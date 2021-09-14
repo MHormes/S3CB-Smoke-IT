@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea' // optional (to generate IntelliJ IDEA project files)
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+}
+
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
