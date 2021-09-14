@@ -23,6 +23,6 @@ public class DepTest
         String toCompare = department.hello("Joe");
         
         // Assert - Check if the method postconditions is as expected
-        assertEquals("Hello Joe!", toCompare);
+        assertEquals("Hello Tim!", toCompare);
     }
 }
