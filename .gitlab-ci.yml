@@ -4,15 +4,12 @@ stages:
 
 build:
  stage: build
-  script:
+ script:
     - ./gradlew build -x test
  
 test:
   stage: test
   script:
     - ./gradlew test
- 
-after_script:
- - echo "End CI"
- - exit
+
 
