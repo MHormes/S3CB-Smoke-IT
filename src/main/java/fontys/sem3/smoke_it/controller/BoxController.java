@@ -39,6 +39,13 @@ public class BoxController {
             return ResponseEntity.ok().body(boxDTOListSorted);
     }
 
+    @GetMapping("{id}/price")
+    public ResponseEntity<Double> getBoxPrice(@PathVariable(value = "id") int id, @RequestParam int amount){
+        BoxDTO boxDTO = fakeDataSource.getBoxWithID(id);
+        double price = fakeDataSource.calculateBoxPrice(boxDTO, amount);
+        return ResponseEntity.ok().body(price);
+    }
+
     @PostMapping()
     public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO){
         if(!fakeDataSource.createBox(boxDTO)){

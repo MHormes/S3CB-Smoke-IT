@@ -5,6 +5,8 @@ import fontys.sem3.smoke_it.model.BoxDTO;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FakeDataSource implements IBoxSorter {
@@ -75,15 +77,34 @@ public class FakeDataSource implements IBoxSorter {
 
     @Override
     public List<BoxDTO> boxesSortedHighToLow(List<BoxDTO> listToSort) {
-        List<BoxDTO> sortedList = new ArrayList<>();
-
+        List<BoxDTO> sortedList = listToSort;
+        Collections.sort(sortedList, new Comparator<BoxDTO>() {
+            @Override
+            public int compare(BoxDTO b1, BoxDTO b2) {
+                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
+            }
+        });
         return sortedList;
     }
 
     @Override
     public List<BoxDTO> boxesSortedLowToHigh(List<BoxDTO> listToSort) {
-        List<BoxDTO> sortedList = new ArrayList<>();
-
+        List<BoxDTO> sortedList = listToSort;
+        Collections.sort(sortedList, new Comparator<BoxDTO>() {
+            @Override
+            public int compare(BoxDTO b1, BoxDTO b2) {
+                return Double.compare(b2.getBasePrice(), b1.getBasePrice());
+            }
+        });
         return sortedList;
+    }
+
+    public double calculateBoxPrice(BoxDTO boxDTO, int amount){
+        if(amount > 1){
+            double basePrice = boxDTO.getBasePrice();
+            double divider = 1 - 0.02*amount;
+            return basePrice * divider;
+        }
+        return boxDTO.getBasePrice();
     }
 }
