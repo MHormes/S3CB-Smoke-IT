@@ -1,11 +1,13 @@
 package fontys.sem3.smoke_it.repository;
 
+import fontys.sem3.smoke_it.Interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.model.BoxDTO;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeDataSource {
+public class FakeDataSource implements IBoxSorter {
 
     List<BoxDTO> fakeBoxList = new ArrayList<>();
 
@@ -17,6 +19,19 @@ public class FakeDataSource {
 
     public List<BoxDTO> getAllBoxes(){
         return this.fakeBoxList;
+    }
+
+    public List<BoxDTO> getAllBoxesSorted(String sort){
+        List<BoxDTO> fakeBoxListSorted = new ArrayList<>();
+        switch (sort){
+            case "l-h":
+                fakeBoxListSorted = boxesSortedLowToHigh(fakeBoxList);
+                break;
+            case "h-l":
+                fakeBoxListSorted = boxesSortedHighToLow(fakeBoxList);
+                break;
+        }
+        return fakeBoxListSorted;
     }
 
     public BoxDTO getBoxWithID(int ID){
@@ -56,5 +71,19 @@ public class FakeDataSource {
         }
 
         return fakeBoxList.remove(boxToDelete);
+    }
+
+    @Override
+    public List<BoxDTO> boxesSortedHighToLow(List<BoxDTO> listToSort) {
+        List<BoxDTO> sortedList = new ArrayList<>();
+
+        return sortedList;
+    }
+
+    @Override
+    public List<BoxDTO> boxesSortedLowToHigh(List<BoxDTO> listToSort) {
+        List<BoxDTO> sortedList = new ArrayList<>();
+
+        return sortedList;
     }
 }

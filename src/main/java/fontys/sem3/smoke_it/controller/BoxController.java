@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.net.URI;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class BoxController {
             return ResponseEntity.ok().body(boxDTO);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<BoxDTO>> getAllBoxesSorted(@RequestParam String sort){
+            List<BoxDTO> boxDTOListSorted = fakeDataSource.getAllBoxesSorted(sort);
+            return ResponseEntity.ok().body(boxDTOListSorted);
     }
 
     @PostMapping()
