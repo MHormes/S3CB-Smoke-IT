@@ -1,6 +1,7 @@
 package fontys.sem3.smoke_it.repository;
 
 import fontys.sem3.smoke_it.Interfaces.IBoxSorter;
+import fontys.sem3.smoke_it.Interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxDTO;
 
 import javax.swing.*;
@@ -9,9 +10,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class FakeDataSource implements IBoxSorter {
+public class FakeDataSource implements IDataSource, IBoxSorter {
 
     List<BoxDTO> fakeBoxList = new ArrayList<>();
+
 
     public FakeDataSource(){
         fakeBoxList.add(new BoxDTO(1, "Roll-Kit", 4.99, "Papers, Blunts, Joint-Tube", "The perfect small kit for every smoker out there"));
@@ -19,6 +21,7 @@ public class FakeDataSource implements IBoxSorter {
         fakeBoxList.add(new BoxDTO(3, "Smoke-Kit", 16.99, "Papers, Blunts, Joint-Tube", "The perfect small kit for every"));
     }
 
+    @Override
     public List<BoxDTO> getAllBoxes(){
         return this.fakeBoxList;
     }
@@ -36,6 +39,7 @@ public class FakeDataSource implements IBoxSorter {
         return fakeBoxListSorted;
     }
 
+    @Override
     public BoxDTO getBoxWithID(int ID){
         for(BoxDTO b: fakeBoxList){
             if(b.getID() == ID){
@@ -45,6 +49,7 @@ public class FakeDataSource implements IBoxSorter {
         return null;
     }
 
+    @Override
     public boolean createBox(BoxDTO boxDTO){
         if(getBoxWithID(boxDTO.getID()) != null){
             return false;
@@ -54,6 +59,7 @@ public class FakeDataSource implements IBoxSorter {
         return true;
     }
 
+    @Override
     public boolean updateBox(BoxDTO boxDTO){
         BoxDTO oldBox = getBoxWithID(boxDTO.getID());
         if(oldBox == null){
@@ -66,6 +72,7 @@ public class FakeDataSource implements IBoxSorter {
         return true;
     }
 
+    @Override
     public boolean deleteBox(int id){
         BoxDTO boxToDelete = getBoxWithID(id);
         if(boxToDelete == null){
@@ -73,6 +80,16 @@ public class FakeDataSource implements IBoxSorter {
         }
 
         return fakeBoxList.remove(boxToDelete);
+    }
+
+    @Override
+    public double calculateBoxPrice(BoxDTO boxDTO, int amount){
+        if(amount > 1){
+            double basePrice = boxDTO.getBasePrice();
+            double divider = 1 - 0.02*amount;
+            return basePrice * divider;
+        }
+        return boxDTO.getBasePrice();
     }
 
     @Override
@@ -97,14 +114,5 @@ public class FakeDataSource implements IBoxSorter {
             }
         });
         return sortedList;
-    }
-
-    public double calculateBoxPrice(BoxDTO boxDTO, int amount){
-        if(amount > 1){
-            double basePrice = boxDTO.getBasePrice();
-            double divider = 1 - 0.02*amount;
-            return basePrice * divider;
-        }
-        return boxDTO.getBasePrice();
     }
 }
