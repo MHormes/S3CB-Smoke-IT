@@ -5,11 +5,13 @@ stages:
 build:
  stage: build
  script:
-    - ./BE/gradlew build -x test
+    - cd BE
+    - ./gradlew build -x test
  
 test:
   stage: test
   script:
+    - cd BE
     - ./gradlew test
 
 
