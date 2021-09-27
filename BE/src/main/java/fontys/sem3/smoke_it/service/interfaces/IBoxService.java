@@ -1,11 +1,10 @@
-package fontys.sem3.smoke_it.Interfaces;
+package fontys.sem3.smoke_it.service.interfaces;
 
 import fontys.sem3.smoke_it.model.BoxDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public interface IDataSource {
+public interface IBoxService {
 
     public List<BoxDTO> getAllBoxes();
 
@@ -17,7 +16,7 @@ public interface IDataSource {
 
     public boolean updateBox(BoxDTO boxDTO);
 
-    public boolean deleteBox(int id);
+    public boolean deleteBox(int ID);
 
     public double calculateBoxPrice(BoxDTO boxDTO, int amount);
 }

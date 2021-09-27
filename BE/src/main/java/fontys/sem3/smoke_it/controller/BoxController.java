@@ -1,14 +1,11 @@
 package fontys.sem3.smoke_it.controller;
 
-import fontys.sem3.smoke_it.Interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxDTO;
-import fontys.sem3.smoke_it.repository.FakeDataSource;
+import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.DataSource;
-import javax.swing.*;
 import java.net.URI;
 import java.util.List;
 
@@ -16,23 +13,22 @@ import java.util.List;
 @RequestMapping("/boxes")
 public class BoxController {
 
-    private static IDataSource fakeDataSource = new FakeDataSource();
-    //private static IDataSource realDataSource = new realDataSource();
+    private IBoxService boxService;
 
-
-    // this has to be static because web services are stateless
-    private static final IDataSource dataSource = fakeDataSource;
+    public BoxController(IBoxService boxService){
+        this.boxService = boxService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<BoxDTO>> getAllBoxes()
     {
-        List<BoxDTO> boxDTOList =  dataSource.getAllBoxes();
+        List<BoxDTO> boxDTOList =  boxService.getAllBoxes();
         return ResponseEntity.ok().body(boxDTOList);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<BoxDTO> getBoxWithID(@PathVariable(value = "id") int id){
-        BoxDTO boxDTO = dataSource.getBoxWithID(id);
+        BoxDTO boxDTO = boxService.getBoxWithID(id);
         if(boxDTO != null){
             return ResponseEntity.ok().body(boxDTO);
         }
@@ -41,20 +37,20 @@ public class BoxController {
 
     @GetMapping("/sort")
     public ResponseEntity<List<BoxDTO>> getAllBoxesSorted(@RequestParam String sort){
-            List<BoxDTO> boxDTOListSorted = dataSource.getAllBoxesSorted(sort);
+            List<BoxDTO> boxDTOListSorted = boxService.getAllBoxesSorted(sort);
             return ResponseEntity.ok().body(boxDTOListSorted);
     }
 
     @GetMapping("{id}/price")
     public ResponseEntity<Double> getBoxPrice(@PathVariable(value = "id") int id, @RequestParam int amount){
-        BoxDTO boxDTO = dataSource.getBoxWithID(id);
-        double price = dataSource.calculateBoxPrice(boxDTO, amount);
+        BoxDTO boxDTO = boxService.getBoxWithID(id);
+        double price = boxService.calculateBoxPrice(boxDTO, amount);
         return ResponseEntity.ok().body(price);
     }
 
     @PostMapping()
     public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO){
-        if(!dataSource.createBox(boxDTO)){
+        if(!boxService.createBox(boxDTO)){
             String entity = "Box with ID " + boxDTO.getID() + " already exists";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         }
@@ -67,7 +63,7 @@ public class BoxController {
 
     @PutMapping
     public ResponseEntity<BoxDTO> updateBox(@RequestBody BoxDTO boxDTO){
-        if(!dataSource.updateBox(boxDTO)){
+        if(!boxService.updateBox(boxDTO)){
             String entity = "There is no box with supplied id: " + boxDTO.getID();
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         }
@@ -80,7 +76,7 @@ public class BoxController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteBox(@PathVariable(value = "id") int id){
-        dataSource.deleteBox(id);
+        boxService.deleteBox(id);
         return ResponseEntity.ok().build();
     }
 }

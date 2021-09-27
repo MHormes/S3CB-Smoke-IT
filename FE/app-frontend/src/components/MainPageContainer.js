@@ -1,15 +1,33 @@
-import React from "react"
+import React from "react";
+import { Route, Switch } from "react-router";
+import NewsFeed from "./NewsFeed";
+import WelcomeContent from "./WelcomeContent";
+import BoxList from "./BoxList";
+import Header from "./Header";
+import Navbar from "./Navbar";
 
-class MainPageContainer extends React.Component {
+const MainPageContainer = () => {
 
-    render() {
-        return (
-            <div>
-                <Header />
-                <Navbar />
-            </div>
-        )
-    }
+
+
+    return (
+        <>
+            <Header />
+            <Navbar />
+            <Switch>
+                <Route exact path="/">
+                    <NewsFeed />
+                    <WelcomeContent />
+                </Route>
+
+                <Route path="/boxes">
+                    <BoxList />
+                </Route>
+            </Switch>
+        </>
+
+    )
+
 }
 
 export default MainPageContainer

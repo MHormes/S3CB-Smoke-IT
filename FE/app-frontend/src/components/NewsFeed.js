@@ -12,3 +12,5 @@ class NewsFeed extends React.Component{
         )
     }
 }
+
+export default NewsFeed

@@ -3,7 +3,7 @@ import React from "react"
 const Header = () =>{
 
     return (
-        <h1>Smoke-It</h1>
+        <h1>Welcome to the website without any styling...</h1>
     )
 }
 

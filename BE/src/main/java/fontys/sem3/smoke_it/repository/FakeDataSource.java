@@ -1,15 +1,16 @@
 package fontys.sem3.smoke_it.repository;
 
-import fontys.sem3.smoke_it.Interfaces.IBoxSorter;
-import fontys.sem3.smoke_it.Interfaces.IDataSource;
+import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxDTO;
+import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Component
 public class FakeDataSource implements IDataSource, IBoxSorter {
 
     List<BoxDTO> fakeBoxList = new ArrayList<>();
@@ -26,6 +27,7 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
         return this.fakeBoxList;
     }
 
+    @Override
     public List<BoxDTO> getAllBoxesSorted(String sort){
         List<BoxDTO> fakeBoxListSorted = new ArrayList<>();
         switch (sort){
@@ -80,16 +82,6 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
         }
 
         return fakeBoxList.remove(boxToDelete);
-    }
-
-    @Override
-    public double calculateBoxPrice(BoxDTO boxDTO, int amount){
-        if(amount > 1){
-            double basePrice = boxDTO.getBasePrice();
-            double divider = 1 - 0.02*amount;
-            return basePrice * divider;
-        }
-        return boxDTO.getBasePrice();
     }
 
     @Override
