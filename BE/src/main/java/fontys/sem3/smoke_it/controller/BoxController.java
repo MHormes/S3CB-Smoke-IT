@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/boxes")
 public class BoxController {
@@ -73,8 +74,8 @@ public class BoxController {
             return new ResponseEntity(uri, HttpStatus.CREATED);
         }
     }
-
-    @DeleteMapping("{id}")
+    
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteBox(@PathVariable(value = "id") int id){
         boxService.deleteBox(id);
         return ResponseEntity.ok().build();

@@ -2,11 +2,13 @@ import React from "react";
 import BoxSingle from "./BoxSingle";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
-const BoxList = () => {
+const BoxList = (props) => {
 
     const adminLog = true;
     const [boxes, setBoxes] = useState(null);
+    const history = useHistory();
 
     useEffect(() => {
         axios.get("http://localhost:8080/boxes")
@@ -19,7 +21,7 @@ const BoxList = () => {
 
     const AddButton = () => {
         return (
-            <button onClick={null}>
+            <button onClick={() => history.push("/boxes/createOrUpdate")}>
                 Add box
             </button>
         )
@@ -27,16 +29,17 @@ const BoxList = () => {
 
     let addButton = null;
     if (adminLog) {
-            addButton = AddButton();
+        addButton = AddButton();
     }
-    
+
     return (
         <>
             {addButton}
             <ul>
-
                 {boxes.map(box => (
                     <BoxSingle
+                    getSelectedBoxProps={props.getSelectedBoxProps}
+                    getBoxToEditProps={props.getBoxToEditProps}
                         key={box.id}
                         box={box} />
                 ))}
