@@ -74,7 +74,7 @@ public class BoxController {
             return new ResponseEntity(uri, HttpStatus.CREATED);
         }
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteBox(@PathVariable(value = "id") int id){
         boxService.deleteBox(id);
