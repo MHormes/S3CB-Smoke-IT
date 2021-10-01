@@ -3,7 +3,9 @@ import BoxSingle from "./BoxSingle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import * as urls from "./../../URL"
 
+//component that holds the list of boxes when viewing all boxes
 const BoxList = (props) => {
 
     const adminLog = true;
@@ -11,7 +13,7 @@ const BoxList = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/boxes")
+        axios.get(urls.baseURL + urls.boxesURL)
             .then(res => {
                 setBoxes(res.data);
             });
@@ -21,7 +23,7 @@ const BoxList = (props) => {
 
     const AddButton = () => {
         return (
-            <button onClick={() => history.push("/boxes/createOrUpdate")}>
+            <button onClick={() => history.push("/boxes/create")}>
                 Add box
             </button>
         )

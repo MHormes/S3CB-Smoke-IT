@@ -49,7 +49,7 @@ public class BoxController {
         return ResponseEntity.ok().body(price);
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO){
         if(!boxService.createBox(boxDTO)){
             String entity = "Box with ID " + boxDTO.getID() + " already exists";
@@ -62,7 +62,7 @@ public class BoxController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<BoxDTO> updateBox(@RequestBody BoxDTO boxDTO){
         if(!boxService.updateBox(boxDTO)){
             String entity = "There is no box with supplied id: " + boxDTO.getID();

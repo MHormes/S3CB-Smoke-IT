@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router";
 import styles from "./BoxSingle.module.css";
+import * as urls from "./../../URL";
 
 const BoxSingle = (props) => {
 
@@ -13,7 +14,7 @@ const BoxSingle = (props) => {
     }
 
     const deleteBox = (boxToDelete) => {
-        var URL = "http://localhost:8080/boxes/delete/" + boxToDelete.id;
+        var URL = urls.baseURL + urls.boxesDeleteURL + boxToDelete.id;
         axios.delete(URL).then(res => console.log(res));
         history.push("/boxes");
     }

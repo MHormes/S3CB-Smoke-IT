@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect } from "react/cjs/react.development"
+import SelectedBoxPrice from "./SelectedBoxPrice"
 
 const SelectedBoxPage = (props) =>{
 
@@ -15,9 +16,9 @@ const SelectedBoxPage = (props) =>{
     return (
         <>
         <h1>{selectedBox.name}</h1>
-        <p>{selectedBox.basePrice}</p>
-        <p>{selectedBox.content}</p>
         <p>{selectedBox.description}</p>
+        <p>{selectedBox.content}</p>
+        <SelectedBoxPrice />
         </>
     )
 }

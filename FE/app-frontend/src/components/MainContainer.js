@@ -6,8 +6,8 @@ import BoxList from "./boxesPage/BoxList";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import SelectedBoxPage from "./singleBoxPage/SelectedBoxPage";
-import BoxAddOrEdit from "./boxesPage/BoxAddOrEdit";
-import axios from "axios";
+import BoxAdd from "./boxesPage/BoxAdd";
+import BoxEdit from "./boxesPage/BoxEdit";
 
 const MainContainer = () => {
 
@@ -19,22 +19,10 @@ const MainContainer = () => {
         history.push("/boxes/selectedBox");
     }
 
-    const addBoxInBE = (box) => {
-        const boxDTO = 
-        {
-            id: 4,
-            name: box.name,
-            basePrice: box.basePrice, 
-            content: box.content,
-            description: box.description
-        }
-        axios.post("http://localhost:8080/boxes", boxDTO)
-    }
-
     const [boxToEdit, setBoxToEdit] = useState();
     const getBoxToEdit = (box) => {
         setBoxToEdit(box);
-        history.push("/boxes/createOrUpdate");
+        history.push("/boxes/update");
     }
 
 
@@ -59,10 +47,12 @@ const MainContainer = () => {
                         selectedBoxProps={selectedBox}
                     />
                 </Route>
-                <Route path="/boxes/createOrUpdate">
-                    <BoxAddOrEdit
-                        addBoxInBEProps={addBoxInBE}
-                        boxToEditProps={boxToEdit}
+                <Route path="/boxes/create">
+                    <BoxAdd/>
+                </Route>
+                <Route path="/boxes/update">
+                    <BoxEdit 
+                    boxToEditProps={boxToEdit}
                     />
                 </Route>
             </Switch>
