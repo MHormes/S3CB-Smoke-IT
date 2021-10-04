@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.model;
 
-public class BoxDTO {
+public class BoxModel {
 
     private String ID;
     private String name;
@@ -9,14 +9,13 @@ public class BoxDTO {
     private String description;
     //PHOTO??????????????????/
 
-    public BoxDTO(String ID, String name, double basePrice, String content, String description){
-        setID(ID);
-        setName(name);
-        setBasePrice(basePrice);
-        setContent(content);
-        setDescription(description);
+    public BoxModel(String ID, String name, double basePrice, String content, String description){
+        this.ID = ID;
+        this.name = name;
+        this.basePrice = basePrice;
+        this.content = content;
+        this.description = description;
     }
-
 
     public String getID() {
         return ID;

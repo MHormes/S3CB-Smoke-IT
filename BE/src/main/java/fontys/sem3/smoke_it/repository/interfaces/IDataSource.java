@@ -1,23 +1,23 @@
 package fontys.sem3.smoke_it.repository.interfaces;
 
-import fontys.sem3.smoke_it.model.BoxDTO;
+import fontys.sem3.smoke_it.model.BoxModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface IDataSource {
 
-    List<BoxDTO> fakeBoxList = new ArrayList<>();
+    List<BoxModel> fakeBoxList = new ArrayList<>();
 
-    public List<BoxDTO> getAllBoxes();
+    public List<BoxModel> getAllBoxes();
 
-    public List<BoxDTO> getAllBoxesSorted(String sort);
+    public List<BoxModel> getAllBoxesSorted(String sort);
 
-    public BoxDTO getBoxWithID(int ID);
+    public BoxModel getBoxWithID(String ID);
 
-    public boolean createBox(BoxDTO boxDTO);
+    public boolean createBox(BoxModel boxModel);
 
-    public boolean updateBox(BoxDTO boxDTO);
+    public boolean updateBox(BoxModel boxModel);
 
-    public boolean deleteBox(int id);
+    public boolean deleteBox(String id);
 }

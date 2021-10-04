@@ -3,6 +3,7 @@ package fontys.sem3.smoke_it.repository;
 import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxDTO;
+import fontys.sem3.smoke_it.model.BoxModel;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,23 +14,23 @@ import java.util.List;
 @Component
 public class FakeDataSource implements IDataSource, IBoxSorter {
 
-    List<BoxDTO> fakeBoxList = new ArrayList<>();
+    List<BoxModel> fakeBoxList = new ArrayList<>();
 
 
     public FakeDataSource(){
-        fakeBoxList.add(new BoxDTO(1, "Roll-Kit", 4.99, "Papers, Blunts, Joint-Tube", "The perfect small kit for every smoker out there"));
-        fakeBoxList.add(new BoxDTO(2, "Supply-Kit", 9.99, "Crusher, Pipe, Ashtray", "Ready for a small surprise every time? Includes Roll-Kit"));
-        fakeBoxList.add(new BoxDTO(3, "Smoke-Kit", 16.99, "Bong, Pipe, Glass work", "The perfect small kit for every"));
+        fakeBoxList.add(new BoxModel("1", "Roll-Kit", 4.99, "Papers, Blunts, Joint-Tube", "The perfect small kit for every smoker out there"));
+        fakeBoxList.add(new BoxModel("2", "Supply-Kit", 9.99, "Crusher, Pipe, Ashtray", "Ready for a small surprise every time? Includes Roll-Kit"));
+        fakeBoxList.add(new BoxModel("3", "Smoke-Kit", 16.99, "Bong, Pipe, Glass work", "The perfect small kit for every"));
     }
 
     @Override
-    public List<BoxDTO> getAllBoxes(){
+    public List<BoxModel> getAllBoxes(){
         return this.fakeBoxList;
     }
 
     @Override
-    public List<BoxDTO> getAllBoxesSorted(String sort){
-        List<BoxDTO> fakeBoxListSorted = new ArrayList<>();
+    public List<BoxModel> getAllBoxesSorted(String sort){
+        List<BoxModel> fakeBoxListSorted = new ArrayList<>();
         switch (sort){
             case "l-h":
                 fakeBoxListSorted = boxesSortedLowToHigh(fakeBoxList);
@@ -42,8 +43,8 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
     }
 
     @Override
-    public BoxDTO getBoxWithID(int ID){
-        for(BoxDTO b: fakeBoxList){
+    public BoxModel getBoxWithID(String ID){
+        for(BoxModel b: fakeBoxList){
             if(b.getID() == ID){
                 return b;
             }
@@ -52,31 +53,31 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
     }
 
     @Override
-    public boolean createBox(BoxDTO boxDTO){
-        if(getBoxWithID(boxDTO.getID()) != null){
+    public boolean createBox(BoxModel boxModel){
+        if(getBoxWithID(boxModel.getID()) != null){
             return false;
         }
 
-        fakeBoxList.add(boxDTO);
+        fakeBoxList.add(boxModel);
         return true;
     }
 
     @Override
-    public boolean updateBox(BoxDTO boxDTO){
-        BoxDTO oldBox = getBoxWithID(boxDTO.getID());
+    public boolean updateBox(BoxModel boxModel){
+        BoxModel oldBox = getBoxWithID(boxModel.getID());
         if(oldBox == null){
             return false;
         }
-        oldBox.setName(boxDTO.getName());
-        oldBox.setBasePrice(boxDTO.getBasePrice());
-        oldBox.setContent(boxDTO.getContent());
-        oldBox.setDescription(boxDTO.getDescription());
+        oldBox.setName(boxModel.getName());
+        oldBox.setBasePrice(boxModel.getBasePrice());
+        oldBox.setContent(boxModel.getContent());
+        oldBox.setDescription(boxModel.getDescription());
         return true;
     }
 
     @Override
-    public boolean deleteBox(int id){
-        BoxDTO boxToDelete = getBoxWithID(id);
+    public boolean deleteBox(String id){
+        BoxModel boxToDelete = getBoxWithID(id);
         if(boxToDelete == null){
             return false;
         }
@@ -85,11 +86,11 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
     }
 
     @Override
-    public List<BoxDTO> boxesSortedHighToLow(List<BoxDTO> listToSort) {
-        List<BoxDTO> sortedList = listToSort;
-        Collections.sort(sortedList, new Comparator<BoxDTO>() {
+    public List<BoxModel> boxesSortedHighToLow(List<BoxModel> listToSort) {
+        List<BoxModel> sortedList = listToSort;
+        Collections.sort(sortedList, new Comparator<BoxModel>() {
             @Override
-            public int compare(BoxDTO b1, BoxDTO b2) {
+            public int compare(BoxModel b1, BoxModel b2) {
                 return Double.compare(b1.getBasePrice(), b2.getBasePrice());
             }
         });
@@ -97,11 +98,11 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
     }
 
     @Override
-    public List<BoxDTO> boxesSortedLowToHigh(List<BoxDTO> listToSort) {
-        List<BoxDTO> sortedList = listToSort;
-        Collections.sort(sortedList, new Comparator<BoxDTO>() {
+    public List<BoxModel> boxesSortedLowToHigh(List<BoxModel> listToSort) {
+        List<BoxModel> sortedList = listToSort;
+        Collections.sort(sortedList, new Comparator<BoxModel>() {
             @Override
-            public int compare(BoxDTO b1, BoxDTO b2) {
+            public int compare(BoxModel b1, BoxModel b2) {
                 return Double.compare(b2.getBasePrice(), b1.getBasePrice());
             }
         });
