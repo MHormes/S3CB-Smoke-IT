@@ -15,8 +15,9 @@ const BoxList = (props) => {
     useEffect(() => {
         axios.get(urls.baseURL + urls.boxesURL)
             .then(res => {
-                setBoxes(res.data);
+                setBoxes(res.data); console.log(res);
             });
+            
     })
 
     if (!boxes) return null;

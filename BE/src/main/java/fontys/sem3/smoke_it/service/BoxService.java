@@ -2,10 +2,12 @@ package fontys.sem3.smoke_it.service;
 
 import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxModel;
+import fontys.sem3.smoke_it.service.exceptions.BoxListNullException;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class BoxService implements IBoxService {
@@ -16,9 +18,18 @@ public class BoxService implements IBoxService {
         this.datasource = datasource;
     }
 
+    public BoxService() {
+    }
+
+
+    //do i want to do this?
     @Override
-    public List<BoxModel> getAllBoxes(){
-        return datasource.getAllBoxes();
+    public List<BoxModel> getAllBoxes() throws BoxListNullException {
+        List<BoxModel> boxList = datasource.getAllBoxes();
+        if (boxList != null){
+            return boxList;
+        }
+        throw new BoxListNullException("boxList empty");
     }
 
     @Override
@@ -58,7 +69,7 @@ public class BoxService implements IBoxService {
 
     @Override
     public String createID() {
-        return null;
+        return UUID.randomUUID().toString();
     }
 
 }
