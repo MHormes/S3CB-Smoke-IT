@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.uniTest;
+package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.repository.FakeDataSource;
@@ -6,11 +6,14 @@ import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
 import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //how do i use this?
+@SpringBootTest
 public class BoxServiceUnitTest {
-/*
+
     @Test
     public void testGetBoxWithID() {
         IDataSource dataSource = new FakeDataSource();
@@ -18,7 +21,7 @@ public class BoxServiceUnitTest {
 
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
 
-        assertEquals("test", boxService.getBoxWithID("1"));
+        assertEquals("test", boxService.getBoxWithID("1").getName());
     }
 
     @Test
@@ -62,6 +65,6 @@ public class BoxServiceUnitTest {
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("2"));
 
-        assertEquals(updateResult, false);
-    }*/
+        assertEquals(updateResult, true);
+    }
 }

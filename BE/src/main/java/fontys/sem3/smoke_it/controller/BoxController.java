@@ -66,7 +66,7 @@ public class BoxController {
         } else {
             String url = "boxes/" + boxDTO.getID();
             URI uri = URI.create(url);
-            return new ResponseEntity(url, HttpStatus.CREATED);
+            return new ResponseEntity(uri, HttpStatus.CREATED);
         }
     }
 
