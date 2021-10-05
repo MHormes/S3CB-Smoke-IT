@@ -18,9 +18,6 @@ public class BoxService implements IBoxService {
         this.datasource = datasource;
     }
 
-    public BoxService() {
-    }
-
 
     //do i want to do this?
     @Override

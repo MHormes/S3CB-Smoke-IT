@@ -10,18 +10,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//how do i use this?
 @SpringBootTest
 public class BoxServiceUnitTest {
 
     @Test
-    public void testGetBoxWithID() {
+    public void testGetBoxWithIDSuccessful() {
         IDataSource dataSource = new FakeDataSource();
         IBoxService boxService = new BoxService(dataSource);
 
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
 
         assertEquals("test", boxService.getBoxWithID("1").getName());
+    }
+
+    @Test
+    public void testGetBoxWithIDInvalidID(){
+
     }
 
     @Test
