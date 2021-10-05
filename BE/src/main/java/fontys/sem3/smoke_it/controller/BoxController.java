@@ -2,6 +2,7 @@ package fontys.sem3.smoke_it.controller;
 
 import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
+import fontys.sem3.smoke_it.model.modelConverters.BoxModelConverter;
 import fontys.sem3.smoke_it.service.exceptions.BoxListNullException;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 public class BoxController {
 
     private IBoxService boxService;
+    private BoxModelConverter boxModelConverter;
 
     public BoxController(IBoxService boxService) {
         this.boxService = boxService;
@@ -27,11 +29,7 @@ public class BoxController {
     //not sure if i want to do this
     @GetMapping()
     public ResponseEntity<List<BoxDTO>> getAllBoxes() throws BoxListNullException {
-        List<BoxDTO> boxDTOList = new ArrayList<>();
-        List<BoxModel> boxModelList = boxService.getAllBoxes();
-        for (BoxModel box : boxModelList) {
-            boxDTOList.add(new BoxDTO(box.getID(), box.getName(), box.getBasePrice(), box.getContent(), box.getDescription()));
-        }
+        List<BoxDTO> boxDTOList = boxModelConverter.convertModelListToDTO(boxService.getAllBoxes());
         return ResponseEntity.ok().body(boxDTOList);
     }
 
@@ -39,18 +37,15 @@ public class BoxController {
     public ResponseEntity<BoxDTO> getBoxWithID(@PathVariable(value = "id") String id) {
         BoxModel boxModel = boxService.getBoxWithID(id);
         if (boxModel != null) {
-            return ResponseEntity.ok().body(new BoxDTO(boxModel.getID(), boxModel.getName(), boxModel.getBasePrice(), boxModel.getContent(), boxModel.getDescription()));
+            BoxDTO boxDTO = boxModelConverter.convertModelToDTO(boxModel);
+            return ResponseEntity.ok().body(boxDTO);
         }
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/sort")
     public ResponseEntity<List<BoxDTO>> getAllBoxesSorted(@RequestParam String sort) {
-        List<BoxDTO> boxDTOListSorted = new ArrayList<>();
-        List<BoxModel> boxModelListSorted = boxService.getAllBoxesSorted(sort);
-        for(BoxModel box: boxModelListSorted){
-            boxDTOListSorted.add(new BoxDTO(box.getID(), box.getName(), box.getBasePrice(), box.getContent(), box.getDescription()));
-        }
+        List<BoxDTO> boxDTOListSorted = boxModelConverter.convertModelListToDTO(boxService.getAllBoxesSorted(sort));
         return ResponseEntity.ok().body(boxDTOListSorted);
     }
 
@@ -63,7 +58,8 @@ public class BoxController {
 
     @PostMapping("/create")
     public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO) {
-        BoxModel boxModel = new BoxModel(boxService.createID(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription());
+        boxDTO.setID(boxService.createID());
+        BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.createBox(boxModel)) {
             String entity = "Box with ID " + boxDTO.getID() + " already exists";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
@@ -76,7 +72,7 @@ public class BoxController {
 
     @PutMapping("/update")
     public ResponseEntity<BoxDTO> updateBox(@RequestBody BoxDTO boxDTO) {
-        BoxModel boxModel = new BoxModel(boxDTO.getID(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription());
+        BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.updateBox(boxModel)) {
             String entity = "There is no box with supplied id: " + boxDTO.getID();
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
