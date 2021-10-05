@@ -3,7 +3,6 @@ package fontys.sem3.smoke_it.controller;
 import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.model.modelConverters.BoxModelConverter;
-import fontys.sem3.smoke_it.service.exceptions.BoxListNullException;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +25,9 @@ public class BoxController {
         this.boxService = boxService;
     }
 
-    //not sure if i want to do this
+
     @GetMapping()
-    public ResponseEntity<List<BoxDTO>> getAllBoxes() throws BoxListNullException {
+    public ResponseEntity<List<BoxDTO>> getAllBoxes() {
         List<BoxDTO> boxDTOList = boxModelConverter.convertModelListToDTO(boxService.getAllBoxes());
         return ResponseEntity.ok().body(boxDTOList);
     }

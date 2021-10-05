@@ -19,6 +19,10 @@ public class FakeDataSource implements IDataSource, IBoxSorter {
         fakeBoxList.add(new BoxModel(UUID.randomUUID().toString(), "Smoke-Kit", 16.99, "Bong, Pipe, Glass work", "The perfect small kit for every"));
     }
 
+    public FakeDataSource(String forTest){
+
+    }
+
     @Override
     public List<BoxModel> getAllBoxes(){
         return this.fakeBoxList;

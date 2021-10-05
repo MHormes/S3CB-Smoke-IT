@@ -2,7 +2,6 @@ package fontys.sem3.smoke_it.service;
 
 import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.service.exceptions.BoxListNullException;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.stereotype.Component;
 
@@ -18,15 +17,13 @@ public class BoxService implements IBoxService {
         this.datasource = datasource;
     }
 
-
-    //do i want to do this?
     @Override
-    public List<BoxModel> getAllBoxes() throws BoxListNullException {
+    public List<BoxModel> getAllBoxes() {
         List<BoxModel> boxList = datasource.getAllBoxes();
         if (boxList != null){
             return boxList;
         }
-        throw new BoxListNullException("boxList empty");
+        return null;
     }
 
     @Override
