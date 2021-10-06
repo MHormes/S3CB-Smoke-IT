@@ -5,11 +5,18 @@ import WelcomeContent from "./mainPage/WelcomeContent";
 import BoxList from "./boxesPage/BoxList";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import SelectedBoxPage from "./singleBoxPage/SelectedBoxPage";
+import SelectedBoxPage from "./selectedBoxPage/SelectedBoxPage";
 import BoxAdd from "./boxesPage/BoxAdd";
 import BoxEdit from "./boxesPage/BoxEdit";
+import LoginPage from "./logAndRegPage/LoginPage";
 
 const MainContainer = () => {
+
+    //needs update to be taken from the login
+    var adminLog = true;
+    const setAdminLog = (loginResult) => {
+        this.adminLog = loginResult;
+    }
 
     const history = useHistory();
 
@@ -38,6 +45,7 @@ const MainContainer = () => {
 
                 <Route exact path="/boxes">
                     <BoxList
+                        adminLogProps={adminLog}
                         getSelectedBoxProps={getSelectedBox}
                         getBoxToEditProps={getBoxToEdit}
                     />
@@ -48,11 +56,16 @@ const MainContainer = () => {
                     />
                 </Route>
                 <Route path="/boxes/create">
-                    <BoxAdd/>
+                    <BoxAdd />
                 </Route>
                 <Route path="/boxes/update">
-                    <BoxEdit 
-                    boxToEditProps={boxToEdit}
+                    <BoxEdit
+                        boxToEditProps={boxToEdit}
+                    />
+                </Route>
+                <Route path="/login">
+                    <LoginPage 
+                        getLoginResultProps={setAdminLog}
                     />
                 </Route>
             </Switch>

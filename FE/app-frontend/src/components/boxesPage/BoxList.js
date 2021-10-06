@@ -8,16 +8,17 @@ import * as urls from "./../../URL"
 //component that holds the list of boxes when viewing all boxes
 const BoxList = (props) => {
 
-    const adminLog = true;
+    const adminLog = props.adminLogProps;
+
     const [boxes, setBoxes] = useState(null);
     const history = useHistory();
 
     useEffect(() => {
         axios.get(urls.baseURL + urls.boxesURL)
             .then(res => {
-                setBoxes(res.data); console.log(res);
+                setBoxes(res.data);
             });
-            
+
     })
 
     if (!boxes) return null;
@@ -41,8 +42,9 @@ const BoxList = (props) => {
             <ul>
                 {boxes.map(box => (
                     <BoxSingle
-                    getSelectedBoxProps={props.getSelectedBoxProps}
-                    getBoxToEditProps={props.getBoxToEditProps}
+                        adminLogProps={props.adminLogProps}
+                        getSelectedBoxProps={props.getSelectedBoxProps}
+                        getBoxToEditProps={props.getBoxToEditProps}
                         key={box.id}
                         box={box} />
                 ))}

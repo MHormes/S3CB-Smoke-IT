@@ -6,6 +6,8 @@ import * as urls from "./../../URL";
 
 const BoxSingle = (props) => {
 
+    const adminLog = props.adminLogProps;
+
     const singleBox = props.box;
     const history = useHistory();
 
@@ -13,26 +15,52 @@ const BoxSingle = (props) => {
         props.getSelectedBoxProps(selectedBox);
     }
 
+    //Element for update button 
+    const UpdateButton = () => {
+        return (
+            <button onClick={() => { if (window.confirm("Update the " + singleBox.name + "?")) { updateBox(singleBox) } }}>
+                update
+            </button>
+        )
+    }
+    //only show if admin is logged
+    let updateButton = null;
+    if (adminLog) {
+        updateButton = UpdateButton();
+    }
+    //method to continue to the update page
+    const updateBox = (boxToUpdate) => {
+        props.getBoxToEditProps(boxToUpdate);
+    }
+
+    //Element for delete button 
+    const DeleteButton = () => {
+        return (
+            <button onClick={() => { if (window.confirm("Are you sure you wish to delete the " + singleBox.name + "?")) { deleteBox(singleBox) } }}>
+                delete
+            </button>
+        )
+    }
+    //only show if admin is logged
+    let deleteButton = null;
+    if (adminLog) {
+        deleteButton = DeleteButton();
+    }
+    //method to perform the delete
     const deleteBox = (boxToDelete) => {
         var URL = urls.baseURL + urls.boxesDeleteURL + boxToDelete.id;
         axios.delete(URL).then(res => console.log(res));
         history.push("/boxes");
     }
 
-    const updateBox = (boxToUpdate) => {
-        props.getBoxToEditProps(boxToUpdate);
-    }
+
     return (
         <li>
             <div className={styles.box} onClick={() => selectBox(singleBox)}>
                 {singleBox.name} {singleBox.basePrice}
             </div>
-            <button onClick={() => { if (window.confirm("Are you sure you wish to delete the " + singleBox.name + "?")) { deleteBox(singleBox) } }}>
-                delete
-            </button>
-            <button onClick={() => { if (window.confirm("Update the " + singleBox.name + "?")) { updateBox(singleBox) } }}>
-                update
-            </button>
+            {deleteButton}
+            {updateButton}
         </li>
     )
 

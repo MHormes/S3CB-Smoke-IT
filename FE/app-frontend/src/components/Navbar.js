@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import styles from "./Navbar.module.css"
 
 const Navbar = () => {
     const links = [
@@ -32,10 +33,10 @@ const Navbar = () => {
 
     return (
         <nav>
-            <ul>
+            <ul className={styles.nav_list}>
                 {links.map(link => {
                     return (
-                        <li key={link.id}>
+                        <li key={link.id} className={styles.nav_item}>
                             <NavLink to={link.path} activeClassName="active-link" exact>
                                 {link.text}
                             </NavLink>
