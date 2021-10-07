@@ -13,9 +13,14 @@ import LoginPage from "./logAndRegPage/LoginPage";
 const MainContainer = () => {
 
     //needs update to be taken from the login
-    var adminLog = true;
-    const setAdminLog = (loginResult) => {
-        this.adminLog = loginResult;
+    const [adminLog, setAdminLog] = useState({
+        adminLog: true
+    })
+
+    const handleLogin = (loginResult) => {
+        setAdminLog({
+            adminLog: loginResult
+        })
     }
 
     const history = useHistory();
@@ -64,8 +69,8 @@ const MainContainer = () => {
                     />
                 </Route>
                 <Route path="/login">
-                    <LoginPage 
-                        getLoginResultProps={setAdminLog}
+                    <LoginPage
+                        getLoginResultProps={handleLogin}
                     />
                 </Route>
             </Switch>

@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.service;
 
-import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.stereotype.Component;
@@ -11,9 +11,9 @@ import java.util.UUID;
 @Component
 public class BoxService implements IBoxService {
 
-    IDataSource datasource;
+    IDataSourceBoxes datasource;
 
-    public BoxService(IDataSource datasource){
+    public BoxService(IDataSourceBoxes datasource){
         this.datasource = datasource;
     }
 

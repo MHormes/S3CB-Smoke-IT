@@ -1,11 +1,10 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.FakeDataSource;
-import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
+import fontys.sem3.smoke_it.repository.FakeDataSourceBoxes;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class BoxServiceUnitTest {
 
-    private IDataSource dataSource;
+    private IDataSourceBoxes dataSource;
     private IBoxService boxService;
 
     @BeforeEach
-    public void ArrangeAllBoxTest(){
-        dataSource = new FakeDataSource();
+    public void arrangeBoxTest(){
+        dataSource = new FakeDataSourceBoxes();
         boxService = new BoxService(dataSource);
     }
 
@@ -31,7 +30,7 @@ public class BoxServiceUnitTest {
     //Below method uses the overloaded fakeDataSource const to have an empty list inside the datasource
     @Test
     public void testGetAllBoxesSuccessful(){
-        IDataSource dataSourceTest = new FakeDataSource("testSource");
+        IDataSourceBoxes dataSourceTest = new FakeDataSourceBoxes("testSource");
         IBoxService boxServiceTest = new BoxService(dataSourceTest);
 
         List<BoxModel> listToAssert = new ArrayList<>();

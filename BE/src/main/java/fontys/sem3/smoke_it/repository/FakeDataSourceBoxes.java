@@ -1,25 +1,24 @@
 package fontys.sem3.smoke_it.repository;
 
 import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
-import fontys.sem3.smoke_it.repository.interfaces.IDataSource;
-import fontys.sem3.smoke_it.model.BoxDTO;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class FakeDataSource implements IDataSource, IBoxSorter {
+public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     List<BoxModel> fakeBoxList = new ArrayList<>();
 
-    public FakeDataSource(){
+    public FakeDataSourceBoxes(){
         fakeBoxList.add(new BoxModel(UUID.randomUUID().toString(), "Roll-Kit", 4.99, "Papers, Blunts, Joint-Tube", "The perfect small kit for every smoker out there"));
         fakeBoxList.add(new BoxModel(UUID.randomUUID().toString(), "Supply-Kit", 9.99, "Crusher, Pipe, Ashtray", "Ready for a small surprise every time? Includes Roll-Kit"));
         fakeBoxList.add(new BoxModel(UUID.randomUUID().toString(), "Smoke-Kit", 16.99, "Bong, Pipe, Glass work", "The perfect small kit for every"));
     }
 
-    public FakeDataSource(String forTest){
+    public FakeDataSourceBoxes(String forTest){
 
     }
 

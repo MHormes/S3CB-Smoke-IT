@@ -19,10 +19,11 @@ import java.util.List;
 public class BoxController {
 
     private IBoxService boxService;
-    private BoxModelConverter boxModelConverter = new BoxModelConverter();
+    private BoxModelConverter boxModelConverter;
 
     public BoxController(IBoxService boxService) {
         this.boxService = boxService;
+        boxModelConverter = new BoxModelConverter();
     }
 
 

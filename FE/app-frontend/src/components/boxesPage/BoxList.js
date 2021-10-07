@@ -10,7 +10,7 @@ const BoxList = (props) => {
 
     const adminLog = props.adminLogProps;
 
-    const [boxes, setBoxes] = useState(null);
+    const [boxes, setBoxes] = useState();
     const history = useHistory();
 
     useEffect(() => {

@@ -11,11 +11,11 @@ const LoginPage = (props) => {
     })
 
     const loginToApp = (loginDetails) => {
-        axios.get(urls.baseURL+urls.loginToApp, loginDetails)
-        .then(res => {
-            console.log(res)
-            //props.getLoginResultProps(res);
-        })
+        axios.get(urls.baseURL + urls.loginToApp, { params: {username: loginDetails.username, password: loginDetails.password}})
+            .then(res => {
+                console.log(res.data)
+                props.getLoginResultProps(res.data.admin);
+            })
     }
 
     const onChange = e => {
@@ -29,7 +29,9 @@ const LoginPage = (props) => {
         e.preventDefault();
         if (loginDetails.username.trim() && loginDetails.password.trim()) {
             loginToApp(loginDetails)
-            history.push("/");
+        }
+        else {
+            alert("Please supply both a username and password")
         }
 
     }

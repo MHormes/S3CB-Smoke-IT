@@ -5,7 +5,7 @@ import fontys.sem3.smoke_it.model.BoxModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IDataSource {
+public interface IDataSourceBoxes {
 
     List<BoxModel> fakeBoxList = new ArrayList<>();
 
