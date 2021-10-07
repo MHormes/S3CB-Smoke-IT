@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
+
 import java.net.URI;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,7 +33,7 @@ public class BoxController {
         return ResponseEntity.ok().body(boxDTOList);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BoxDTO> getBoxWithID(@PathVariable(value = "id") String id) {
         BoxModel boxModel = boxService.getBoxWithID(id);
         if (boxModel != null) {
@@ -49,11 +49,14 @@ public class BoxController {
         return ResponseEntity.ok().body(boxDTOListSorted);
     }
 
-    @GetMapping("{id}/price")
+    @GetMapping("/{id}/price")
     public ResponseEntity<Double> getBoxPrice(@PathVariable(value = "id") String id, @RequestParam int amount) {
         BoxModel boxModel = boxService.getBoxWithID(id);
-        double price = boxService.calculateBoxPrice(boxModel, amount);
-        return ResponseEntity.ok().body(price);
+        if (boxModel != null) {
+            double price = boxService.calculateBoxPrice(boxModel, amount);
+            return ResponseEntity.ok().body(price);
+        }
+        return ResponseEntity.ok().body(2.00);
     }
 
     @PostMapping("/create")

@@ -1,5 +1,7 @@
 package fontys.sem3.smoke_it.model;
 
+import java.util.Objects;
+
 public class BoxModel {
 
     private String ID;
@@ -55,5 +57,18 @@ public class BoxModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoxModel boxModel = (BoxModel) o;
+        return Objects.equals(ID, boxModel.getID());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID);
     }
 }

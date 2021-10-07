@@ -44,7 +44,7 @@ public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
     @Override
     public BoxModel getBoxWithID(String ID){
         for(BoxModel b: fakeBoxList){
-            if(b.getID() == ID){
+            if(Objects.equals(b.getID(), ID)){
                 return b;
             }
         }

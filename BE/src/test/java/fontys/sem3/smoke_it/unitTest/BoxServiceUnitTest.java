@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 public class BoxServiceUnitTest {
@@ -48,16 +49,19 @@ public class BoxServiceUnitTest {
 
     @Test
     public void testGetBoxWithIDSuccessful() {
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription");
+        boxService.createBox(modelToExpect);
 
-        assertEquals("test", boxService.getBoxWithID("1").getName());
+        BoxModel boxToAssert = boxService.getBoxWithID("1");
+        assertEquals(modelToExpect.equals(modelToExpect.hashCode()), boxToAssert.equals(boxToAssert.hashCode()));
+
     }
 
     @Test
     public void testGetBoxWithIDInvalidID(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
 
-        assertEquals(null, boxService.getBoxWithID("2"));
+        assertNull(boxService.getBoxWithID("2"));
     }
 
     @Test
