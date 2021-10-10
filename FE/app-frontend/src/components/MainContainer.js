@@ -14,13 +14,15 @@ const MainContainer = () => {
 
     //needs update to be taken from the login
     const [adminLog, setAdminLog] = useState({
-        adminLog: true
+        adminLog: false
     })
 
     const handleLogin = (loginResult) => {
+        console.log(loginResult)
         setAdminLog({
             adminLog: loginResult
         })
+        history.push("/")
     }
 
     const history = useHistory();
