@@ -6,12 +6,28 @@ import * as func from "./amountButtonFunction"
 const SelectedBoxPrice = (props) => {
 
     const [price, setPrice] = useState(props.selectedBoxProps.basePrice)
+    const selectedBox = props.selectedBoxProps;
     const [monthSelection, setMonthSelection] = useState(0)
-
+    const [amountSelected, setAmountSelected] = useState(0)
     var roundedPrice = price.toFixed(2)
+    
+
+    const continueToCheckout = () => {
+        const checkoutDetails = {
+            boxName: selectedBox.name,
+            boxContent: selectedBox.content,
+            boxDetails: selectedBox.details,
+            duration: monthSelection,
+            amount: amountSelected,
+            price: roundedPrice
+        }
+        props.getCheckoutDetailsProps(checkoutDetails)
+    }
+
+
 
     const changePrice = (number) => {
-        const selectedBox = props.selectedBoxProps
+        setAmountSelected(number)
         axios.get(urls.baseURL + urls.boxesURL + selectedBox.id + "/" + urls.boxesGetPrice, { params: { amount: number } })
             .then(res => {
                 setPrice(res.data)
@@ -35,7 +51,7 @@ const SelectedBoxPrice = (props) => {
             <button onClick={() => setMonthSelection(12)}>12</button>
 
             <p>Select the amount of boxes you wish to receive in the selected timeframe:</p>
-            <button onClick={() => changePrice(1)} disabled={func.button1(monthSelection)}>1</button>
+            <button onClick={() =>changePrice(1)} disabled={func.button1(monthSelection)}>1</button>
             <button onClick={() => changePrice(2)} disabled={func.button2(monthSelection)}>2</button>
             <button onClick={() => changePrice(3)} disabled={func.button3(monthSelection)}>3</button>
             <button onClick={() => changePrice(4)} disabled={func.button4(monthSelection)}>4</button>
@@ -48,8 +64,7 @@ const SelectedBoxPrice = (props) => {
             <button onClick={() => changePrice(11)} disabled={func.button11(monthSelection)}>11</button>
             <button onClick={() => changePrice(12)} disabled={func.button12(monthSelection)}>12</button>
             <h1>€ {roundedPrice}</h1>
-
-
+            <button onClick={continueToCheckout}>Continue to checkout</button>
         </>
     )
 }

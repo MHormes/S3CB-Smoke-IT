@@ -12,7 +12,8 @@ const BoxSingle = (props) => {
     const history = useHistory();
 
     const selectBox = (selectedBox) => {
-        props.getSelectedBoxProps(selectedBox);
+        localStorage.setItem("selectedBox", JSON.stringify(selectedBox))
+        props.getSelectedBoxProps(selectedBox)
     }
 
     //Element for update button 

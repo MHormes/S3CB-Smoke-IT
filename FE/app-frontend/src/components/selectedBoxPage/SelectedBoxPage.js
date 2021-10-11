@@ -4,7 +4,7 @@ import SelectedBoxContent from "./SelectedBoxContent"
 
 const SelectedBoxPage = (props) => {
 
-    const selectedBox = props.selectedBoxProps
+    const selectedBox = JSON.parse(localStorage.getItem("selectedBox"))
 
     if (selectedBox == null) return <h1>no box selected</h1>
     return (
@@ -13,7 +13,8 @@ const SelectedBoxPage = (props) => {
             <SelectedBoxContent
                 selectedBoxProps={selectedBox} />
             <SelectedBoxPrice
-                selectedBoxProps={selectedBox} />
+                selectedBoxProps={selectedBox}
+                getCheckoutDetailsProps={props.getCheckoutDetailsProps} />
         </>
     )
 }
