@@ -6,10 +6,10 @@ import * as urls from "./../../URL";
 
 const BoxSingle = (props) => {
 
-    const adminLog = props.adminLogProps;
+    const adminLog = localStorage.getItem("adminLog")
 
-    const singleBox = props.box;
-    const history = useHistory();
+    const singleBox = props.box
+    const history = useHistory()
 
     const selectBox = (selectedBox) => {
         localStorage.setItem("selectedBox", JSON.stringify(selectedBox))
@@ -25,8 +25,8 @@ const BoxSingle = (props) => {
         )
     }
     //only show if admin is logged
-    let updateButton = null;
-    if (adminLog) {
+    let updateButton = null
+    if (adminLog === "true") {
         updateButton = UpdateButton();
     }
     //method to continue to the update page
@@ -43,8 +43,8 @@ const BoxSingle = (props) => {
         )
     }
     //only show if admin is logged
-    let deleteButton = null;
-    if (adminLog) {
+    let deleteButton = null
+    if (adminLog === "true") {
         deleteButton = DeleteButton();
     }
     //method to perform the delete

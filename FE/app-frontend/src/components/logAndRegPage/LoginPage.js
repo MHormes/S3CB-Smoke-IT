@@ -13,7 +13,6 @@ const LoginPage = (props) => {
     const loginToApp = (loginDetails) => {
         axios.get(urls.baseURL + urls.loginToApp, { params: {username: loginDetails.username, password: loginDetails.password}})
             .then(res => {
-                console.log(res.data)
                 props.getLoginResultProps(res.data.admin);
             })
     }

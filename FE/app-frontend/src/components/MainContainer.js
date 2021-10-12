@@ -3,32 +3,24 @@ import { Route, Switch, useHistory } from "react-router";
 import NewsFeed from "./mainPage/NewsFeed";
 import WelcomeContent from "./mainPage/WelcomeContent";
 import BoxList from "./boxesPage/BoxList";
-import Header from "./Header";
-import Navbar from "./Navbar";
+import Header from "./allPagesComponents/Header";
+import Navbar from "./allPagesComponents/Navbar";
 import SelectedBoxPage from "./selectedBoxPage/SelectedBoxPage";
 import BoxAdd from "./boxesPage/BoxAdd";
 import BoxEdit from "./boxesPage/BoxEdit";
 import LoginPage from "./logAndRegPage/LoginPage";
+import LogoutPage from "./logAndRegPage/LogoutPage";
 import CheckoutPage from "./checkoutPage/CheckoutPage";
 
 const MainContainer = () => {
 
-    const history = useHistory();
+    const history = useHistory()
 
-    //needs update to be taken from the login
-    const [adminLog, setAdminLog] = useState({
-        adminLog: false
-    })
-
+    //method to handle login and setting the adminlog for admin functions
     const handleLogin = (loginResult) => {
-        console.log(loginResult)
-        setAdminLog({
-            adminLog: loginResult
-        })
+        localStorage.setItem("adminLog", loginResult)
         history.push("/")
     }
-
-
 
     const [selectedBox, setSelectedBox] = useState();
     const getSelectedBox = (box) => {
@@ -61,7 +53,6 @@ const MainContainer = () => {
 
                 <Route exact path="/boxes">
                     <BoxList
-                        adminLogProps={adminLog}
                         getSelectedBoxProps={getSelectedBox}
                         getBoxToEditProps={getBoxToEdit}
                     />
@@ -89,6 +80,9 @@ const MainContainer = () => {
                     <LoginPage
                         getLoginResultProps={handleLogin}
                     />
+                </Route>
+                <Route path="/logout">
+                    <LogoutPage />
                 </Route>
             </Switch>
         </>
