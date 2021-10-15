@@ -1,7 +1,12 @@
 package fontys.sem3.smoke_it.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@Getter
+@Setter
 public class UserModel {
 
     private String username;
@@ -12,30 +17,6 @@ public class UserModel {
             this.username = username;
             this.password = password;
             this.admin = admin;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public String getPassword(){
-        return this.password;
-    }
-
-    private void setAdmin(Boolean admin){
-        this.admin = admin;
-    }
-
-    public Boolean getAdmin(){
-        return this.admin;
     }
 
     @Override

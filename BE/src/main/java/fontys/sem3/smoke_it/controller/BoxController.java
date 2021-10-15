@@ -77,12 +77,10 @@ public class BoxController {
     public ResponseEntity<BoxDTO> updateBox(@RequestBody BoxDTO boxDTO) {
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.updateBox(boxModel)) {
-            String entity = "There is no box with supplied id: " + boxDTO.getID();
+            String entity = "There is no box with supplied id: " + boxDTO.getID() + " (box is called: " + boxDTO.getName() + ")";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
-            String url = "boxes/" + boxDTO.getID();
-            URI uri = URI.create(url);
-            return new ResponseEntity(uri, HttpStatus.CREATED);
+            return ResponseEntity.ok().build();
         }
     }
 

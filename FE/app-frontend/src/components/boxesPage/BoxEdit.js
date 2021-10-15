@@ -9,12 +9,14 @@ const BoxEdit = (props) => {
     const history = useHistory()
     const boxToEdit = props.boxToEditProps
 
-    const [boxDetails, setBoxDetails] = useState({
-        name: "boxToEdit.name",
-        basePrice: 0.00,
-        content: "boxToEdit.content",
-        description: "boxToEdit.description",
-    })
+    const [boxDetails, setBoxDetails] = useState(
+        {
+            name: boxToEdit.name,
+            basePrice: boxToEdit.basePrice,
+            content: boxToEdit.content,
+            description: boxToEdit.description
+        }
+    )
 
     //method to call edit endpoint
     const editBoxInBE = (id) => {
@@ -25,10 +27,16 @@ const BoxEdit = (props) => {
             content: boxDetails.content,
             description: boxDetails.description
         }
-        axios.put(urls.baseURL+urls.boxesEditURL, boxDTO)
+        axios.put(urls.baseURL + urls.boxesEditURL, boxDTO).then(res => {
+            if (res.status === 200) {
+                alert("Update successfull")
+            }
+        }).catch(err => {
+            alert(err.response.data)
+        })
     }
 
-    
+
 
     const onChange = e => {
         setBoxDetails({
@@ -47,7 +55,6 @@ const BoxEdit = (props) => {
             alert("Please fill in all fields")
         }
     }
-
     return (
         <form onSubmit={handleSubmit}>
             <h1>Edit an existing box</h1>
@@ -63,8 +70,9 @@ const BoxEdit = (props) => {
             <br />
             <label>
                 Base price:
+                <br />
                 <input
-                    type="text"
+                    type="number"
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}

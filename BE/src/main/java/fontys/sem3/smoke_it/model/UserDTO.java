@@ -1,5 +1,10 @@
 package fontys.sem3.smoke_it.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserDTO {
 
     private String username;
@@ -9,21 +14,4 @@ public class UserDTO {
         setUsername(username);
         setAdmin(admin);
     }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
-    public void setAdmin(Boolean admin){
-        this.admin = admin;
-    }
-
-    public Boolean getAdmin(){
-        return this.admin;
-    }
-
 }

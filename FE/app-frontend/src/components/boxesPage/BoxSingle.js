@@ -50,7 +50,11 @@ const BoxSingle = (props) => {
     //method to perform the delete
     const deleteBox = (boxToDelete) => {
         var URL = urls.baseURL + urls.boxesDeleteURL + boxToDelete.id;
-        axios.delete(URL).then(res => console.log(res));
+        axios.delete(URL).then(res => {
+            if(res.status === 200){
+                    alert("Delete was successfull")
+            }
+        })
         history.push("/boxes");
     }
 

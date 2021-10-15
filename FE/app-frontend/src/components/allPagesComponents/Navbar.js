@@ -5,7 +5,6 @@ import styles from "./Navbar.module.css"
 const Navbar = () => {
 
     const logged = localStorage.getItem("adminLog")
-
     const links = [
         {
             id: 1,
@@ -19,8 +18,8 @@ const Navbar = () => {
         },
         {
             id: 3,
-            path: "/info",
-            text: "Info",
+            path: "/aboutUs",
+            text: "About us",
         },
         {
             id: 4,
@@ -47,8 +46,8 @@ const Navbar = () => {
         },
         {
             id: 3,
-            path: "/info",
-            text: "Info",
+            path: "/aboutUs",
+            text: "About us",
         },
         {
             id: 4,
@@ -75,8 +74,8 @@ const Navbar = () => {
         },
         {
             id: 3,
-            path: "/info",
-            text: "Info",
+            path: "/aboutUs",
+            text: "About us",
         },
         {
             id: 4,
@@ -95,11 +94,11 @@ const Navbar = () => {
         }
     ]
 
-    if(logged === null){
+    if (logged === "true") {
         return (
             <nav>
                 <ul className={styles.nav_list}>
-                    {links.map(link => {
+                    {linksAdmin.map(link => {
                         return (
                             <li key={link.id} className={styles.nav_item}>
                                 <NavLink to={link.path} activeClassName="active-link" exact>
@@ -112,8 +111,9 @@ const Navbar = () => {
                 </ul>
             </nav>
         )
+
     }
-    else if(logged === "false"){
+    else if (logged === "false") {
         return (
             <nav>
                 <ul className={styles.nav_list}>
@@ -131,11 +131,11 @@ const Navbar = () => {
             </nav>
         )
     }
-    else{
+    else {
         return (
             <nav>
                 <ul className={styles.nav_list}>
-                    {linksAdmin.map(link => {
+                    {links.map(link => {
                         return (
                             <li key={link.id} className={styles.nav_item}>
                                 <NavLink to={link.path} activeClassName="active-link" exact>
@@ -149,7 +149,7 @@ const Navbar = () => {
             </nav>
         )
     }
-    
+
 }
 
 export default Navbar

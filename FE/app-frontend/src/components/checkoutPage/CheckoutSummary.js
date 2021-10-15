@@ -1,8 +1,8 @@
 import React from "react"
 
-const CheckoutSummary = (props) => {
+const CheckoutSummary = () => {
 
-    const checkoutDetails = props.checkoutDetailsProps
+    const checkoutDetails = JSON.parse(localStorage.getItem("checkoutDetails"))
 
     return (
         <>

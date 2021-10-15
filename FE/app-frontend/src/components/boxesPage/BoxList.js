@@ -13,10 +13,15 @@ const BoxList = (props) => {
     const history = useHistory()
 
     useEffect(() => {
-        axios.get(urls.baseURL + urls.boxesURL)
-            .then(res => {
-                setBoxes(res.data);
-            });
+        let mounted = true
+        if (mounted) {
+            axios.get(urls.baseURL + urls.boxesURL)
+                .then(res => {
+                    setBoxes(res.data);
+                });
+        }
+
+        return () => mounted = false;
     })
 
     if (!boxes) return null;

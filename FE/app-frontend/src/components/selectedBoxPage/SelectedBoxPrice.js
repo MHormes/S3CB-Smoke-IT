@@ -10,7 +10,7 @@ const SelectedBoxPrice = (props) => {
     const [monthSelection, setMonthSelection] = useState(0)
     const [amountSelected, setAmountSelected] = useState(0)
     var roundedPrice = price.toFixed(2)
-    
+
 
     const continueToCheckout = () => {
         const checkoutDetails = {
@@ -21,7 +21,13 @@ const SelectedBoxPrice = (props) => {
             amount: amountSelected,
             price: roundedPrice
         }
-        props.getCheckoutDetailsProps(checkoutDetails)
+        if (monthSelection >= 1 && amountSelected >= 1) {
+            localStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
+            props.getCheckoutDetailsProps(checkoutDetails)
+        }
+        else{
+            alert("Please select a duration and amount before continuing")
+        }
     }
 
 
@@ -51,7 +57,7 @@ const SelectedBoxPrice = (props) => {
             <button onClick={() => setMonthSelection(12)}>12</button>
 
             <p>Select the amount of boxes you wish to receive in the selected timeframe:</p>
-            <button onClick={() =>changePrice(1)} disabled={func.button1(monthSelection)}>1</button>
+            <button onClick={() => changePrice(1)} disabled={func.button1(monthSelection)}>1</button>
             <button onClick={() => changePrice(2)} disabled={func.button2(monthSelection)}>2</button>
             <button onClick={() => changePrice(3)} disabled={func.button3(monthSelection)}>3</button>
             <button onClick={() => changePrice(4)} disabled={func.button4(monthSelection)}>4</button>

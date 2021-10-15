@@ -1,13 +1,14 @@
-import { useHistory } from "react-router"
+import { useEffect } from "react"
 
-const LogoutPage = () =>{
+const LogoutPage = (props) => {
 
-    const history = useHistory()
-    const logout = () =>{
-        localStorage.removeItem("adminLog")
-        history.push("/")
+    const logout = () => {
+        props.handleLogoutProps();
     }
-    logout()
+
+    useEffect(() => {
+        logout()
+    })
     return null
 }
 

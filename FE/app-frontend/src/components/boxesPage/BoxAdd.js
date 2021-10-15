@@ -18,7 +18,7 @@ const BoxAdd = () => {
             description: box.description
         }
 
-        axios.post(urls.baseURL+urls.boxesAddURL, boxDTO)
+        axios.post(urls.baseURL + urls.boxesAddURL, boxDTO)
     }
 
     const [boxDetails, setBoxDetails] = useState({
@@ -56,9 +56,6 @@ const BoxAdd = () => {
         }
     }
 
-
-
-
     return (
         <form onSubmit={handleSubmit}>
             <h1>Add a new box</h1>
@@ -74,8 +71,9 @@ const BoxAdd = () => {
             <br />
             <label>
                 Base price:
+                <br />
                 <input
-                    type="text"
+                    type="number"
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}

@@ -11,9 +11,14 @@ const LoginPage = (props) => {
     })
 
     const loginToApp = (loginDetails) => {
-        axios.get(urls.baseURL + urls.loginToApp, { params: {username: loginDetails.username, password: loginDetails.password}})
+        axios.get(urls.baseURL + urls.loginToApp, { params: { username: loginDetails.username, password: loginDetails.password } })
             .then(res => {
-                props.getLoginResultProps(res.data.admin);
+                props.handleLoginProps(res.data.admin)
+            })
+            .catch(err => {
+                if(err.response.status === 404){
+                    alert("The login details are incorrect")
+                }
             })
     }
 

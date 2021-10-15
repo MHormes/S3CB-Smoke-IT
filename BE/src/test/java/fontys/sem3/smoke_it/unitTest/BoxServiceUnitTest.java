@@ -52,8 +52,8 @@ public class BoxServiceUnitTest {
         BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription");
         boxService.createBox(modelToExpect);
 
-        BoxModel boxToAssert = boxService.getBoxWithID("1");
-        assertEquals(modelToExpect.equals(modelToExpect.hashCode()), boxToAssert.equals(boxToAssert.hashCode()));
+        BoxModel boxToAssert = boxService.getBoxWithID("1");;
+        assertEquals(true, modelToExpect.equals(boxToAssert));
 
     }
 
