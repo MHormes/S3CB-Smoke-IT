@@ -16,6 +16,7 @@ test:
     - ./gradlew test
 
 sonarqube-check:
+  stage: sonarqube-check
   script: 
     - cd BE
     - ./gradlew sonarqube
