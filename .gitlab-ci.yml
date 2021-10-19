@@ -26,7 +26,7 @@ sonarqube-check:
       - .sonar/cache
   script: 
     - cd BE
-    ./gradlew sonarqube -Dsonar.qualitygate.wait=true
+    - ./gradlew sonarqube -Dsonar.qualitygate.wait=true
   allow_failure: true
   only:
     - merge_requests
