@@ -1,17 +1,26 @@
 stages:
 - build
 - test 
+- sonarqube-check
 
 build:
  stage: build
  script:
     - cd BE
     - ./gradlew build -x test
+    - ./gradlew.bat --stop
  
 test:
   stage: test
   script:
     - cd BE
     - ./gradlew test
-
-
+    - ./gradlew.bat --stop
+ 
+sonarqube-check:
+  stage: sonarqube-check
+  script: 
+    - cd BE
+    - ./gradlew sonarqube
+    - ./gradlew.bat --stop
+ 
