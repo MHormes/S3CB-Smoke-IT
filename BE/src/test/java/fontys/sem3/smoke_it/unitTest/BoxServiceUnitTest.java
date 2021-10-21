@@ -1,12 +1,14 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
+import fontys.sem3.smoke_it.repository.DataSourceBoxes;
 import fontys.sem3.smoke_it.repository.FakeDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -18,32 +20,33 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @SpringBootTest
 public class BoxServiceUnitTest {
 
-    private IDataSourceBoxes dataSource;
+    //@Autowired
     private IBoxService boxService;
 
+    //Below is needed for fake testing.
+    //Still need to figure out how to test the H2 db
+    private IDataSourceBoxes dataSource;
     @BeforeEach
     public void arrangeBoxTest(){
         dataSource = new FakeDataSourceBoxes();
         boxService = new BoxService(dataSource);
     }
 
-
     //Below method uses the overloaded fakeDataSource const to have an empty list inside the datasource
     @Test
     public void testGetAllBoxesSuccessful(){
-        IDataSourceBoxes dataSourceTest = new FakeDataSourceBoxes("testSource");
-        IBoxService boxServiceTest = new BoxService(dataSourceTest);
-
+        IDataSourceBoxes dataSource = new FakeDataSourceBoxes("test");
+        IBoxService boxService = new BoxService(dataSource);
         List<BoxModel> listToAssert = new ArrayList<>();
 
         BoxModel box1 = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1");
-        boxServiceTest.createBox(box1);
+        boxService.createBox(box1);
         listToAssert.add(box1);
         BoxModel box2 = new BoxModel("2", "test2", 1.00, "testContent2", "testDescription2");
-        boxServiceTest.createBox(box2);
+        boxService.createBox(box2);
         listToAssert.add(box2);
 
-        assertEquals(listToAssert, boxServiceTest.getAllBoxes());
+        assertEquals(listToAssert, boxService.getAllBoxes());
 
     }
 

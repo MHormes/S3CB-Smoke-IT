@@ -55,7 +55,12 @@ const Navbar = () => {
             text: "Contact",
         },
         {
-            id: 5,
+            id:5,
+            path:"/history",
+            text:"History"
+        },
+        {
+            id: 6,
             path: "/logout",
             text: "Logout",
         }

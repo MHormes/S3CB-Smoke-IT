@@ -4,10 +4,11 @@ import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Component
+@Repository
 public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     List<BoxModel> fakeBoxList = new ArrayList<>();

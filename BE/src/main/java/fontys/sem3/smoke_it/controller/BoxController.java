@@ -4,6 +4,7 @@ import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.model.modelConverters.BoxModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,11 @@ import java.util.List;
 @RequestMapping("/boxes")
 public class BoxController {
 
+    @Autowired
     private IBoxService boxService;
     private BoxModelConverter boxModelConverter;
 
-    public BoxController(IBoxService boxService) {
-        this.boxService = boxService;
+    public BoxController() {
         boxModelConverter = new BoxModelConverter();
     }
 

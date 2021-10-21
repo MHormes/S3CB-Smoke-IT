@@ -3,27 +3,27 @@ package fontys.sem3.smoke_it.service;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@Service
 public class BoxService implements IBoxService {
 
     IDataSourceBoxes datasource;
-
-    public BoxService(IDataSourceBoxes datasource){
+    @Autowired
+    public BoxService(@Qualifier("dataSourceBoxes") IDataSourceBoxes datasource){
         this.datasource = datasource;
     }
 
     @Override
     public List<BoxModel> getAllBoxes() {
         List<BoxModel> boxList = datasource.getAllBoxes();
-        if (boxList != null){
-            return boxList;
-        }
-        return null;
+        return boxList;
     }
 
     @Override

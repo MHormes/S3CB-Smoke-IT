@@ -94,18 +94,18 @@ const MainContainer = () => {
                         handleLogoutProps={handleLogout}
                     />
                 </Route>
+                {localStorage.getItem("adminLog") === "true" ?
+                    <Route path="/boxes/create">
+                        <BoxAdd />
+                    </Route>
+                    :
+                    <Redirect to="/" />
+                }
                 {localStorage.getItem("adminLog") === "true" && boxToEdit != null ?
                     <Route path="/boxes/update">
                         <BoxEdit
                             boxToEditProps={boxToEdit}
                         />
-                    </Route>
-                    :
-                    <Redirect to="/" />
-                }
-                {localStorage.getItem("adminLog") === "true" ?
-                    <Route path="/boxes/create">
-                        <BoxAdd />
                     </Route>
                     :
                     <Redirect to="/" />
