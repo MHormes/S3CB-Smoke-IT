@@ -1,6 +1,10 @@
 import React, { useState } from "react"
+import { useHistory } from "react-router"
 
 const CheckoutForm = () => {
+
+    const history = useHistory()
+
     const [orderDetails, setOrderDetails] = useState({
         name: "",
         email: "",
@@ -19,7 +23,7 @@ const CheckoutForm = () => {
     const handleSubmit = e => {
         e.preventDefault()
         if(orderDetails.name.trim() && orderDetails.email.trim() && orderDetails.address.trim() && orderDetails.postal.trim() && orderDetails.city.trim()){
-            console.log(orderDetails);
+            history.push("/boxes/selectedBox/checkout/payment")
         }
         else{
             alert("Please fill in all fields")

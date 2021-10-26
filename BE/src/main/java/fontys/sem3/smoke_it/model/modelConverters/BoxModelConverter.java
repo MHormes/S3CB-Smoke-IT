@@ -17,10 +17,12 @@ public class BoxModelConverter {
     }
 
     public BoxDTO convertModelToDTO(BoxModel boxModel){
-        return new BoxDTO(boxModel.getID(), boxModel.getName(), boxModel.getBasePrice(), boxModel.getContent(), boxModel.getDescription());
+        BoxDTO boxDTO =  new BoxDTO(boxModel.getID(), boxModel.getName(), boxModel.getBasePrice(), boxModel.getContent(), boxModel.getDescription());
+        boxDTO.setImage(boxModel.getImage());
+        return boxDTO;
     }
 
     public BoxModel convertDTOToModel(BoxDTO boxDTO){
-        return new BoxModel(boxDTO.getID(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription());
+        return new BoxModel(boxDTO.getID(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription(), boxDTO.getImage());
     }
 }

@@ -1,14 +1,12 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.DataSourceBoxes;
-import fontys.sem3.smoke_it.repository.FakeDataSourceBoxes;
+import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-public class BoxServiceUnitTest {
+class BoxServiceUnitTest {
 
     //@Autowired
     private IBoxService boxService;
@@ -34,7 +32,7 @@ public class BoxServiceUnitTest {
 
     //Below method uses the overloaded fakeDataSource const to have an empty list inside the datasource
     @Test
-    public void testGetAllBoxesSuccessful(){
+    void testGetAllBoxesSuccessful(){
         IDataSourceBoxes dataSource = new FakeDataSourceBoxes("test");
         IBoxService boxService = new BoxService(dataSource);
         List<BoxModel> listToAssert = new ArrayList<>();
@@ -51,7 +49,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testGetBoxWithIDSuccessful() {
+    void testGetBoxWithIDSuccessful() {
         BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription");
         boxService.createBox(modelToExpect);
 
@@ -61,14 +59,14 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testGetBoxWithIDInvalidID(){
+    void testGetBoxWithIDInvalidID(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
 
         assertNull(boxService.getBoxWithID("2"));
     }
 
     @Test
-    public void testCreateBoxCorrectInput(){
+    void testCreateBoxCorrectInput(){
         Boolean createResult = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
 
         assertEquals(true, createResult);
@@ -76,7 +74,7 @@ public class BoxServiceUnitTest {
 
     //Would this be needed with the UUID?
     @Test
-    public void testCreateBoxWithExistingID(){
+    void testCreateBoxWithExistingID(){
         boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1"));
         Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2"));
 
@@ -84,7 +82,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testUpdateBoxCorrectInput(){
+    void testUpdateBoxCorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("1"));
 
@@ -92,7 +90,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testUpdateBoxWithIncorrectInput(){
+    void testUpdateBoxWithIncorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("2"));
 
@@ -100,7 +98,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testDeleteBoxWithValidID(){
+    void testDeleteBoxWithValidID(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
         Boolean deleteResult = boxService.deleteBox("1");
 
@@ -108,7 +106,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testDeleteWithInvalidID() {
+    void testDeleteWithInvalidID() {
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
         Boolean deleteResult = boxService.deleteBox("2");
 
@@ -116,7 +114,7 @@ public class BoxServiceUnitTest {
     }
 
     @Test
-    public void testCalculatePriceTwoTimes(){
+    void testCalculatePriceTwoTimes(){
         boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription2"));
         boxService.createBox(new BoxModel("2", "test2", 2.00, "testContent2", "testDescription2"));
 

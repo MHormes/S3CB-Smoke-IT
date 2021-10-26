@@ -58,11 +58,11 @@ const SelectedBoxPrice = (props) => {
 
 
             <p>Select the frequence of the delivery:</p>
-            <button onClick={() => setMonthSelection(1)} disabled={func.button1(amountSelected)}>1 box</button>
-            <button onClick={() => setMonthSelection(2)} disabled={func.button1m(amountSelected)}>Once month</button>
-            <button onClick={() => setMonthSelection(3)} disabled={func.button2(amountSelected)}>Once every 2 months</button>
+            <button onClick={() => setMonthSelection(0)} disabled={func.button1(amountSelected)}>1 box</button>
+            <button onClick={() => setMonthSelection(1)} disabled={func.button1m(amountSelected)}>Once month</button>
+            <button onClick={() => setMonthSelection(2)} disabled={func.button2(amountSelected)}>Once every 2 months</button>
             <button onClick={() => setMonthSelection(4)} disabled={func.button3(amountSelected)}>Once every quarter</button>
-            <button onClick={() => setMonthSelection(5)} disabled={func.button6(amountSelected)}>Once every 6 months</button>
+            <button onClick={() => setMonthSelection(6)} disabled={func.button6(amountSelected)}>Once every 6 months</button>
 
             <h1>€ {roundedPrice}</h1>
             <button onClick={continueToCheckout}>Continue to checkout</button>

@@ -7,7 +7,6 @@ import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,16 +24,13 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     @Override
     public List<BoxModel> getAllBoxesSorted(String sort){
-        List<BoxModel> boxListSorted = new ArrayList<>();
         switch (sort){
             case "l-h":
-                boxListSorted = boxesSortedLowToHigh(repo.findAll());
-                break;
+                return boxesSortedLowToHigh(repo.findAll());
             case "h-l":
-                boxListSorted = boxesSortedHighToLow(repo.findAll());
-                break;
+                return boxesSortedHighToLow(repo.findAll());
+            default: return repo.findAll();
         }
-        return boxListSorted;
     }
 
     @Override

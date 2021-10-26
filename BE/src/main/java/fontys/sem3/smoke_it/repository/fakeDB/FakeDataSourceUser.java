@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.repository;
+package fontys.sem3.smoke_it.repository.fakeDB;
 
 import fontys.sem3.smoke_it.model.UserDTO;
 import fontys.sem3.smoke_it.model.UserModel;

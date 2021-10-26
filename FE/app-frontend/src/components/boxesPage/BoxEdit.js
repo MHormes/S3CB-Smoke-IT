@@ -29,7 +29,7 @@ const BoxEdit = (props) => {
         }
         axios.put(urls.baseURL + urls.boxesEditURL, boxDTO).then(res => {
             if (res.status === 200) {
-                alert("Update successfull")
+                console.log("Update successfull")
             }
         }).catch(err => {
             alert(err.response.data)

@@ -9,18 +9,19 @@ const BoxAdd = () => {
     const history = useHistory()
 
     //method to add new box to the BE
-    const addBoxInBE = (box) => {
+    const addBoxInBE = (box, file) => {
         const boxDTO =
         {
             name: box.name,
             basePrice: box.basePrice,
             content: box.content,
-            description: box.description
+            description: box.description,
         }
+        console.log(file.get("image"))
+        axios.post(urls.baseURL + urls.boxesAddURL, boxDTO, file.get("image"))
+    }                                               
 
-        axios.post(urls.baseURL + urls.boxesAddURL, boxDTO)
-    }
-
+    //State for boxdetails
     const [boxDetails, setBoxDetails] = useState({
         name: "",
         basePrice: 0,
@@ -28,6 +29,10 @@ const BoxAdd = () => {
         description: "",
     })
 
+    //State for picture upload
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    //on change for the text fields
     const onChange = e => {
         setBoxDetails({
             ...boxDetails,
@@ -35,10 +40,20 @@ const BoxAdd = () => {
         })
     }
 
+    //submit for the form
     const handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.append(
+            'image',
+            selectedFile,
+            selectedFile.name
+        )
+
         if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim()) {
-            addBoxInBE(boxDetails);
+            addBoxInBE(boxDetails, formData);
 
             //clear the state
             setBoxDetails({
@@ -48,6 +63,9 @@ const BoxAdd = () => {
                 description: "",
             })
 
+            //clear file state
+            setSelectedFile(null)
+
             //redirect to boxes page (refreshes)
             history.push("/boxes")
         }
@@ -56,9 +74,23 @@ const BoxAdd = () => {
         }
     }
 
+    const onFilechange = e => {
+        setSelectedFile(e.target.files[0])
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <h1>Add a new box</h1>
+            <label>
+                Upload a picture:
+                <br />
+                <input
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    onChange={onFilechange}
+                />
+            </label>
+            <br />
             <label>
                 Name:
                 <input

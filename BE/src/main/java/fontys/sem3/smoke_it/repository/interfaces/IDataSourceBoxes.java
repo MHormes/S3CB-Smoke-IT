@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IDataSourceBoxes {
 
-    List<BoxModel> fakeBoxList = new ArrayList<>();
-
     public List<BoxModel> getAllBoxes();
 
     public List<BoxModel> getAllBoxesSorted(String sort);

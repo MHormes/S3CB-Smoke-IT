@@ -11,6 +11,7 @@ import BoxEdit from "./boxesPage/BoxEdit";
 import LoginPage from "./logAndRegPage/LoginPage";
 import LogoutPage from "./logAndRegPage/LogoutPage";
 import CheckoutPage from "./checkoutPage/CheckoutPage";
+import CheckoutPayment from "./checkoutPage/CheckoutPayment";
 import AboutUsPage from "./infoPage/AboutUsPage";
 
 const MainContainer = () => {
@@ -74,9 +75,13 @@ const MainContainer = () => {
                         getCheckoutDetailsProps={getCheckoutDetails}
                     />
                 </Route>
-                <Route path="/boxes/selectedBox/checkout">
+                <Route exact path="/boxes/selectedBox/checkout">
                     <CheckoutPage
                         checkoutDetailsProps={checkoutDetails}
+                    />
+                </Route>
+                <Route path="boxes/selectedBox/checkout/payment">
+                    <CheckoutPayment
                     />
                 </Route>
                 <Route excact path="/aboutUs">

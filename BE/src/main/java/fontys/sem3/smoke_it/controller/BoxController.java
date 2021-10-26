@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.net.URI;
 
 import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -61,8 +64,18 @@ public class BoxController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO) {
+    public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO, MultipartFile file) {
+        //assign unique id
         boxDTO.setID(boxService.createID());
+        //convert file to byte array
+        try{
+            byte[] image = file.getBytes();
+            boxDTO.setImage(image);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        //convert completed dto to model for db add
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.createBox(boxModel)) {
             String entity = "Box with ID " + boxDTO.getID() + " already exists";

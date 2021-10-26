@@ -2,11 +2,9 @@ package fontys.sem3.smoke_it.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Setter
@@ -25,18 +23,21 @@ public class BoxModel {
     private String content;
     @Column(name="description")
     private String description;
-    //PHOTO??????????????????/
+    @Lob
+    @Column(name="image")
+    private byte[] image;
 
     public BoxModel(){
 
     }
 
-    public BoxModel(String ID, String name, double basePrice, String content, String description){
+    public BoxModel(String ID, String name, double basePrice, String content, String description, byte[] image){
         this.ID = ID;
         this.name = name;
         this.basePrice = basePrice;
         this.content = content;
         this.description = description;
+        this.image = image;
     }
 
     @Override

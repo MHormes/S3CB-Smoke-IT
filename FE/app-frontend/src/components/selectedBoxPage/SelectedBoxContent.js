@@ -10,6 +10,7 @@ const SelectedBoxContent = (props) => {
 
     return (
         <>
+        <img src={selectedBox.image} alt={selectedBox.name+" image could not be loaded"}/>
             <p>{selectedBox.description}</p>
             <ul>
                 {contentItems}
