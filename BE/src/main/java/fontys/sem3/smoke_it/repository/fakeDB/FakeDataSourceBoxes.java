@@ -3,7 +3,6 @@ package fontys.sem3.smoke_it.repository;
 import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -30,22 +29,19 @@ public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     @Override
     public List<BoxModel> getAllBoxesSorted(String sort){
-        List<BoxModel> fakeBoxListSorted = new ArrayList<>();
         switch (sort){
             case "l-h":
-                fakeBoxListSorted = boxesSortedLowToHigh(fakeBoxList);
-                break;
+                return boxesSortedLowToHigh(fakeBoxList);
             case "h-l":
-                fakeBoxListSorted = boxesSortedHighToLow(fakeBoxList);
-                break;
+                 return boxesSortedHighToLow(fakeBoxList);
+            default: return fakeBoxList;
         }
-        return fakeBoxListSorted;
     }
 
     @Override
-    public BoxModel getBoxWithID(String ID){
+    public BoxModel getBoxWithID(String id){
         for(BoxModel b: fakeBoxList){
-            if(Objects.equals(b.getID(), ID)){
+            if(Objects.equals(b.getID(), id)){
                 return b;
             }
         }
