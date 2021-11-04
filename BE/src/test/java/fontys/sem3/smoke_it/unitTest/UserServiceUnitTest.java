@@ -1,8 +1,11 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.UserModel;
+import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceUser;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceUser;
+import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.UserService;
 import fontys.sem3.smoke_it.service.interfaces.IUserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class UserServiceUnitTest {
 
-    @Autowired
+    //@Autowired
     private IUserService userService;
+
+    //Below is needed for fake testing.
+    //Still need to figure out how to test the H2 db
+    private IDataSourceUser dataSource;
+    @BeforeEach
+    public void arrangeUserTest(){
+        dataSource = new FakeDataSourceUser();
+        userService = new UserService(dataSource);
+    }
 
 
     @Test
