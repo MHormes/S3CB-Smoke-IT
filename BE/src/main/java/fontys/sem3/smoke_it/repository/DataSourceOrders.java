@@ -6,6 +6,9 @@ import fontys.sem3.smoke_it.repository.interfaces.IOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 @Repository
 public class DataSourceOrders implements IDataSourceOrders {
 
@@ -20,9 +23,7 @@ public class DataSourceOrders implements IDataSourceOrders {
 
     @Override
     public OrderModel getOrder(Long id) {
-        if(repo.findById(id).isPresent()){
-            return repo.findById(id).get();
-        }
-        return null;
+        Optional<OrderModel> orderModel = repo.findById(id);
+        return orderModel.orElse(null);
     }
 }
