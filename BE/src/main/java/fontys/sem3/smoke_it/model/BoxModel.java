@@ -2,7 +2,6 @@ package fontys.sem3.smoke_it.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,7 +13,7 @@ import java.util.Objects;
 public class BoxModel {
 
     @Id
-    private String ID;
+    private String id;
     @Column(name="name")
     private String name;
     @Column(name="basePrice")
@@ -23,21 +22,20 @@ public class BoxModel {
     private String content;
     @Column(name="description")
     private String description;
-    @Lob
-    @Column(name="image")
-    private byte[] image;
+    @Column(name="imagePath")
+    private String imagePath;
 
     public BoxModel(){
 
     }
 
-    public BoxModel(String ID, String name, double basePrice, String content, String description, byte[] image){
-        this.ID = ID;
+    public BoxModel(String ID, String name, double basePrice, String content, String description, String imagePath){
+        this.id = ID;
         this.name = name;
         this.basePrice = basePrice;
         this.content = content;
         this.description = description;
-        this.image = image;
+        this.imagePath = imagePath;
     }
 
     @Override
@@ -50,6 +48,6 @@ public class BoxModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID);
+        return Objects.hash(id);
     }
 }

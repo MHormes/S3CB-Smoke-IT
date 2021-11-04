@@ -1,9 +1,6 @@
 import React, { useState } from "react"
-import { useHistory } from "react-router"
 
-const CheckoutForm = () => {
-
-    const history = useHistory()
+const CheckoutForm = (props) => {
 
     const [orderDetails, setOrderDetails] = useState({
         name: "",
@@ -23,7 +20,7 @@ const CheckoutForm = () => {
     const handleSubmit = e => {
         e.preventDefault()
         if(orderDetails.name.trim() && orderDetails.email.trim() && orderDetails.address.trim() && orderDetails.postal.trim() && orderDetails.city.trim()){
-            history.push("/boxes/selectedBox/checkout/payment")
+            props.assignOrderObjectProps(orderDetails)
         }
         else{
             alert("Please fill in all fields")
@@ -85,7 +82,7 @@ const CheckoutForm = () => {
                         onChange={onChange} />
                 </label>
                 <br />
-                <input type="submit" value="Continue to payment" />
+                <input type="submit" value="Finish your order" />
             </form>
         </>
     )

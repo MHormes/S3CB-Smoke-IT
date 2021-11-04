@@ -14,10 +14,11 @@ const SelectedBoxPrice = (props) => {
 
     const continueToCheckout = () => {
         const checkoutDetails = {
+            boxId: selectedBox.id,
             boxName: selectedBox.name,
             boxContent: selectedBox.content,
             boxDetails: selectedBox.details,
-            duration: monthSelection,
+            frequency: monthSelection,
             amount: amountSelected,
             price: roundedPrice
         }

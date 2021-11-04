@@ -18,16 +18,18 @@ const BoxEdit = (props) => {
         }
     )
 
+    //State for picture upload
+    const [selectedFile, setSelectedFile] = useState(null);
+
     //method to call edit endpoint
-    const editBoxInBE = (id) => {
-        const boxDTO = {
-            id: id,
-            name: boxDetails.name,
-            basePrice: boxDetails.basePrice,
-            content: boxDetails.content,
-            description: boxDetails.description
-        }
-        axios.put(urls.baseURL + urls.boxesEditURL, boxDTO).then(res => {
+    const editBoxInBE = (id, file) => {
+        file.append("id", id);
+        file.append("name", boxDetails.name);
+        file.append("basePrice", boxDetails.basePrice)
+        file.append("content", boxDetails.content)
+        file.append("description", boxDetails.description)
+        
+        axios.put(urls.baseURL + urls.boxesEditURL, file).then(res => {
             if (res.status === 200) {
                 console.log("Update successfull")
             }
@@ -47,17 +49,51 @@ const BoxEdit = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        let formData = new FormData()
+        formData.append(
+            'imageFile',
+            selectedFile
+        )
+
         if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim()) {
-            editBoxInBE(boxToEdit.id);
+            editBoxInBE(boxToEdit.id, formData);
+
+            //clear the state
+            setBoxDetails({
+                name: "",
+                basePrice: 0,
+                content: "",
+                description: "",
+            })
+
+            //clear file state
+            setSelectedFile(null)
+
+            //redirect to boxes page (refreshes)
             history.push("/boxes")
         }
         else {
             alert("Please fill in all fields")
         }
     }
+
+    const onFilechange = e => {
+        setSelectedFile(e.target.files[0])
+    }
     return (
         <form onSubmit={handleSubmit}>
             <h1>Edit an existing box</h1>
+            <label>
+                Upload a new picture:
+                <br />
+                <input
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    onChange={onFilechange}
+                />
+            </label>
+            <br />
             <label>
                 Name:
                 <input

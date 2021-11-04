@@ -23,7 +23,6 @@ public class OrderController {
         this.modelConverter = new OrderModelConverter();
     }
 
-
     @PostMapping("")
     public ResponseEntity<OrderModel> createOrder(@RequestBody OrderDTO orderDTO){
         OrderModel orderModel = modelConverter.convertDTOToModel(orderDTO);
@@ -34,9 +33,9 @@ public class OrderController {
         return new ResponseEntity(entity, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<OrderModel> getOrder(@PathVariable(value="id") Long id){
-        OrderModel orderModel = orderService.getOrder(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderModel> getOrder(@PathVariable(value="id") String id){
+        OrderModel orderModel = orderService.getOrder(Long.parseLong(id));
         if(orderModel != null){
             return ResponseEntity.ok().body(orderModel);
         }

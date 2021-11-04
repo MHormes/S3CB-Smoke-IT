@@ -4,23 +4,28 @@ import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.model.modelConverters.BoxModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.IOException;
+import java.io.File;
 import java.net.URI;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/boxes")
 public class BoxController {
+
+    private static String imageDirectory = System.getProperty("user.dir") + "/images/";
 
     @Autowired
     private IBoxService boxService;
@@ -63,18 +68,12 @@ public class BoxController {
         return ResponseEntity.ok().body(2.00);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<BoxDTO> createBox(@RequestBody BoxDTO boxDTO, MultipartFile file) {
+    @PostMapping(value = "/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<BoxDTO> createBox(@ModelAttribute BoxDTO boxDTO) {
         //assign unique id
         boxDTO.setID(boxService.createID());
-        //convert file to byte array
-        try{
-            byte[] image = file.getBytes();
-            boxDTO.setImage(image);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
+        //create file path
+        createImageFilePath(boxDTO);
         //convert completed dto to model for db add
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.createBox(boxModel)) {
@@ -87,8 +86,11 @@ public class BoxController {
         }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<BoxDTO> updateBox(@RequestBody BoxDTO boxDTO) {
+    @PutMapping(value = "/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<BoxDTO> updateBox(@ModelAttribute BoxDTO boxDTO) {
+        //create new file path
+        createImageFilePath(boxDTO);
+
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.updateBox(boxModel)) {
             String entity = "There is no box with supplied id: " + boxDTO.getID() + " (box is called: " + boxDTO.getName() + ")";
@@ -102,5 +104,27 @@ public class BoxController {
     public ResponseEntity deleteBox(@PathVariable(value = "id") String id) {
         boxService.deleteBox(id);
         return ResponseEntity.ok().build();
+    }
+
+    private void makeDirectoryIfNotExist(String imageDirectory) {
+        File directory = new File(imageDirectory);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+    }
+
+    private void createImageFilePath(BoxDTO boxDTO) {
+        //Create directory for images
+        makeDirectoryIfNotExist(imageDirectory);
+        //create file path
+        Path imagePath = Paths.get(imageDirectory,
+                boxDTO.getName().concat(".").concat(Objects.requireNonNull(FilenameUtils.getExtension(boxDTO.getImageFile().getOriginalFilename()))));
+        //assign file to filepath
+        try {
+            Files.write(imagePath, boxDTO.getImageFile().getBytes());
+            boxDTO.setImagePath(imagePath);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

@@ -20,6 +20,6 @@ public class DataSourceOrders implements IDataSourceOrders {
 
     @Override
     public OrderModel getOrder(Long id) {
-        return repo.getOne(id);
+        return repo.findById(id).get();
     }
 }

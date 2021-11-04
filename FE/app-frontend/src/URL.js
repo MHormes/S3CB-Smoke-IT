@@ -4,4 +4,6 @@ export const boxesAddURL = "boxes/create/";
 export const boxesEditURL = "boxes/update/";
 export const boxesDeleteURL = "boxes/delete/";
 export const loginToApp = "user/login";
-export const boxesGetPrice = "price/"
+export const boxesGetPrice = "price/";
+export const placeOrder = "/orders/";
+export const imageWebServer = "http://127.0.0.1:8887/";

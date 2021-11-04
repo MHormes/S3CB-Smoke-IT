@@ -1,4 +1,5 @@
 import React from "react"
+import * as urls from "./../../URL"
 
 const SelectedBoxContent = (props) => {
 
@@ -7,10 +8,11 @@ const SelectedBoxContent = (props) => {
     const contentItems = contentList.map((content) =>
         <li key={content}>{content}</li>
     )
-
+    //{selectedBox.imagePath}
     return (
         <>
-        <img src={selectedBox.image} alt={selectedBox.name+" image could not be loaded"}/>
+
+            <img src={urls.imageWebServer + selectedBox.name + ".png"} alt={selectedBox.name + " image could not be loaded"} />
             <p>{selectedBox.description}</p>
             <ul>
                 {contentItems}

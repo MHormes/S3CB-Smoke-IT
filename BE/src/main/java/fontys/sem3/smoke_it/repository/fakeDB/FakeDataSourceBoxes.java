@@ -41,7 +41,7 @@ public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
     @Override
     public BoxModel getBoxWithID(String id){
         for(BoxModel b: fakeBoxList){
-            if(Objects.equals(b.getID(), id)){
+            if(Objects.equals(b.getId(), id)){
                 return b;
             }
         }
@@ -50,7 +50,7 @@ public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     @Override
     public boolean createBox(BoxModel boxModel){
-        if(getBoxWithID(boxModel.getID()) != null){
+        if(getBoxWithID(boxModel.getId()) != null){
             return false;
         }
 
@@ -61,7 +61,7 @@ public class FakeDataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
     @Override
     public boolean updateBox(BoxModel boxModel){
         if(boxModel != null) {
-            BoxModel oldBox = getBoxWithID(boxModel.getID());
+            BoxModel oldBox = getBoxWithID(boxModel.getId());
             if (oldBox == null) {
                 return false;
             }

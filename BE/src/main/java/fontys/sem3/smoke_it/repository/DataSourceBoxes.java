@@ -46,12 +46,15 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     @Override
     public boolean updateBox(BoxModel boxModel) {
-        BoxModel modelToUpdate = repo.getOne(boxModel.getID());
+        BoxModel modelToUpdate = repo.getOne(boxModel.getId());
         if(modelToUpdate.getName() != null){
             modelToUpdate.setName(boxModel.getName());
             modelToUpdate.setBasePrice(boxModel.getBasePrice());
             modelToUpdate.setContent(boxModel.getContent());
             modelToUpdate.setDescription(boxModel.getDescription());
+            if(boxModel.getImagePath() != null){
+                modelToUpdate.setImagePath(boxModel.getImagePath());
+            }
             repo.save(modelToUpdate);
             return true;
         }

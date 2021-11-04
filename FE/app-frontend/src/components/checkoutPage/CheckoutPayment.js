@@ -1,15 +1,16 @@
 import React from "react";
 
-const CheckoutPayment = () => {
+const CheckoutPayment = (props) => {
 
     const handlePayment = () =>{
         console.log("paid")
+        props.setPaymentCheckProps(true);
     }
 
     return (
         <>
             <p>Please pay</p>
-            <button onClick={()=> handlePayment}>I have paid</button>
+            <button onClick={handlePayment}>I have paid</button>
         </>
     )
 

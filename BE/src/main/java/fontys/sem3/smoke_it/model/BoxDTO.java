@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+
 @Setter
 @Getter
 public class BoxDTO {
@@ -13,7 +15,7 @@ public class BoxDTO {
     private double basePrice;
     private String content;
     private String description;
-    private byte[] image;
+    private Path imagePath;
     private MultipartFile imageFile;
 
     public BoxDTO(String ID, String name, double basePrice, String content, String description){

@@ -10,16 +10,13 @@ const BoxAdd = () => {
 
     //method to add new box to the BE
     const addBoxInBE = (box, file) => {
-        const boxDTO =
-        {
-            name: box.name,
-            basePrice: box.basePrice,
-            content: box.content,
-            description: box.description,
-        }
-        console.log(file.get("image"))
-        axios.post(urls.baseURL + urls.boxesAddURL, boxDTO, file.get("image"))
-    }                                               
+        file.append("name", box.name);
+        file.append("basePrice", box.basePrice)
+        file.append("content", box.content)
+        file.append("description", box.description)
+        
+        axios.post(urls.baseURL + urls.boxesAddURL, file)
+    }
 
     //State for boxdetails
     const [boxDetails, setBoxDetails] = useState({
@@ -44,15 +41,18 @@ const BoxAdd = () => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        const formData = new FormData()
+        let formData = new FormData()
+        if (selectedFile != null) {
+            formData.append(
+                'imageFile',
+                selectedFile
+            )
+        } else {
+            alert("Please supply an image");
+            return;
+        }
 
-        formData.append(
-            'image',
-            selectedFile,
-            selectedFile.name
-        )
-
-        if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim()) {
+        if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim() && boxDetails.basePrice >= 0.00) {
             addBoxInBE(boxDetails, formData);
 
             //clear the state

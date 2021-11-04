@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +38,10 @@ class BoxServiceUnitTest {
         IBoxService boxService = new BoxService(dataSource);
         List<BoxModel> listToAssert = new ArrayList<>();
 
-        BoxModel box1 = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1");
+        BoxModel box1 = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath");
         boxService.createBox(box1);
         listToAssert.add(box1);
-        BoxModel box2 = new BoxModel("2", "test2", 1.00, "testContent2", "testDescription2");
+        BoxModel box2 = new BoxModel("2", "test2", 1.00, "testContent2", "testDescription2", "testImagePath");
         boxService.createBox(box2);
         listToAssert.add(box2);
 
@@ -50,7 +51,7 @@ class BoxServiceUnitTest {
 
     @Test
     void testGetBoxWithIDSuccessful() {
-        BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription");
+        BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription", "");
         boxService.createBox(modelToExpect);
 
         BoxModel boxToAssert = boxService.getBoxWithID("1");;
@@ -60,14 +61,14 @@ class BoxServiceUnitTest {
 
     @Test
     void testGetBoxWithIDInvalidID(){
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
         assertNull(boxService.getBoxWithID("2"));
     }
 
     @Test
     void testCreateBoxCorrectInput(){
-        Boolean createResult = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        Boolean createResult = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
         assertEquals(true, createResult);
     }
@@ -75,15 +76,15 @@ class BoxServiceUnitTest {
     //Would this be needed with the UUID?
     @Test
     void testCreateBoxWithExistingID(){
-        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1"));
-        Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2"));
+        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testPath1"));
+        Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2", "testPath2"));
 
         assertEquals(false, createResult);
     }
 
     @Test
     void testUpdateBoxCorrectInput(){
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("1"));
 
         assertEquals(true, updateResult);
@@ -91,7 +92,7 @@ class BoxServiceUnitTest {
 
     @Test
     void testUpdateBoxWithIncorrectInput(){
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("2"));
 
         assertEquals(false, updateResult);
@@ -99,7 +100,7 @@ class BoxServiceUnitTest {
 
     @Test
     void testDeleteBoxWithValidID(){
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
         Boolean deleteResult = boxService.deleteBox("1");
 
         assertEquals(true, deleteResult);
@@ -107,7 +108,7 @@ class BoxServiceUnitTest {
 
     @Test
     void testDeleteWithInvalidID() {
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription"));
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
         Boolean deleteResult = boxService.deleteBox("2");
 
         assertEquals(false, deleteResult);
@@ -115,8 +116,8 @@ class BoxServiceUnitTest {
 
     @Test
     void testCalculatePriceTwoTimes(){
-        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription2"));
-        boxService.createBox(new BoxModel("2", "test2", 2.00, "testContent2", "testDescription2"));
+        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testPath1"));
+        boxService.createBox(new BoxModel("2", "test2", 2.00, "testContent2", "testDescription2", "testPath2"));
 
         double price1 = boxService.calculateBoxPrice(boxService.getBoxWithID("1"), 2);
         double price2 = boxService.calculateBoxPrice(boxService.getBoxWithID("2"), 4);

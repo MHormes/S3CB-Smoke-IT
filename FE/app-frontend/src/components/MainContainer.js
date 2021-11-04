@@ -80,7 +80,7 @@ const MainContainer = () => {
                         checkoutDetailsProps={checkoutDetails}
                     />
                 </Route>
-                <Route path="boxes/selectedBox/checkout/payment">
+                <Route path="/boxes/selectedBox/checkout/payment">
                     <CheckoutPayment
                     />
                 </Route>

@@ -22,7 +22,7 @@ const BoxList = (props) => {
         }
 
         return () => mounted = false;
-    })
+    }, [])
 
     if (!boxes) return null;
 
