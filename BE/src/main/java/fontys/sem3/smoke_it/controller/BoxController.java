@@ -2,7 +2,7 @@ package fontys.sem3.smoke_it.controller;
 
 import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.model.modelConverters.BoxModelConverter;
+import fontys.sem3.smoke_it.model.modelconverters.BoxModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,16 +71,16 @@ public class BoxController {
     @PostMapping(value = "/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<BoxDTO> createBox(@ModelAttribute BoxDTO boxDTO) {
         //assign unique id
-        boxDTO.setID(boxService.createID());
+        boxDTO.setId(boxService.createID());
         //create file path
         createImageFilePath(boxDTO);
         //convert completed dto to model for db add
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.createBox(boxModel)) {
-            String entity = "Box with ID " + boxDTO.getID() + " already exists";
+            String entity = "Box with ID " + boxDTO.getId() + " already exists";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
-            String url = "boxes/" + boxDTO.getID();
+            String url = "boxes/" + boxDTO.getId();
             URI uri = URI.create(url);
             return new ResponseEntity(uri, HttpStatus.CREATED);
         }
@@ -93,7 +93,7 @@ public class BoxController {
 
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.updateBox(boxModel)) {
-            String entity = "There is no box with supplied id: " + boxDTO.getID() + " (box is called: " + boxDTO.getName() + ")";
+            String entity = "There is no box with supplied id: " + boxDTO.getId() + " (box is called: " + boxDTO.getName() + ")";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
             return ResponseEntity.ok().build();

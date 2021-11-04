@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Smoke_It_Application {
+public class SmokeItApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Smoke_It_Application.class, args);
+		SpringApplication.run(SmokeItApplication.class, args);
 	}
 
 }

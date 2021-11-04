@@ -2,7 +2,7 @@ package fontys.sem3.smoke_it.controller;
 
 import fontys.sem3.smoke_it.model.OrderDTO;
 import fontys.sem3.smoke_it.model.OrderModel;
-import fontys.sem3.smoke_it.model.modelConverters.OrderModelConverter;
+import fontys.sem3.smoke_it.model.modelconverters.OrderModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class OrderController {
     @PostMapping("")
     public ResponseEntity<OrderModel> createOrder(@RequestBody OrderDTO orderDTO){
         OrderModel orderModel = modelConverter.convertDTOToModel(orderDTO);
-        if(orderService.createOrder(orderModel)){
+        if(Boolean.TRUE.equals(orderService.createOrder(orderModel))){
             return ResponseEntity.ok().body(orderModel);
         }
         String entity = "Order was not completed";

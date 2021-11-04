@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.model.modelConverters;
+package fontys.sem3.smoke_it.model.modelconverters;
 
 import fontys.sem3.smoke_it.model.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
@@ -12,7 +12,6 @@ public class BoxModelConverter {
     public List<BoxDTO> convertModelListToDTO(List<BoxModel> modelList){
         List<BoxDTO> boxDTOList = new ArrayList<>();
         for (BoxModel box : modelList) {
-            //boxDTOList.add(new BoxDTO(box.getID(), box.getName(), box.getBasePrice(), box.getContent(), box.getDescription()));
             boxDTOList.add(convertModelToDTO(box));
         }
         return boxDTOList;
@@ -25,6 +24,6 @@ public class BoxModelConverter {
     }
 
     public BoxModel convertDTOToModel(BoxDTO boxDTO){
-        return new BoxModel(boxDTO.getID(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription(), boxDTO.getImagePath().toString());
+        return new BoxModel(boxDTO.getId(), boxDTO.getName(), boxDTO.getBasePrice(), boxDTO.getContent(), boxDTO.getDescription(), boxDTO.getImagePath().toString());
     }
 }

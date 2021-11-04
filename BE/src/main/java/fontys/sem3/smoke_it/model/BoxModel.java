@@ -29,8 +29,8 @@ public class BoxModel {
 
     }
 
-    public BoxModel(String ID, String name, double basePrice, String content, String description, String imagePath){
-        this.id = ID;
+    public BoxModel(String id, String name, double basePrice, String content, String description, String imagePath){
+        this.id = id;
         this.name = name;
         this.basePrice = basePrice;
         this.content = content;

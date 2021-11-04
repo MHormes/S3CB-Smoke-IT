@@ -25,14 +25,14 @@ public class UserServiceUnitTest {
     //Still need to figure out how to test the H2 db
     private IDataSourceUser dataSource;
     @BeforeEach
-    public void arrangeUserTest(){
+    void arrangeUserTest(){
         dataSource = new FakeDataSourceUser();
         userService = new UserService(dataSource);
     }
 
 
     @Test
-    public void testGetUserModelExists(){
+    void testGetUserModelExists(){
         UserModel modelToExpect = new UserModel("admin", "admin", true);
         UserModel userModel = userService.getUserModel("admin");
 
@@ -40,21 +40,21 @@ public class UserServiceUnitTest {
     }
 
     @Test
-    public void testGetUserModelNonExisting(){
+    void testGetUserModelNonExisting(){
         UserModel userModel = userService.getUserModel("non-existing");
 
         assertEquals(null, userModel);
     }
 
     @Test
-    public void testLoginAttemptSuccessful(){
+    void testLoginAttemptSuccessful(){
         Boolean loginResult = userService.attemptLogin("admin", "admin");
 
         assertEquals(true, loginResult);
     }
 
     @Test
-    public void testLoginAttemptUnSuccessful(){
+    void testLoginAttemptUnSuccessful(){
         Boolean loginResult = userService.attemptLogin("fake", "fake");
 
         assertEquals(false, loginResult);
