@@ -12,24 +12,25 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="User")
+@Table(name = "User")
 public class UserModel {
 
     @Id
     private Long id;
-    @Column(name="username")
+    @Column(name = "username")
     private String username;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="admin")
+    @Column(name = "admin")
     private Boolean admin;
 
-    public UserModel(String username, String password, Boolean admin){
-            this.username = username;
-            this.password = password;
-            this.admin = admin;
+    public UserModel(Long id, String username, String password, Boolean admin) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.admin = admin;
     }
 
     public UserModel() {
@@ -41,7 +42,7 @@ public class UserModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserModel userModel = (UserModel) o;
-        return Objects.equals(username, userModel.getUsername());
+        return Objects.equals(hashCode(), userModel.hashCode());
     }
 
     @Override

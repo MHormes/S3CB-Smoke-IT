@@ -1,41 +1,32 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.UserModel;
-import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceUser;
-import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceUser;
-import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.UserService;
 import fontys.sem3.smoke_it.service.interfaces.IUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class UserServiceFakeTest {
 
-    //@Autowired
+    @Autowired
     private IUserService userService;
-
-    //Below is needed for fake testing.
-    //Still need to figure out how to test the H2 db
-    private IDataSourceUser dataSource;
-    @BeforeEach
-    void arrangeUserTest(){
-        dataSource = new FakeDataSourceUser();
-        userService = new UserService(dataSource);
-    }
-
 
     @Test
     void testGetUserModelExists(){
-        UserModel modelToExpect = new UserModel("admin", "admin", true);
+        UserModel modelToExpect = new UserModel(1L, "admin", "admin", true);
+        userService.createUserModel(modelToExpect);
         UserModel userModel = userService.getUserModel("admin");
 
-        assertEquals(modelToExpect.equals(modelToExpect.hashCode()), userModel.equals(userModel.hashCode()));
+        assertTrue(modelToExpect.equals(userModel));
     }
 
     @Test
@@ -47,7 +38,9 @@ class UserServiceFakeTest {
 
     @Test
     void testLoginAttemptSuccessful(){
-        Boolean loginResult = userService.attemptLogin("admin", "admin");
+        UserModel modelToExpect = new UserModel(1L, "admin", "pass", true);
+        userService.createUserModel(modelToExpect);
+        Boolean loginResult = userService.attemptLogin("admin", "pass");
 
         assertEquals(true, loginResult);
     }

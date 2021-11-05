@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 public class DataSourceUser implements IDataSourceUser {
@@ -17,11 +18,25 @@ public class DataSourceUser implements IDataSourceUser {
     @Override
     public Boolean attemptLogin(String username, String password) {
         UserModel userModel =  repo.getFirstByUsername(username);
-        return Objects.equals(userModel.getPassword(), password);
+        if (userModel != null){
+            return Objects.equals(userModel.getPassword(), password);
+        }
+        return false;
     }
 
     @Override
     public UserModel getUserModel(String username) {
-        return repo.getFirstByUsername(username);
+        UserModel usermodel = repo.getFirstByUsername(username);
+        if(usermodel != null){
+            Optional<UserModel> modelToReturn = repo.findById(usermodel.getId());
+            return modelToReturn.orElse(null);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean createUserModel(UserModel userModel) {
+        repo.save(userModel);
+        return true;
     }
 }

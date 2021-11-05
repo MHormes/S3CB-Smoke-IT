@@ -24,5 +24,10 @@ public class UserService implements IUserService {
         return dataSource.getUserModel(username);
     }
 
+    @Override
+    public Boolean createUserModel(UserModel userModel) {
+        return dataSource.createUserModel(userModel);
+    }
+
 
 }

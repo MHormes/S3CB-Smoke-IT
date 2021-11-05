@@ -4,7 +4,9 @@ import fontys.sem3.smoke_it.model.UserModel;
 
 public interface IDataSourceUser {
 
-    public Boolean attemptLogin(String username, String password);
+    Boolean attemptLogin(String username, String password);
 
-    public UserModel getUserModel(String username);
+    UserModel getUserModel(String username);
+
+    Boolean createUserModel(UserModel userModel);
 }
