@@ -22,8 +22,7 @@ public class BoxService implements IBoxService {
 
     @Override
     public List<BoxModel> getAllBoxes() {
-        List<BoxModel> boxList = datasource.getAllBoxes();
-        return boxList;
+        return datasource.getAllBoxes();
     }
 
     @Override

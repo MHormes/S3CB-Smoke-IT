@@ -1,7 +1,6 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.UserModel;
-import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceUser;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceUser;
@@ -16,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class UserServiceUnitTest {
+class UserServiceFakeTest {
 
     //@Autowired
     private IUserService userService;

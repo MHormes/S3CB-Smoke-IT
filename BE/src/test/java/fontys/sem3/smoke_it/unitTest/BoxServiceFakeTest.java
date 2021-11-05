@@ -1,47 +1,40 @@
 package fontys.sem3.smoke_it.unitTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.fakeDB.FakeDataSourceBoxes;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.Assert;
 
+import javax.transaction.Transactional;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+@Transactional
+@ActiveProfiles("test")
 @SpringBootTest
-class BoxServiceUnitTest {
+class BoxServiceFakeTest {
 
-    //@Autowired
+    @Autowired
     private IBoxService boxService;
 
-    //Below is needed for fake testing.
-    //Still need to figure out how to test the H2 db
-    private IDataSourceBoxes dataSource;
-    @BeforeEach
-    public void arrangeBoxTest(){
-        dataSource = new FakeDataSourceBoxes();
-        boxService = new BoxService(dataSource);
-    }
-
-    //Below method uses the overloaded fakeDataSource const to have an empty list inside the datasource
     @Test
     void testGetAllBoxesSuccessful(){
-        IDataSourceBoxes dataSource = new FakeDataSourceBoxes("test");
-        IBoxService boxService = new BoxService(dataSource);
         List<BoxModel> listToAssert = new ArrayList<>();
 
-        BoxModel box1 = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath");
+        BoxModel box1 = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1");
         boxService.createBox(box1);
         listToAssert.add(box1);
-        BoxModel box2 = new BoxModel("2", "test2", 1.00, "testContent2", "testDescription2", "testImagePath");
+        BoxModel box2 = new BoxModel("2", "test2", 1.00, "testContent2", "testDescription2", "testImagePath2");
         boxService.createBox(box2);
         listToAssert.add(box2);
 
@@ -51,11 +44,10 @@ class BoxServiceUnitTest {
 
     @Test
     void testGetBoxWithIDSuccessful() {
-        BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription", "");
+        BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testImagePath1");
         boxService.createBox(modelToExpect);
 
-        BoxModel boxToAssert = boxService.getBoxWithID("1");;
-        assertEquals(true, modelToExpect.equals(boxToAssert));
+        assertTrue(modelToExpect.equals(boxService.getBoxWithID("1")));
 
     }
 
@@ -63,24 +55,23 @@ class BoxServiceUnitTest {
     void testGetBoxWithIDInvalidID(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
-        assertNull(boxService.getBoxWithID("2"));
+        assertNull(boxService.getBoxWithID("100"));
     }
 
     @Test
     void testCreateBoxCorrectInput(){
         Boolean createResult = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
-
         assertEquals(true, createResult);
     }
 
     //Would this be needed with the UUID?
-    @Test
-    void testCreateBoxWithExistingID(){
-        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testPath1"));
-        Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2", "testPath2"));
-
-        assertEquals(false, createResult);
-    }
+//    @Test
+//    void testCreateBoxWithExistingID(){
+//        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testPath1"));
+//        Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2", "testPath2"));
+//
+//        assertEquals(false, createResult);
+//    }
 
     @Test
     void testUpdateBoxCorrectInput(){
