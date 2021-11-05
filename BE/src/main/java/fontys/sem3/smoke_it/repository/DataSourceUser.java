@@ -27,11 +27,7 @@ public class DataSourceUser implements IDataSourceUser {
     @Override
     public UserModel getUserModel(String username) {
         UserModel usermodel = repo.getFirstByUsername(username);
-        if(usermodel != null){
-            Optional<UserModel> modelToReturn = repo.findById(usermodel.getId());
-            return modelToReturn.orElse(null);
-        }
-        return null;
+        return usermodel;
     }
 
     @Override

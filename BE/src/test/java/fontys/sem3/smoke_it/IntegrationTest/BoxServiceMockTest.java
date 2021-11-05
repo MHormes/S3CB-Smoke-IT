@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.unitTest;
+package fontys.sem3.smoke_it.IntegrationTest;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

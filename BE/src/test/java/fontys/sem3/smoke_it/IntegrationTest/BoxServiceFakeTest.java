@@ -1,25 +1,17 @@
-package fontys.sem3.smoke_it.unitTest;
+package fontys.sem3.smoke_it.IntegrationTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
-import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.util.Assert;
 
-import javax.transaction.Transactional;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Transactional
 @ActiveProfiles("test")
 @SpringBootTest
 class BoxServiceFakeTest {
@@ -64,19 +56,14 @@ class BoxServiceFakeTest {
         assertEquals(true, createResult);
     }
 
-    //Would this be needed with the UUID?
-//    @Test
-//    void testCreateBoxWithExistingID(){
-//        boxService.createBox(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testPath1"));
-//        Boolean createResult = boxService.createBox(new BoxModel("1", "test2", 1.00, "testContent2", "testDescription2", "testPath2"));
-//
-//        assertEquals(false, createResult);
-//    }
-
     @Test
     void testUpdateBoxCorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
-        Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("1"));
+
+
+        BoxModel x = boxService.getBoxWithID("1");
+
+        Boolean updateResult = boxService.updateBox(x);
 
         assertEquals(true, updateResult);
     }
@@ -84,6 +71,9 @@ class BoxServiceFakeTest {
     @Test
     void testUpdateBoxWithIncorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
+
+        BoxModel x = boxService.getBoxWithID("1");
+
         Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("2"));
 
         assertEquals(false, updateResult);

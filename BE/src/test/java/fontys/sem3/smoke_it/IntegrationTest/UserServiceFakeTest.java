@@ -1,10 +1,7 @@
-package fontys.sem3.smoke_it.unitTest;
+package fontys.sem3.smoke_it.IntegrationTest;
 
 import fontys.sem3.smoke_it.model.UserModel;
-import fontys.sem3.smoke_it.repository.interfaces.IDataSourceUser;
-import fontys.sem3.smoke_it.service.UserService;
 import fontys.sem3.smoke_it.service.interfaces.IUserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
