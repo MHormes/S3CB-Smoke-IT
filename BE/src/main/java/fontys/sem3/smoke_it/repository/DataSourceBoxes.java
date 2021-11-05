@@ -7,10 +7,7 @@ import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
@@ -24,13 +21,14 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
     }
 
     @Override
-    public List<BoxModel> getAllBoxesSorted(String sort){
-        switch (sort){
+    public List<BoxModel> getAllBoxesSorted(String sort) {
+        switch (sort) {
             case "l-h":
                 return boxesSortedLowToHigh(repo.findAll());
             case "h-l":
                 return boxesSortedHighToLow(repo.findAll());
-            default: return repo.findAll();
+            default:
+                return repo.findAll();
         }
     }
 
@@ -48,28 +46,26 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
 
     @Override
     public boolean updateBox(BoxModel boxModel) {
-        if(boxModel != null){
-            BoxModel modelToUpdate = repo.getOne(boxModel.getId());
-            if(modelToUpdate.getName() != null){
-                modelToUpdate.setName(boxModel.getName());
-                modelToUpdate.setBasePrice(boxModel.getBasePrice());
-                modelToUpdate.setContent(boxModel.getContent());
-                modelToUpdate.setDescription(boxModel.getDescription());
-                if(boxModel.getImagePath() != null){
-                    modelToUpdate.setImagePath(boxModel.getImagePath());
-                }
-                repo.save(modelToUpdate);
-                return true;
+        BoxModel modelToUpdate = repo.getOne(boxModel.getId());
+        if (modelToUpdate.getName() != null) {
+            modelToUpdate.setName(boxModel.getName());
+            modelToUpdate.setBasePrice(boxModel.getBasePrice());
+            modelToUpdate.setContent(boxModel.getContent());
+            modelToUpdate.setDescription(boxModel.getDescription());
+            if (!Objects.equals(boxModel.getImagePath(), "")) {
+                modelToUpdate.setImagePath(boxModel.getImagePath());
             }
-            return false;
+            repo.save(modelToUpdate);
+            return true;
         }
         return false;
+
     }
 
     @Override
     public boolean deleteBox(String id) {
         Optional<BoxModel> modelToDelete = repo.findById(id);
-        if(modelToDelete.isPresent()){
+        if (modelToDelete.isPresent()) {
             repo.deleteById(id);
             return true;
         }

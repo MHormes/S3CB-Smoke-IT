@@ -39,10 +39,13 @@ public class BoxService implements IBoxService {
     public boolean createBox(BoxModel boxModel){
         return datasource.createBox(boxModel);
     }
-
+    
     @Override
     public boolean updateBox(BoxModel boxModel){
-        return datasource.updateBox(boxModel);
+        if(boxModel != null){
+            return datasource.updateBox(boxModel);
+        }
+        return false;
     }
 
     @Override

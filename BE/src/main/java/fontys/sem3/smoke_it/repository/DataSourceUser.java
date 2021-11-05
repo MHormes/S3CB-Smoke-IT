@@ -26,8 +26,7 @@ public class DataSourceUser implements IDataSourceUser {
 
     @Override
     public UserModel getUserModel(String username) {
-        UserModel usermodel = repo.getFirstByUsername(username);
-        return usermodel;
+        return repo.getFirstByUsername(username);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.IntegrationTest;
+package fontys.sem3.smoke_it.integrationTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
@@ -60,10 +60,9 @@ class BoxServiceFakeTest {
     void testUpdateBoxCorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
-
         BoxModel x = boxService.getBoxWithID("1");
 
-        Boolean updateResult = boxService.updateBox(x);
+        Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("1"));
 
         assertEquals(true, updateResult);
     }
@@ -89,8 +88,7 @@ class BoxServiceFakeTest {
 
     @Test
     void testDeleteWithInvalidID() {
-        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
-        Boolean deleteResult = boxService.deleteBox("2");
+        Boolean deleteResult = boxService.deleteBox("testDeleteInvalidId");
 
         assertEquals(false, deleteResult);
     }

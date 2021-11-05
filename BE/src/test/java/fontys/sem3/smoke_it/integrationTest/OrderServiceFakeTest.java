@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.IntegrationTest;
+package fontys.sem3.smoke_it.integrationTest;
 
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.service.OrderService;
