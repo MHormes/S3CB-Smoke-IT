@@ -1,18 +1,20 @@
 package fontys.sem3.smoke_it.service;
 
+import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class BoxService implements IBoxService {
+public class BoxService implements IBoxService , IBoxSorter {
 
     IDataSourceBoxes datasource;
     @Autowired
@@ -27,7 +29,15 @@ public class BoxService implements IBoxService {
 
     @Override
     public List<BoxModel> getAllBoxesSorted(String sort){
-        return datasource.getAllBoxesSorted(sort);
+        List<BoxModel> listToReturn = datasource.getAllBoxes();
+        switch (sort) {
+            case "l-h":
+                return boxesSortedLowToHigh(listToReturn);
+            case "h-l":
+                return boxesSortedHighToLow(listToReturn);
+            default:
+                return listToReturn;
+        }
     }
 
     @Override
@@ -66,6 +76,28 @@ public class BoxService implements IBoxService {
     @Override
     public String createID() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public List<BoxModel> boxesSortedHighToLow(List<BoxModel> listToSort) {
+        Collections.sort(listToSort, new Comparator<BoxModel>() {
+            @Override
+            public int compare(BoxModel b1, BoxModel b2) {
+                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
+            }
+        });
+        return listToSort;
+    }
+
+    @Override
+    public List<BoxModel> boxesSortedLowToHigh(List<BoxModel> listToSort) {
+        Collections.sort(listToSort, new Comparator<BoxModel>() {
+            @Override
+            public int compare(BoxModel o1, BoxModel o2) {
+                return 0;
+            }
+        });
+        return listToSort;
     }
 
 }

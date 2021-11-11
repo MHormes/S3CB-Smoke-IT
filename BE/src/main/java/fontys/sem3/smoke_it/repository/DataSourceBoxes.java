@@ -1,7 +1,6 @@
 package fontys.sem3.smoke_it.repository;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.interfaces.IBoxSorter;
 import fontys.sem3.smoke_it.repository.interfaces.IBoxesRepository;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
+public class DataSourceBoxes implements IDataSourceBoxes {
 
     @Autowired
     IBoxesRepository repo;
@@ -18,18 +17,6 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
     @Override
     public List<BoxModel> getAllBoxes() {
         return repo.findAll();
-    }
-
-    @Override
-    public List<BoxModel> getAllBoxesSorted(String sort) {
-        switch (sort) {
-            case "l-h":
-                return boxesSortedLowToHigh(repo.findAll());
-            case "h-l":
-                return boxesSortedHighToLow(repo.findAll());
-            default:
-                return repo.findAll();
-        }
     }
 
     @Override
@@ -70,29 +57,5 @@ public class DataSourceBoxes implements IDataSourceBoxes, IBoxSorter {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public List<BoxModel> boxesSortedHighToLow(List<BoxModel> listToSort) {
-        List<BoxModel> sortedList = listToSort;
-        Collections.sort(sortedList, new Comparator<BoxModel>() {
-            @Override
-            public int compare(BoxModel b1, BoxModel b2) {
-                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
-            }
-        });
-        return sortedList;
-    }
-
-    @Override
-    public List<BoxModel> boxesSortedLowToHigh(List<BoxModel> listToSort) {
-        List<BoxModel> sortedList = listToSort;
-        Collections.sort(sortedList, new Comparator<BoxModel>() {
-            @Override
-            public int compare(BoxModel b1, BoxModel b2) {
-                return Double.compare(b2.getBasePrice(), b1.getBasePrice());
-            }
-        });
-        return sortedList;
     }
 }

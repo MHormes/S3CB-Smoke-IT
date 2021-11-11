@@ -5,6 +5,7 @@ const SelectedBoxContent = (props) => {
 
     const selectedBox = props.selectedBoxProps
     const contentList = selectedBox.content.split(",");
+    console.log(selectedBox.imagePath)
     const contentItems = contentList.map((content) =>
         <li key={content}>{content}</li>
     )
