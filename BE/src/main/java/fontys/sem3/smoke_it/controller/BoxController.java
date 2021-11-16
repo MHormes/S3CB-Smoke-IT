@@ -102,8 +102,8 @@ public class BoxController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteBox(@PathVariable(value = "id") String id) {
-        boxService.deleteBox(id);
-        return ResponseEntity.ok().build();
+        Boolean result = boxService.deleteBox(id);
+        return ResponseEntity.ok().body(result);
     }
 
     private void makeDirectoryIfNotExist(String imageDirectory) {

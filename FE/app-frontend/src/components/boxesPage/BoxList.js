@@ -22,7 +22,7 @@ const BoxList = (props) => {
         }
 
         return () => mounted = false;
-    })
+    }, [])
 
     if (!boxes) return null;
 
@@ -48,7 +48,8 @@ const BoxList = (props) => {
                         getSelectedBoxProps={props.getSelectedBoxProps}
                         getBoxToEditProps={props.getBoxToEditProps}
                         key={box.id}
-                        box={box} />
+                        box={box}
+                        jwtTokenProps={props.jwtTokenProps} />
                 ))}
             </ul>
         </>

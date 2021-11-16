@@ -13,23 +13,32 @@ import LogoutPage from "./logAndRegPage/LogoutPage";
 import CheckoutPage from "./checkoutPage/CheckoutPage";
 import CheckoutPayment from "./checkoutPage/CheckoutPayment";
 import AboutUsPage from "./infoPage/AboutUsPage";
+import Cookies from "universal-cookie";
 
 const MainContainer = () => {
 
     const history = useHistory()
-
+    const cookies = new Cookies()
 
     //method to handle login and setting the adminlog for admin functions
     const [adminLog, setAdminLog] = useState()
-    const handleLogin = (loginResult) => {
-        localStorage.setItem("adminLog", loginResult)
-        setAdminLog(loginResult)
+    const handleLogin = (loginResult, jwtToken) => {
+        if (loginResult === "ADMIN") {
+            localStorage.setItem("adminLog", true)
+            setAdminLog(true)
+        }
+        else {
+            localStorage.setItem("adminLog", false)
+            setAdminLog(false)
+        }
+        cookies.set("jwtToken", jwtToken)
         history.push("/")
     }
 
     const handleLogout = () => {
         localStorage.removeItem("adminLog")
         setAdminLog("")
+        cookies.remove("jwtToken")
         history.push("/")
     }
 
@@ -67,6 +76,7 @@ const MainContainer = () => {
                     <BoxList
                         getSelectedBoxProps={getSelectedBox}
                         getBoxToEditProps={getBoxToEdit}
+                        jwtTokenProps={cookies.get("jwtToken")}
                     />
                 </Route>
                 <Route exact path="/boxes/selectedBox">
@@ -101,7 +111,8 @@ const MainContainer = () => {
                 </Route>
                 {localStorage.getItem("adminLog") === "true" ?
                     <Route path="/boxes/create">
-                        <BoxAdd />
+                        <BoxAdd
+                            jwtTokenProps={cookies.get("jwtToken")} />
                     </Route>
                     :
                     <Redirect to="/" />
@@ -110,6 +121,7 @@ const MainContainer = () => {
                     <Route path="/boxes/update">
                         <BoxEdit
                             boxToEditProps={boxToEdit}
+                            jwtTokenProps={cookies.get("jwtToken")}
                         />
                     </Route>
                     :

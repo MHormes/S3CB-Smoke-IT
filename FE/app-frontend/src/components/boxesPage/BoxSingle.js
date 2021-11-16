@@ -8,6 +8,7 @@ const BoxSingle = (props) => {
 
     const adminLog = localStorage.getItem("adminLog")
 
+    const jwtToken = props.jwtTokenProps
     const singleBox = props.box
     const history = useHistory()
 
@@ -50,7 +51,11 @@ const BoxSingle = (props) => {
     //method to perform the delete
     const deleteBox = (boxToDelete) => {
         var URL = urls.baseURL + urls.boxesDeleteURL + boxToDelete.id;
-        axios.delete(URL).then(res => {
+        axios.delete(URL,{
+            headers:{
+                'Authorization': jwtToken
+            }
+        }).then(res => {
             if(res.status === 200){
                     console.log("Delete was successfull")
             }

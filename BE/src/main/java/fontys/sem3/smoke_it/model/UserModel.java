@@ -3,10 +3,7 @@ package fontys.sem3.smoke_it.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -15,7 +12,7 @@ import java.util.Objects;
 @Table(name = "User")
 public class UserModel {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     @Column(name = "username")
     private String username;
@@ -23,18 +20,16 @@ public class UserModel {
     private String password;
     @Column(name = "email")
     private String email;
-    @Column(name = "admin")
-    private Boolean admin;
-
-    public UserModel(Long id, String username, String password, Boolean admin) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.admin = admin;
-    }
+    @Column(name = "role")
+    private String role;
 
     public UserModel() {
+    }
 
+    public UserModel(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     @Override

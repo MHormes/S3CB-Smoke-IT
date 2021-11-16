@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -27,10 +28,9 @@ public class BoxServiceMockTest {
     void setUp(){
         boxService = new BoxService(datasource);
         BoxModel boxModel = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1");
-        List<BoxModel> mockList = List.of(
-                boxModel,
-                new BoxModel("2", "test2", 2.00, "testContent2", "testDescription2", "testImagePath2")
-        );
+        List<BoxModel> mockList = new ArrayList<>();
+        mockList.add(boxModel);
+        mockList.add(new BoxModel("2", "test2", 2.00, "testContent2", "testDescription2", "testImagePath2"));
         when(datasource.getAllBoxes()).thenReturn(mockList);
         when(datasource.updateBox(boxModel)).thenReturn(true);
     }
@@ -59,7 +59,7 @@ public class BoxServiceMockTest {
 
     @Test
     void testGetAllBoxesSortedHighToLow(){
-        List<BoxModel> sortedList = boxService.getAllBoxesSorted("l-h");
+        List<BoxModel> sortedList = boxService.getAllBoxesSorted("h-l");
 
         Assertions.assertEquals(2 ,sortedList.get(0).getBasePrice());
         Assertions.assertEquals(1 ,sortedList.get(1).getBasePrice());

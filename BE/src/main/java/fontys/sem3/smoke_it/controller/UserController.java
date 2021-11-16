@@ -16,18 +16,17 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-
-
     private UserModelConverter userModelConverter;
 
-    public UserController(){
+    public UserController(IUserService userService){
+        this.userService = userService;
         userModelConverter = new UserModelConverter();
     }
 
     @PostMapping("/register")
     public ResponseEntity createUser(@RequestBody UserModel userModel){
         if(userService.createUserModel(userModel)){
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(userModel);
         }
         else{
             String entity = "Username: " + userModel.getUsername() + " is already taken";

@@ -9,6 +9,7 @@ const BoxEdit = (props) => {
     const history = useHistory()
     const boxToEdit = props.boxToEditProps
 
+    const jwtToken = props.jwtTokenProps
     const [boxDetails, setBoxDetails] = useState(
         {
             name: boxToEdit.name,
@@ -19,7 +20,7 @@ const BoxEdit = (props) => {
     )
 
     //State for picture upload
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState("");
 
     //method to call edit endpoint
     const editBoxInBE = (id, file) => {
@@ -28,8 +29,13 @@ const BoxEdit = (props) => {
         file.append("basePrice", boxDetails.basePrice)
         file.append("content", boxDetails.content)
         file.append("description", boxDetails.description)
-        
-        axios.put(urls.baseURL + urls.boxesEditURL, file).then(res => {
+
+        axios.put(urls.baseURL + urls.boxesEditURL, file, {
+            headers: {
+                'Authorization': jwtToken
+            }
+        }
+        ).then(res => {
             if (res.status === 200) {
                 console.log("Update successfull")
             }

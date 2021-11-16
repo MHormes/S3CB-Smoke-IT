@@ -19,7 +19,7 @@ class UserServiceFakeTest {
 
     @Test
     void testGetUserModelExists(){
-        UserModel modelToExpect = new UserModel(1L, "admin", "admin", true);
+        UserModel modelToExpect = new UserModel("admin", "admin", "ADMIN");
         userService.createUserModel(modelToExpect);
         UserModel userModel = userService.getUserModel("admin");
 
@@ -35,7 +35,7 @@ class UserServiceFakeTest {
 
     @Test
     void testLoginAttemptSuccessful(){
-        UserModel modelToExpect = new UserModel(1L, "admin", "pass", true);
+        UserModel modelToExpect = new UserModel("admin", "pass", "ADMIN");
         userService.createUserModel(modelToExpect);
         Boolean loginResult = userService.attemptLogin("admin", "pass");
 

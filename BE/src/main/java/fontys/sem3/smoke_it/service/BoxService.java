@@ -80,10 +80,11 @@ public class BoxService implements IBoxService , IBoxSorter {
 
     @Override
     public List<BoxModel> boxesSortedHighToLow(List<BoxModel> listToSort) {
-        Collections.sort(listToSort, new Comparator<BoxModel>() {
+        List<BoxModel> list = listToSort;
+        Collections.sort(list, new Comparator<BoxModel>() {
             @Override
             public int compare(BoxModel b1, BoxModel b2) {
-                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
+                return Double.compare(b2.getBasePrice(), b1.getBasePrice());
             }
         });
         return listToSort;
@@ -93,8 +94,8 @@ public class BoxService implements IBoxService , IBoxSorter {
     public List<BoxModel> boxesSortedLowToHigh(List<BoxModel> listToSort) {
         Collections.sort(listToSort, new Comparator<BoxModel>() {
             @Override
-            public int compare(BoxModel o1, BoxModel o2) {
-                return 0;
+            public int compare(BoxModel b1, BoxModel b2) {
+                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
             }
         });
         return listToSort;

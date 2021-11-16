@@ -15,6 +15,7 @@ const CheckoutPage = () => {
 
     const [orderObject, setOrderObject] = useState()
 
+    const [paymentCheck, setPaymentCheck] = useState()
 
     const assignOrderObject = (orderDetails) => {
         setOrderObject({
@@ -31,7 +32,6 @@ const CheckoutPage = () => {
         addOrderInBE(orderObject)
     }
 
-    var paymentCheck;
     const addOrderInBE = (orderObject) => {
         if (paymentCheck) {
             axios.post(urls.baseURL+urls.placeOrder, orderObject).then(res=>{
@@ -48,8 +48,8 @@ const CheckoutPage = () => {
         }
     }
 
-    const setPaymentCheck = (value) => {
-        paymentCheck = value;
+    const setPaymentCheckInSate = (value) => {
+        setPaymentCheck(value);
     }
 
     return (
@@ -60,7 +60,7 @@ const CheckoutPage = () => {
             <CheckoutForm
                 assignOrderObjectProps={assignOrderObject} />
             <CheckoutPayment
-                setPaymentCheckProps={setPaymentCheck} />
+                setPaymentCheckProps={setPaymentCheckInSate} />
         </>
     )
 }

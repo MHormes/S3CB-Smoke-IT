@@ -4,9 +4,11 @@ import axios from 'axios'
 import * as urls from "./../../URL";
 
 //component shown when adding a new box
-const BoxAdd = () => {
+const BoxAdd = (props) => {
 
     const history = useHistory()
+
+    const jwtToken = props.jwtTokenProps
 
     //method to add new box to the BE
     const addBoxInBE = (box, file) => {
@@ -14,8 +16,12 @@ const BoxAdd = () => {
         file.append("basePrice", box.basePrice)
         file.append("content", box.content)
         file.append("description", box.description)
-        
-        axios.post(urls.baseURL + urls.boxesAddURL, file)
+
+        axios.post(urls.baseURL + urls.boxesAddURL, file, {
+            headers: {
+                'Authorization' : jwtToken
+            }
+        })
     }
 
     //State for boxdetails

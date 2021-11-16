@@ -8,10 +8,10 @@ import lombok.Setter;
 public class UserDTO {
 
     private String username;
-    private Boolean admin;
+    private String role;
 
-    public UserDTO(String username, Boolean admin){
+    public UserDTO(String username, String role){
         setUsername(username);
-        setAdmin(admin);
+        setRole(role);
     }
 }

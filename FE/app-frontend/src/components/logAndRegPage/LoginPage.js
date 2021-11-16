@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styles from "./LoginPage.module.css"
+import jwt_decode from "jwt-decode"
 import * as urls from "./../../URL"
 import axios from "axios"
 
@@ -11,13 +12,16 @@ const LoginPage = (props) => {
     })
 
     const loginToApp = (loginDetails) => {
-        axios.get(urls.baseURL + urls.loginToApp, { params: { username: loginDetails.username, password: loginDetails.password } })
+        axios.post(urls.baseURL + urls.loginToApp, loginDetails)
             .then(res => {
-                props.handleLoginProps(res.data.admin)
+                var jwtToken = res.data.Authorization
+                var decodedJWT = jwt_decode(jwtToken)
+                console.log(decodedJWT)
+                props.handleLoginProps(decodedJWT.role, jwtToken)
             })
             .catch(err => {
-                if(err.response.status === 404){
-                    alert("The login details are incorrect")
+                if(err.response.status === 403){
+                    alert("Your login details are incorrect")
                 }
             })
     }
