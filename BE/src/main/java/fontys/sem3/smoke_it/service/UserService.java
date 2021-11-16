@@ -20,10 +20,11 @@ public class UserService implements IUserService {
         this.passEncoder = new BCryptPasswordEncoder();
     }
 
-    @Override
-    public Boolean attemptLogin(String username, String password) {
-        return dataSource.attemptLogin(username, password);
-    }
+    //Not needed since spring security
+//    @Override
+//    public Boolean attemptLogin(String username, String password) {
+//        return dataSource.attemptLogin(username, password);
+//    }
 
     @Override
     public UserModel getUserModel(String username) {

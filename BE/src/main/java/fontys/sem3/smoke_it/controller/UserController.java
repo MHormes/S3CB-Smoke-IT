@@ -34,14 +34,14 @@ public class UserController {
 
         }
     }
-
-    @GetMapping("/login")
-    public ResponseEntity<UserDTO> loginApplication(@RequestParam String username, String password) {
-        Boolean loginResult = userService.attemptLogin(username, password);
-        if (Boolean.TRUE.equals(loginResult)) {
-            UserDTO userDTOToReturn = userModelConverter.convertModelToDTO(userService.getUserModel(username));
-            return ResponseEntity.ok().body(userDTOToReturn);
-        }
-        return ResponseEntity.notFound().build();
-    }
+//Not needed since spring security
+//    @GetMapping("/login")
+//    public ResponseEntity<UserDTO> loginApplication(@RequestParam String username, String password) {
+//        Boolean loginResult = userService.attemptLogin(username, password);
+//        if (Boolean.TRUE.equals(loginResult)) {
+//            UserDTO userDTOToReturn = userModelConverter.convertModelToDTO(userService.getUserModel(username));
+//            return ResponseEntity.ok().body(userDTOToReturn);
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
 }

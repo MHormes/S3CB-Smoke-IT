@@ -17,7 +17,11 @@ const BoxList = (props) => {
         if (mounted) {
             axios.get(urls.baseURL + urls.boxesURL)
                 .then(res => {
-                    setBoxes(res.data);
+                    if (res.data.status === 200) {
+                        setBoxes(res.data);
+                    } else {
+                        alert("You are not connected with the BE")
+                    }
                 });
         }
 

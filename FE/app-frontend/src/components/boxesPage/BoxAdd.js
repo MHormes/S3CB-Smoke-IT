@@ -21,6 +21,12 @@ const BoxAdd = (props) => {
             headers: {
                 'Authorization' : jwtToken
             }
+        }).then(res => {
+            if (res.status === 200) {
+                console.log("create successfull")
+            }
+        }).catch(err => {
+            alert(err.status)
         })
     }
 

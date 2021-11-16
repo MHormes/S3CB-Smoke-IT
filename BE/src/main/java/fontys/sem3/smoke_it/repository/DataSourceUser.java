@@ -14,14 +14,15 @@ public class DataSourceUser implements IDataSourceUser {
     @Autowired
     IUserRepository repo;
 
-    @Override
-    public Boolean attemptLogin(String username, String password) {
-        UserModel userModel =  repo.getFirstByUsername(username);
-        if (userModel != null){
-            return Objects.equals(userModel.getPassword(), password);
-        }
-        return false;
-    }
+    //Not needed since spring security
+//    @Override
+//    public Boolean attemptLogin(String username, String password) {
+//        UserModel userModel =  repo.getFirstByUsername(username);
+//        if (userModel != null){
+//            return Objects.equals(userModel.getPassword(), password);
+//        }
+//        return false;
+//    }
 
     @Override
     public UserModel getUserModel(String username) {

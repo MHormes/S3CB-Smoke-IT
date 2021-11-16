@@ -32,20 +32,4 @@ class UserServiceFakeTest {
 
         assertEquals(null, userModel);
     }
-
-    @Test
-    void testLoginAttemptSuccessful(){
-        UserModel modelToExpect = new UserModel("admin", "pass", "ADMIN");
-        userService.createUserModel(modelToExpect);
-        Boolean loginResult = userService.attemptLogin("admin", "pass");
-
-        assertEquals(true, loginResult);
-    }
-
-    @Test
-    void testLoginAttemptUnSuccessful(){
-        Boolean loginResult = userService.attemptLogin("fake", "fake");
-
-        assertEquals(false, loginResult);
-    }
 }
