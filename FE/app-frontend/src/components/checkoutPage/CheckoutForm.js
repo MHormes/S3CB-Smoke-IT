@@ -39,7 +39,8 @@ const CheckoutForm = (props) => {
                         name="name"
                         placeholder="e.g. John Doe"
                         value={orderDetails.name}
-                        onChange={onChange} />
+                        onChange={onChange} 
+                        required/>
                 </label>
                 <br />
                 <label>
@@ -49,7 +50,9 @@ const CheckoutForm = (props) => {
                         name="email"
                         placeholder="e.g. john.doe@gmail.com"
                         value={orderDetails.email}
-                        onChange={onChange} />
+                        onChange={onChange} 
+                        required
+                        pattern="/^\S+@\S+\.\S+$/"/>
                 </label>
                 <br />
                 <label>
@@ -59,7 +62,8 @@ const CheckoutForm = (props) => {
                         name="address"
                         placeholder="e.g. Rachelsmolen 10"
                         value={orderDetails.address}
-                        onChange={onChange} />
+                        onChange={onChange} 
+                        required/>
                 </label>
                 <br />
                 <label>
@@ -69,7 +73,9 @@ const CheckoutForm = (props) => {
                         name="postal"
                         placeholder="e.g. 1234 AB"
                         value={orderDetails.postal}
-                        onChange={onChange} />
+                        onChange={onChange} 
+                        required
+                        pattern="/^[0-9]{4}[A-z]{20$}/"/>
                 </label>
                 <br />
                 <label>
@@ -79,7 +85,8 @@ const CheckoutForm = (props) => {
                         name="city"
                         placeholder="e.g. Eindhoven"
                         value={orderDetails.city}
-                        onChange={onChange} />
+                        onChange={onChange} 
+                        required/>
                 </label>
                 <br />
                 <input type="submit" value="Finish your order" />

@@ -41,7 +41,12 @@ const CheckoutPage = () => {
                     history.push("/")
                 }
             }).catch(err => {
-                alert(err.response.data)
+                if(err == null){
+                    alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                }
+                else{
+                    alert(err)
+                }
             })
         } else {
             alert("Please pay before finishing checkout")

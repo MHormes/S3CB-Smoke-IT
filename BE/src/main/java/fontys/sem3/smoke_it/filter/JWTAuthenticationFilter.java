@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fontys.sem3.smoke_it.config.AuthenticationConfigConstants;
 import fontys.sem3.smoke_it.model.UserModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

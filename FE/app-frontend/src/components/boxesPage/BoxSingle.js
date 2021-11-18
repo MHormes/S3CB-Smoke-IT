@@ -58,6 +58,15 @@ const BoxSingle = (props) => {
         }).then(res => {
             if(res.status === 200){
                     console.log("Delete was successfull")
+            }else{
+                alert(res.status)
+            }
+        }).catch(err => {
+            if(err == null){
+                alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+            }
+            else{
+                alert(err)
             }
         })
         history.push("/boxes");

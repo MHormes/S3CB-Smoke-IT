@@ -17,10 +17,13 @@ const BoxList = (props) => {
         if (mounted) {
             axios.get(urls.baseURL + urls.boxesURL)
                 .then(res => {
-                    if (res.data.status === 200) {
-                        setBoxes(res.data);
-                    } else {
-                        alert("You are not connected with the BE")
+                    setBoxes(res.data);
+                }).catch(err => {
+                    if(err.status == null){
+                        alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                    }
+                    else{
+                        alert(err.status)
                     }
                 });
         }

@@ -27,7 +27,7 @@ const SelectedBoxPrice = (props) => {
             props.getCheckoutDetailsProps(checkoutDetails)
         }
         else {
-            alert("Please select a duration and amount before continuing")
+            alert("Please select a amount and frequency before continuing")
         }
     }
 
@@ -38,6 +38,13 @@ const SelectedBoxPrice = (props) => {
         axios.get(urls.baseURL + urls.boxesURL + selectedBox.id + "/" + urls.boxesGetPrice, { params: { amount: number } })
             .then(res => {
                 setPrice(res.data)
+            }).catch(err =>{
+                if(err.status == null){
+                    alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                }
+                else{
+                    alert(err.status)
+                }
             })
     }
 

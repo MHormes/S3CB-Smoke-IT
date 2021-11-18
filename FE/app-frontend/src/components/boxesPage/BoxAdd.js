@@ -64,7 +64,7 @@ const BoxAdd = (props) => {
             return;
         }
 
-        if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim() && boxDetails.basePrice >= 0.00) {
+        if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim() && boxDetails.basePrice > 0.00) {
             addBoxInBE(boxDetails, formData);
 
             //clear the state
@@ -110,7 +110,8 @@ const BoxAdd = (props) => {
                     name="name"
                     placeholder="Insert a name"
                     value={boxDetails.name}
-                    onChange={onChange} />
+                    onChange={onChange}
+                    required/>
             </label>
             <br />
             <label>
@@ -121,7 +122,8 @@ const BoxAdd = (props) => {
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <label>
@@ -129,9 +131,10 @@ const BoxAdd = (props) => {
                 <input
                     type="text"
                     name="content"
-                    placeholder="Insert the content"
+                    placeholder="Items separated with commas (,) will be listed below each other on the box page"
                     value={boxDetails.content}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <label>
@@ -141,7 +144,8 @@ const BoxAdd = (props) => {
                     name="description"
                     placeholder="Insert a description"
                     value={boxDetails.description}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <input type="submit" value="Submit" />

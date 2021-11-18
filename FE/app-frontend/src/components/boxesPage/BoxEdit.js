@@ -40,7 +40,12 @@ const BoxEdit = (props) => {
                 console.log("Update successfull")
             }
         }).catch(err => {
-            alert(err.response.data)
+            if(err.status == null){
+                alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+            }
+            else{
+                alert(err.status)
+            }
         })
     }
 
@@ -57,10 +62,18 @@ const BoxEdit = (props) => {
         e.preventDefault();
 
         let formData = new FormData()
-        formData.append(
-            'imageFile',
-            selectedFile
-        )
+        if(selectedFile != null){
+            formData.append(
+                'imageFile',
+                selectedFile
+            )
+        }else{
+            formData.append(
+                'imageFile',
+                ""
+            )
+        }
+       
 
         if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim()) {
             editBoxInBE(boxToEdit.id, formData);
@@ -91,7 +104,7 @@ const BoxEdit = (props) => {
         <form onSubmit={handleSubmit}>
             <h1>Edit an existing box</h1>
             <label>
-                Upload a new picture:
+                Upload a new picture (overrides the old picture):
                 <br />
                 <input
                     type="file"
@@ -107,7 +120,8 @@ const BoxEdit = (props) => {
                     name="name"
                     placeholder="Insert a name"
                     value={boxDetails.name}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <label>
@@ -118,7 +132,8 @@ const BoxEdit = (props) => {
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <label>
@@ -126,9 +141,10 @@ const BoxEdit = (props) => {
                 <input
                     type="text"
                     name="content"
-                    placeholder="Insert the content"
+                    placeholder="Items separated with commas (,) will be listed below each other on the box page"
                     value={boxDetails.content}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <label>
@@ -138,7 +154,8 @@ const BoxEdit = (props) => {
                     name="description"
                     placeholder="Insert a description"
                     value={boxDetails.description}
-                    onChange={onChange} />
+                    onChange={onChange} 
+                    required/>
             </label>
             <br />
             <input type="submit" value="Submit" />

@@ -88,8 +88,12 @@ public class BoxController {
 
     @PutMapping(value = "/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<BoxDTO> updateBox(@ModelAttribute BoxDTO boxDTO) {
-        //create new file path
-        createImageFilePath(boxDTO);
+        if(boxDTO.getImageFile() != null){
+            //create new file path
+            createImageFilePath(boxDTO);
+        }else{
+            boxDTO.setImagePath(Path.of(""));
+        }
 
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
         if (!boxService.updateBox(boxModel)) {

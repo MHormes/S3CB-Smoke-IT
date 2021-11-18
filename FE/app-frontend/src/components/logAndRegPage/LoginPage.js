@@ -20,8 +20,14 @@ const LoginPage = (props) => {
                 props.handleLoginProps(decodedJWT.role, jwtToken)
             })
             .catch(err => {
-                if(err.response.status === 403){
+                if (err.response.status === 403) {
                     alert("Your login details are incorrect")
+                }
+                else if (err.status == null) {
+                    alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                }
+                else {
+                    alert(err.status)
                 }
             })
     }
