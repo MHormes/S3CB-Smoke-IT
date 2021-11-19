@@ -51,8 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/boxes/update").hasAnyAuthority("ADMIN")
                 .antMatchers("/boxes/delete/{id}").hasAnyAuthority("ADMIN")
                 //configuration of orders endpoints
-                .antMatchers("/orders/").permitAll()
+                .antMatchers("/orders/create/").permitAll()
                 .antMatchers("/orders/{id}").hasAnyAuthority("ADMIN")
+                .antMatchers("/orders/grouped").hasAnyAuthority("ADMIN")
+                .antMatchers("/orders/grouped/{id}").hasAnyAuthority("ADMIN")
                 //configuration of user endpoints
                 .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
                 .antMatchers("/login").permitAll()

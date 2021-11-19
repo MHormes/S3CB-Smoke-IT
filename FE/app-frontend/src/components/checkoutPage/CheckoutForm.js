@@ -52,7 +52,7 @@ const CheckoutForm = (props) => {
                         value={orderDetails.email}
                         onChange={onChange} 
                         required
-                        pattern="/^\S+@\S+\.\S+$/"/>
+                        pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'/>
                 </label>
                 <br />
                 <label>
@@ -75,7 +75,7 @@ const CheckoutForm = (props) => {
                         value={orderDetails.postal}
                         onChange={onChange} 
                         required
-                        pattern="/^[0-9]{4}[A-z]{20$}/"/>
+                        pattern="^[0-9]{4}[A-z]{2}$"/>
                 </label>
                 <br />
                 <label>
