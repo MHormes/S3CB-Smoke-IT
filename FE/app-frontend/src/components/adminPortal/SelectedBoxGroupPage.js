@@ -38,7 +38,8 @@ const SelectedBoxGroupPage = (props) => {
                 {orders.map(order => (
                     <SingleSelectedBoxGroupPage
                     key={order.id} 
-                    order={order}/>
+                    order={order}
+                    selectOrderProps={props.selectOrderProps}/>
                 ))}
             </ul>
         </>

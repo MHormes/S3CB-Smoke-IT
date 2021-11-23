@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -23,8 +25,15 @@ public class OrderModel {
     private int amount;
     @Column(name="frequency")
     private int frequency;
+
+    //SUBCJECT TO CHANGES
+    @Column(name="date")
+    private LocalDate deliverDate;
+    @Column(name="packed")
+    private Boolean packed;
+
     @Column(name="name")
-    private String name;
+    private String name;    
     @Column(name="email")
     private String email;
     @Column(name="address")

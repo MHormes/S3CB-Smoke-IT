@@ -18,7 +18,7 @@ const BoxesGroupedPage = (props) => {
             }).then(res => {
                 setGroupedBoxes(res.data);
             }).catch(err => {
-                if (err == null) {
+                if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                 }
                 else {

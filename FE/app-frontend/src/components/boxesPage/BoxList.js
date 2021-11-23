@@ -19,10 +19,10 @@ const BoxList = (props) => {
                 .then(res => {
                     setBoxes(res.data);
                 }).catch(err => {
-                    if(err.status == null){
+                    if (err.status == null) {
                         alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                     }
-                    else{
+                    else {
                         alert(err.status)
                     }
                 });
@@ -52,7 +52,7 @@ const BoxList = (props) => {
             <ul>
                 {boxes.map(box => (
                     <BoxSingle
-                        getSelectedBoxProps={props.getSelectedBoxProps}
+                        selectBoxProps={props.selectBoxProps}
                         getBoxToEditProps={props.getBoxToEditProps}
                         key={box.id}
                         box={box}

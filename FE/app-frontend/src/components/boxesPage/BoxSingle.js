@@ -14,7 +14,7 @@ const BoxSingle = (props) => {
 
     const selectBox = (selectedBox) => {
         localStorage.setItem("selectedBox", JSON.stringify(selectedBox))
-        props.getSelectedBoxProps(selectedBox)
+        props.selectBoxProps()
     }
 
     //Element for update button 

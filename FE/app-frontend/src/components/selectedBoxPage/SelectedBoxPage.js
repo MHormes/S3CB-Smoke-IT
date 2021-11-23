@@ -6,7 +6,7 @@ const SelectedBoxPage = (props) => {
 
     const selectedBox = JSON.parse(localStorage.getItem("selectedBox"))
 
-    if (selectedBox == null) return <h1>no box selected</h1>
+    if (!selectedBox) return <h1>no box selected</h1>
     return (
         <>
             <h1>{selectedBox.name}</h1>

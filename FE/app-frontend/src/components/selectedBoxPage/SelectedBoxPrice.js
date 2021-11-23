@@ -35,7 +35,7 @@ const SelectedBoxPrice = (props) => {
 
     const changePrice = (number) => {
         setAmountSelected(number)
-        axios.get(urls.baseURL + urls.boxesURL + selectedBox.id + "/" + urls.boxesGetPrice, { params: { amount: number } })
+        axios.get(urls.baseURL + urls.boxesURL + selectedBox.id + urls.boxesGetPrice, { params: { amount: number } })
             .then(res => {
                 setPrice(res.data)
             }).catch(err =>{

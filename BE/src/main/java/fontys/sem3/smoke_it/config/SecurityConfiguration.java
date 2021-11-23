@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //configuration of boxes end points
                 .antMatchers("/boxes/").permitAll()
                 .antMatchers("/boxes/{id}").permitAll()
-                .antMatchers("/boxes/{id}/price/*").permitAll()
+                .antMatchers("/boxes/{id}/price/{id}").permitAll()
                 .antMatchers("/boxes/sort").permitAll()
                 .antMatchers("/boxes/create").hasAnyAuthority("ADMIN")
                 .antMatchers("/boxes/update").hasAnyAuthority("ADMIN")

@@ -16,7 +16,6 @@ const LoginPage = (props) => {
             .then(res => {
                 var jwtToken = res.data.Authorization
                 var decodedJWT = jwt_decode(jwtToken)
-                console.log(decodedJWT)
                 props.handleLoginProps(decodedJWT.role, jwtToken)
             })
             .catch(err => {

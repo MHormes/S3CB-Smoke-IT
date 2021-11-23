@@ -20,7 +20,7 @@ const BoxEdit = (props) => {
     )
 
     //State for picture upload
-    const [selectedFile, setSelectedFile] = useState("");
+    const [selectedFile, setSelectedFile] = useState();
 
     //method to call edit endpoint
     const editBoxInBE = (id, file) => {
@@ -40,11 +40,13 @@ const BoxEdit = (props) => {
                 console.log("Update successfull")
             }
         }).catch(err => {
-            if(err.status == null){
+            if (!err) {
                 alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                return false
             }
-            else{
-                alert(err.status)
+            else {
+                alert("Your update did not work, please check all your input fields")
+                return false
             }
         })
     }
@@ -62,35 +64,35 @@ const BoxEdit = (props) => {
         e.preventDefault();
 
         let formData = new FormData()
-        if(selectedFile != null){
+        if (selectedFile != null) {
             formData.append(
                 'imageFile',
                 selectedFile
             )
-        }else{
+        } else {
             formData.append(
                 'imageFile',
-                ""
+                null
             )
         }
-       
+
 
         if (boxDetails.name.trim() && boxDetails.content.trim() && boxDetails.description.trim()) {
-            editBoxInBE(boxToEdit.id, formData);
+            if (editBoxInBE(boxToEdit.id, formData)) {
+                //clear the state
+                setBoxDetails({
+                    name: "",
+                    basePrice: 0,
+                    content: "",
+                    description: "",
+                })
 
-            //clear the state
-            setBoxDetails({
-                name: "",
-                basePrice: 0,
-                content: "",
-                description: "",
-            })
+                //clear file state
+                setSelectedFile(null)
 
-            //clear file state
-            setSelectedFile(null)
-
-            //redirect to boxes page (refreshes)
-            history.push("/boxes")
+                //redirect to boxes page (refreshes)
+                history.push("/boxes")
+            }
         }
         else {
             alert("Please fill in all fields")
@@ -120,8 +122,8 @@ const BoxEdit = (props) => {
                     name="name"
                     placeholder="Insert a name"
                     value={boxDetails.name}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <label>
@@ -132,8 +134,8 @@ const BoxEdit = (props) => {
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <label>
@@ -143,8 +145,8 @@ const BoxEdit = (props) => {
                     name="content"
                     placeholder="Items separated with commas (,) will be listed below each other on the box page"
                     value={boxDetails.content}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <label>
@@ -154,8 +156,8 @@ const BoxEdit = (props) => {
                     name="description"
                     placeholder="Insert a description"
                     value={boxDetails.description}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <input type="submit" value="Submit" />

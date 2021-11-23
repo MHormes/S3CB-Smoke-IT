@@ -16,6 +16,7 @@ import BoxesGroupedPage from "./adminPortal/BoxesGroupedPage";
 import CheckoutDone from "./checkoutPage/CheckoutDone";
 import Cookies from "universal-cookie";
 import SelectedBoxGroupPage from "./adminPortal/SelectedBoxGroupPage";
+import SelectedOrderPage from "./adminPortal/SelectedOrderPage";
 
 const MainContainer = () => {
 
@@ -44,10 +45,7 @@ const MainContainer = () => {
         history.push("/")
     }
 
-
-    const [selectedBox, setSelectedBox] = useState()
-    const getSelectedBox = (box) => {
-        setSelectedBox(box)
+    const selectBox = () => {
         history.push("/boxes/selectedBox")
     }
 
@@ -60,6 +58,7 @@ const MainContainer = () => {
     const [orderObject, setOrderObject] = useState()
     const finishCheckout = (orderObject) => {
         setOrderObject(orderObject)
+        localStorage.removeItem("checkoutDetails")
         history.push("/boxes/selectedBox/checkout/finish")
     }
 
@@ -75,6 +74,10 @@ const MainContainer = () => {
         history.push("/adminPortal/selectedGroup")
     }
 
+    const selectOrder = () => {
+        history.push("/adminPortal/selectedOrder")
+    }
+
 
     return (
         <>
@@ -88,14 +91,13 @@ const MainContainer = () => {
                 </Route>
                 <Route exact path="/boxes">
                     <BoxList
-                        getSelectedBoxProps={getSelectedBox}
+                        selectBoxProps={selectBox}
                         getBoxToEditProps={getBoxToEdit}
                         jwtTokenProps={cookies.get("jwtToken")}
                     />
                 </Route>
                 <Route exact path="/boxes/selectedBox">
                     <SelectedBoxPage
-                        selectedBoxProps={selectedBox}
                         getCheckoutDetailsProps={getCheckoutDetails}
                     />
                 </Route>
@@ -120,6 +122,11 @@ const MainContainer = () => {
                         handleLogoutProps={handleLogout}
                     />
                 </Route>
+                <Route exact path="/adminPortal/selectedOrder">
+                    <SelectedOrderPage
+                        jwtTokenProps={cookies.get("jwtToken")}
+                    />
+                </Route>
                 {localStorage.getItem("adminLog") === "true" ?
                     <Route exact path="/adminPortal">
                         <BoxesGroupedPage
@@ -135,6 +142,7 @@ const MainContainer = () => {
                         <SelectedBoxGroupPage
                             jwtTokenProps={cookies.get("jwtToken")}
                             boxIdForOrderGroupProps={boxIdForOrderGroup}
+                            selectOrderProps={selectOrder}
                         />
                     </Route>
                     :
