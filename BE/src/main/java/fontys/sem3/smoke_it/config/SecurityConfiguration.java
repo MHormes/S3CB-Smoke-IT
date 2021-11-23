@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
 
-        http.cors().configurationSource(request -> corsConfiguration).and().csrf().disable().authorizeRequests()
+        http.cors().configurationSource(request -> corsConfiguration).and().authorizeRequests()
                 .antMatchers("/h2-ui/**").permitAll()
                 //configuration of boxes end points
                 .antMatchers("/boxes/").permitAll()
@@ -71,7 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
-        http.csrf().disable();
+        //http.csrf().disable();
+        //.csrf().disable()
         http.headers().frameOptions().disable();
     }
 
