@@ -30,23 +30,55 @@ const SelectedOrderPage = (props) => {
         return () => mounted = false;
     }, [])
 
+    const setOrderAsPacked = (orderId) => {
+        console.log("I have been packed")
+    }
+
+    const unsetOrderAsPacked = (orderId) => {
+        console.log("I have been unpacked")
+    }
+
+    const setOrderAsSend = (orderId) => {
+        console.log("I have been packed")
+    }
+
+
+    const packButtonNeeded = () => {
+        return (
+            <button onClick={() => setOrderAsPacked(selectedOrder.orderId)}>
+                Set box as packed
+            </button>
+        )
+    }
+    const packButtonPacked = () => {
+        return (
+            <button onClick={() => unsetOrderAsPacked(selectedOrder.orderId)}>
+                Remove box from packed list
+            </button>
+        )
+    }
+    let packButton = null;
+    if (selectedOrder.packed != true) {
+        packButton = packButtonNeeded();
+    } else {
+        packButton = packButtonPacked();
+    }
+
     if (!orderedBox || !selectedOrder || !orderedBoxId) return null
     return (
         <>
-        <p>Order: {selectedOrder.id}</p>
-        <p>Box must be send every: {selectedOrder.frequency}</p>
-        <p>Including this box there are: {selectedOrder.amount} boxes left in this subscription</p>
+            <p>Order id:{selectedOrder.orderId}. For subscription with id: {selectedOrder.subscriptionId}</p>
+            <p>Box must be send every: {selectedOrder.frequency} months</p>
+            <p>Including this box there are: {selectedOrder.amountLeft + 1} boxes left in this subscription</p>
             <SelectedOrderBox
-                jwtTokenProps={props.jwtTokenProps}
                 orderedBoxProps={orderedBox}
             />
             <SelectedOrderShipping
-                jwtTokenProps={props.jwtTokenProps}
                 shippingDetailsProps={selectedOrder}
             />
+            {packButton} <button onClick={() => setOrderAsSend(selectedOrder.orderId)}>Send box</button>
         </>
     )
-
 }
 
 export default SelectedOrderPage

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SingleBoxGroupPage = (props) => {
+const BoxesGroupedSingle = (props) => {
 
     const boxGroup = props.box
     const selectBoxGroup = () => {
@@ -16,4 +16,4 @@ const SingleBoxGroupPage = (props) => {
     )
 }
 
-export default SingleBoxGroupPage
+export default BoxesGroupedSingle

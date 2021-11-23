@@ -32,7 +32,6 @@ public class SubscriptionController {
     public ResponseEntity<SubscriptionModel> createSubscription(@RequestBody SubscriptionDTO subscriptionDTO) throws MessagingException, IOException {
         SubscriptionModel subscription = modelConverter.convertDTOToModel(subscriptionDTO);
         if (subscriptionService.createSubscription(subscription)) {
-            subscriptionService.createOrder(subscription.getId());
             //Email needs later fix
             //orderService.sendEmail();
             return ResponseEntity.ok().body(subscription);
@@ -41,7 +40,7 @@ public class SubscriptionController {
         return new ResponseEntity(entity, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/orders/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable(value = "id") String id) {
         OrderModel orderModel = subscriptionService.getOrder(Long.parseLong(id));
         if (orderModel != null) {

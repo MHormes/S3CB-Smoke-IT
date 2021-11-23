@@ -2,9 +2,9 @@ import React from "react";
 
 const CheckoutPayment = (props) => {
 
-    const price = props.pricePerBoxProps*props.amountOfBoxesProps
+    const price = (props.pricePerBoxProps * props.amountOfBoxesProps)
 
-    const handlePayment = () =>{
+    const handlePayment = () => {
         console.log("paid")
         props.setPaymentCheckProps(true);
     }

@@ -55,9 +55,9 @@ const MainContainer = () => {
         history.push("/boxes/selectedBox/checkout")
     }
 
-    const [orderObject, setOrderObject] = useState()
-    const finishCheckout = (orderObject) => {
-        setOrderObject(orderObject)
+    const [subscriptionObject, setSubscriptionObject] = useState()
+    const finishCheckout = (subscriptionObject) => {
+        setSubscriptionObject(subscriptionObject)
         localStorage.removeItem("checkoutDetails")
         history.push("/boxes/selectedBox/checkout/finish")
     }
@@ -166,10 +166,10 @@ const MainContainer = () => {
                     :
                     <Redirect to="/" />
                 }
-                {orderObject != null ?
+                {subscriptionObject != null ?
                     <Route path="/boxes/selectedBox/checkout/finish">
                         <CheckoutDone
-                            orderObjectProps={orderObject}
+                            subscriptionObjectProps={subscriptionObject}
                         />
                     </Route>
                     :

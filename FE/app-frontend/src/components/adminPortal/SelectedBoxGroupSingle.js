@@ -1,15 +1,15 @@
 import React from "react";
 
-const SingleSelectedBoxGroupPage = (props) => {
+const SelectedBoxGroupSingle = (props) => {
 
     const order = props.order
     const selectOrderFunction = () => {
         localStorage.setItem("selectedOrder", JSON.stringify(order))
         props.selectOrderProps()
     }
-    
+
     return (
-        <li>    
+        <li>
             <div onClick={selectOrderFunction}>
                 <p>{order.name} {order.city}</p>
             </div>
@@ -17,4 +17,4 @@ const SingleSelectedBoxGroupPage = (props) => {
     )
 }
 
-export default SingleSelectedBoxGroupPage
+export default SelectedBoxGroupSingle

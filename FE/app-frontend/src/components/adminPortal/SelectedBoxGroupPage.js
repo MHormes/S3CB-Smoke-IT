@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import * as urls from "./../../URL";
 import axios from "axios";
-import SingleSelectedBoxGroupPage from "./SingleSelectedBoxGroupPage"
+import SelectedBoxGroupSingle from "./SelectedBoxGroupSingle"
 
 const SelectedBoxGroupPage = (props) => {
 
@@ -11,7 +11,7 @@ const SelectedBoxGroupPage = (props) => {
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            axios.get(urls.baseURL + urls.ordersURL + urls.ordersGrouped+props.boxIdForOrderGroupProps, {
+            axios.get(urls.baseURL + urls.subscriptionURL + urls.ordersGrouped + props.boxIdForOrderGroupProps, {
                 headers: {
                     'Authorization': jwtToken
                 }
@@ -22,24 +22,24 @@ const SelectedBoxGroupPage = (props) => {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                 }
                 else {
-                    alert(err.status)
+                    alert(err)
                 }
             });
         }
 
         return () => mounted = false;
-    })
-
+    }, [])
+    
     if (!orders) return null
 
-    return(
+    return (
         <>
-        <ul>
+            <ul>
                 {orders.map(order => (
-                    <SingleSelectedBoxGroupPage
-                    key={order.id} 
-                    order={order}
-                    selectOrderProps={props.selectOrderProps}/>
+                    <SelectedBoxGroupSingle
+                        key={order.id}
+                        order={order}
+                        selectOrderProps={props.selectOrderProps} />
                 ))}
             </ul>
         </>

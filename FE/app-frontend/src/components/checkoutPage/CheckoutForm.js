@@ -19,13 +19,13 @@ const CheckoutForm = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        if(orderDetails.name.trim() && orderDetails.email.trim() && orderDetails.address.trim() && orderDetails.postal.trim() && orderDetails.city.trim()){
-            props.assignOrderObjectProps(orderDetails)
+        if (orderDetails.name.trim() && orderDetails.email.trim() && orderDetails.address.trim() && orderDetails.postal.trim() && orderDetails.city.trim()) {
+            props.assignSubscriptionObjectProps(orderDetails)
         }
-        else{
+        else {
             alert("Please fill in all fields")
         }
-        
+
     }
 
     return (
@@ -39,8 +39,8 @@ const CheckoutForm = (props) => {
                         name="name"
                         placeholder="e.g. John Doe"
                         value={orderDetails.name}
-                        onChange={onChange} 
-                        required/>
+                        onChange={onChange}
+                        required />
                 </label>
                 <br />
                 <label>
@@ -50,9 +50,9 @@ const CheckoutForm = (props) => {
                         name="email"
                         placeholder="e.g. john.doe@gmail.com"
                         value={orderDetails.email}
-                        onChange={onChange} 
+                        onChange={onChange}
                         required
-                        pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'/>
+                        pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' />
                 </label>
                 <br />
                 <label>
@@ -62,8 +62,8 @@ const CheckoutForm = (props) => {
                         name="address"
                         placeholder="e.g. Rachelsmolen 10"
                         value={orderDetails.address}
-                        onChange={onChange} 
-                        required/>
+                        onChange={onChange}
+                        required />
                 </label>
                 <br />
                 <label>
@@ -73,9 +73,9 @@ const CheckoutForm = (props) => {
                         name="postal"
                         placeholder="e.g. 1234 AB"
                         value={orderDetails.postal}
-                        onChange={onChange} 
+                        onChange={onChange}
                         required
-                        pattern="^[0-9]{4}[A-z]{2}$"/>
+                        pattern="^[0-9]{4}[A-z]{2}$" />
                 </label>
                 <br />
                 <label>
@@ -85,8 +85,8 @@ const CheckoutForm = (props) => {
                         name="city"
                         placeholder="e.g. Eindhoven"
                         value={orderDetails.city}
-                        onChange={onChange} 
-                        required/>
+                        onChange={onChange}
+                        required />
                 </label>
                 <br />
                 <input type="submit" value="Finish your order" />

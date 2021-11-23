@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import * as urls from "./../../URL"
-import SingleBoxGroupPage from "./SingleBoxGroupPage"
+import BoxesGroupedSingle from "./BoxesGroupedSingle"
 
 const BoxesGroupedPage = (props) => {
 
@@ -11,7 +11,7 @@ const BoxesGroupedPage = (props) => {
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            axios.get(urls.baseURL + urls.ordersURL + urls.ordersGrouped, {
+            axios.get(urls.baseURL + urls.subscriptionURL + urls.ordersGrouped, {
                 headers: {
                     'Authorization': jwtToken
                 }
@@ -28,7 +28,7 @@ const BoxesGroupedPage = (props) => {
         }
 
         return () => mounted = false;
-    })
+    }, [])
 
     if (!groupedBoxes) return null
 
@@ -36,10 +36,10 @@ const BoxesGroupedPage = (props) => {
         <>
             <ul>
                 {groupedBoxes.map(boxGroup => (
-                    <SingleBoxGroupPage
-                    selectGroupedBoxesProps={props.selectGroupedBoxesProps}
-                    key={boxGroup.boxID} 
-                    box={boxGroup}/>
+                    <BoxesGroupedSingle
+                        selectGroupedBoxesProps={props.selectGroupedBoxesProps}
+                        key={boxGroup.boxID}
+                        box={boxGroup} />
                 ))}
             </ul>
         </>

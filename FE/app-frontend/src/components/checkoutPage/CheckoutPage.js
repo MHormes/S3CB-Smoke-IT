@@ -10,16 +10,15 @@ const CheckoutPage = (props) => {
     //get the checkout details from the local storage. In here i saved the box and subscription details.
     const checkoutDetails = JSON.parse(localStorage.getItem("checkoutDetails"))
 
-
-    const [orderObject, setOrderObject] = useState()
+    const [subscriptionObject, setSubscriptionObject] = useState()
 
     const [paymentCheck, setPaymentCheck] = useState()
 
-    const assignOrderObject = (orderDetails) => {
-        setOrderObject({
+    const assignSubscriptionObject = (orderDetails) => {
+        setSubscriptionObject({
             boxId: checkoutDetails.boxId,
             userId: 0,
-            amount: checkoutDetails.amount,
+            amountBought: checkoutDetails.amount,
             frequency: checkoutDetails.frequency,
             name: orderDetails.name,
             email: orderDetails.email,
@@ -27,21 +26,21 @@ const CheckoutPage = (props) => {
             postal: orderDetails.postal,
             city: orderDetails.city
         })
-        addOrderInBE(orderObject)
+        addSubscriptionInBE(subscriptionObject)
     }
 
-    const addOrderInBE = (orderObject) => {
+    const addSubscriptionInBE = (subscriptionObject) => {
         if (paymentCheck) {
-            axios.post(urls.baseURL+urls.ordersURL+urls.placeOrder, orderObject).then(res=>{
+            axios.post(urls.baseURL + urls.subscriptionURL + urls.createSub, subscriptionObject).then(res => {
                 console.log(res.data)
                 if (res.status === 200) {
-                    props.finishCheckoutProps(orderObject)
+                    props.finishCheckoutProps(subscriptionObject)
                 }
             }).catch(err => {
-                if(err == null){
+                if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                 }
-                else{
+                else {
                     alert(err)
                 }
             })
@@ -60,11 +59,11 @@ const CheckoutPage = (props) => {
             <CheckoutSummary
                 checkoutDetailsProps={checkoutDetails} />
             <CheckoutForm
-                assignOrderObjectProps={assignOrderObject} />
+                assignSubscriptionObjectProps={assignSubscriptionObject} />
             <CheckoutPayment
                 setPaymentCheckProps={setPaymentCheckInSate}
-                pricePerBoxProps={checkoutDetails.basePrice} 
-                amountOfBoxesProps={checkoutDetails.amount}/>
+                pricePerBoxProps={checkoutDetails.basePrice}
+                amountOfBoxesProps={checkoutDetails.amount} />
         </>
     )
 }
