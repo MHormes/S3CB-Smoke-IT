@@ -2,7 +2,6 @@ package fontys.sem3.smoke_it.controller;
 
 import fontys.sem3.smoke_it.model.*;
 import fontys.sem3.smoke_it.model.modelconverters.SubscriptionModelConverter;
-import fontys.sem3.smoke_it.service.SubscriptionService;
 import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
