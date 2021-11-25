@@ -1,5 +1,3 @@
-import react from "react";
-
 const SelectedOrderBox = (props) => {
     const orderedBox = props.orderedBoxProps
 

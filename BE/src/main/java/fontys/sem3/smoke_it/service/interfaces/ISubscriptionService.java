@@ -14,20 +14,21 @@ public interface ISubscriptionService {
     SubscriptionModel getSubscriptionById(Long id);
 
     List<SubscriptionModel> getActiveSubscriptions(String id);
-//
+
+    List<SubscriptionModel> getSubscriptionsForUserId(Long id);
+
 //    void sendEmail() throws AddressException, MessagingException, IOException;
 
     void createOrder(Long subscriptionId);
 
-    LocalDate calculateNextOrderDate();
 
     OrderModel getOrder(Long id);
 
     List<GroupedOrders> getAllOrdersGrouped();
 
-    OrderModel getOrderBySubscriptionId(Long subscriptionID);
+    OrderModel getActiveOrderBySubscriptionId(Long subscriptionID);
 
-    void setOrderAsPacked(Long id);
+    void toggleOrderPacked(Long id);
 
-    void setOrderAsShipped(Long id);
+    OrderModel setOrderAsShipped(Long id);
 }

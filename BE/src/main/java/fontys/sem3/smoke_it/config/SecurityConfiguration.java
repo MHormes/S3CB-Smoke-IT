@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/boxes/delete/{id}").hasAnyAuthority("ADMIN")
                 //configuration of orders endpoints
                 .antMatchers("/subscriptions/create/").permitAll()
-                .antMatchers("/subscriptions/{id}").hasAnyAuthority("ADMIN")
+                .antMatchers("/subscriptions/{id}").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/subscriptions/grouped").hasAnyAuthority("ADMIN")
                 .antMatchers("/subscriptions/grouped/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers("/subscriptions/orders/send/{id}").hasAnyAuthority("ADMIN")

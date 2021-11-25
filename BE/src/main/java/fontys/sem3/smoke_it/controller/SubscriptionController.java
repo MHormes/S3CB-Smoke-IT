@@ -39,6 +39,12 @@ public class SubscriptionController {
         return new ResponseEntity(entity, HttpStatus.CONFLICT);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<List<SubscriptionModel>> getSubscriptionsForUserId(@PathVariable(value = "id")String id){
+            List<SubscriptionModel> subList = subscriptionService.getSubscriptionsForUserId(Long.parseLong(id));
+            return ResponseEntity.ok().body(subList);
+    }
+
     @GetMapping("/orders/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable(value = "id") String id) {
         OrderModel orderModel = subscriptionService.getOrder(Long.parseLong(id));
@@ -68,16 +74,18 @@ public class SubscriptionController {
         List<OrderDTO> returnList = new ArrayList<>();
         List<SubscriptionModel> activeSubscriptions = subscriptionService.getActiveSubscriptions(id);
         for (SubscriptionModel s : activeSubscriptions) {
-            OrderModel order = subscriptionService.getOrderBySubscriptionId(s.getId());
-            OrderDTO orderDTO = modelConverter.mergeOrderAndSubscription(order, s);
-            returnList.add(orderDTO);
+            OrderModel order = subscriptionService.getActiveOrderBySubscriptionId(s.getId());
+            if(order != null){
+                OrderDTO orderDTO = modelConverter.mergeOrderAndSubscription(order, s);
+                returnList.add(orderDTO);
+            }
         }
         return ResponseEntity.ok().body(returnList);
     }
 
     @PutMapping("/orders/pack/{id}")
-    public ResponseEntity<OrderDTO> setOrderAsPacked(@PathVariable(value = "id")String id){
-        subscriptionService.setOrderAsPacked(Long.parseLong(id));
+    public ResponseEntity<OrderDTO> toggleOrderPacked(@PathVariable(value = "id")String id){
+        subscriptionService.toggleOrderPacked(Long.parseLong(id));
         return this.getOrder(id);
     }
 

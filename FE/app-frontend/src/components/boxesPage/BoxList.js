@@ -19,7 +19,7 @@ const BoxList = (props) => {
                 .then(res => {
                     setBoxes(res.data);
                 }).catch(err => {
-                    if (err.status == null) {
+                    if (!err.status) {
                         alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                     }
                     else {

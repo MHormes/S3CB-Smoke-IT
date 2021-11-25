@@ -10,12 +10,10 @@ const CheckoutPage = (props) => {
     //get the checkout details from the local storage. In here i saved the box and subscription details.
     const checkoutDetails = JSON.parse(localStorage.getItem("checkoutDetails"))
 
-    const [subscriptionObject, setSubscriptionObject] = useState()
-
     const [paymentCheck, setPaymentCheck] = useState()
 
     const assignSubscriptionObject = (orderDetails) => {
-        setSubscriptionObject({
+        const subscriptionObject = {
             boxId: checkoutDetails.boxId,
             userId: 0,
             amountBought: checkoutDetails.amount,
@@ -25,16 +23,18 @@ const CheckoutPage = (props) => {
             address: orderDetails.address,
             postal: orderDetails.postal,
             city: orderDetails.city
-        })
+        }
         addSubscriptionInBE(subscriptionObject)
     }
 
     const addSubscriptionInBE = (subscriptionObject) => {
+        console.log(subscriptionObject)
         if (paymentCheck) {
-            axios.post(urls.baseURL + urls.subscriptionURL + urls.createSub, subscriptionObject).then(res => {
+            axios.post(urls.baseURL + urls.subscriptionURL + urls.createSub, subscriptionObject)
+            .then(res => {
                 console.log(res.data)
                 if (res.status === 200) {
-                    props.finishCheckoutProps(subscriptionObject)
+                    props.finishCheckoutProps(res.data)
                 }
             }).catch(err => {
                 if (!err) {
@@ -59,7 +59,8 @@ const CheckoutPage = (props) => {
             <CheckoutSummary
                 checkoutDetailsProps={checkoutDetails} />
             <CheckoutForm
-                assignSubscriptionObjectProps={assignSubscriptionObject} />
+                assignSubscriptionObjectProps={assignSubscriptionObject}
+                 />
             <CheckoutPayment
                 setPaymentCheckProps={setPaymentCheckInSate}
                 pricePerBoxProps={checkoutDetails.basePrice}

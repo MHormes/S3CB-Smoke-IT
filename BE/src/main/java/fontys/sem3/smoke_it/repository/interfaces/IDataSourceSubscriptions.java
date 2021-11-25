@@ -15,6 +15,8 @@ public interface IDataSourceSubscriptions {
 
     List<SubscriptionModel> getSubscriptionsByBoxId(String id);
 
+    List<SubscriptionModel> getSubscriptionsByUserId(Long id);
+
     void decreaseSubscriptionAmount(Long id);
 
     void createOrder(OrderModel orderModel);
@@ -23,9 +25,9 @@ public interface IDataSourceSubscriptions {
 
     List<GroupedOrders> getAllOrdersGrouped();
 
-    OrderModel getOrderBySubscriptionId(Long subscriptionId);
+    List<OrderModel> getOrdersBySubscriptionId(Long subscriptionId);
 
-    void setOrderAsPacked(Long id);
+    void toggleOrderPacked(Long id);
 
     OrderModel setOrderAsShipped(Long id);
 }

@@ -7,7 +7,7 @@ const SelectedBoxPrice = (props) => {
 
     const [price, setPrice] = useState(props.selectedBoxProps.basePrice)
     const selectedBox = props.selectedBoxProps;
-    const [monthSelection, setMonthSelection] = useState(0)
+    const [monthSelection, setMonthSelection] = useState(-1)
     const [amountSelected, setAmountSelected] = useState(0)
     var roundedPrice = price.toFixed(2)
 
@@ -22,7 +22,7 @@ const SelectedBoxPrice = (props) => {
             amount: amountSelected,
             price: roundedPrice
         }
-        if (monthSelection >= 1 && amountSelected >= 1) {
+        if (monthSelection >= 0 && amountSelected >= 1) {
             localStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
             props.getCheckoutDetailsProps(checkoutDetails)
         }

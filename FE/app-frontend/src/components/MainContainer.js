@@ -10,7 +10,9 @@ import BoxAdd from "./boxesPage/BoxAdd";
 import BoxEdit from "./boxesPage/BoxEdit";
 import LoginPage from "./logAndRegPage/LoginPage";
 import LogoutPage from "./logAndRegPage/LogoutPage";
+import RegistrationPage from "./logAndRegPage/RegistrationPage";
 import CheckoutPage from "./checkoutPage/CheckoutPage";
+import HistoryPage from "./historyPage/HistoryPage";
 import AboutUsPage from "./infoPage/AboutUsPage";
 import BoxesGroupedPage from "./adminPortal/BoxesGroupedPage";
 import CheckoutDone from "./checkoutPage/CheckoutDone";
@@ -122,20 +124,33 @@ const MainContainer = () => {
                         handleLogoutProps={handleLogout}
                     />
                 </Route>
-                <Route exact path="/adminPortal/selectedOrder">
-                    <SelectedOrderPage
-                        jwtTokenProps={cookies.get("jwtToken")}
+                <Route path="/register">
+                    <RegistrationPage
                     />
                 </Route>
-                {localStorage.getItem("adminLog") === "true" ?
+                <Route exact path="/adminPortal/selectedOrder">
+                    <SelectedOrderPage
+                    />
+                </Route>
+                {cookies.get("jwtToken") != null &&
+                    <Route exact path="/history/">
+                    <HistoryPage
+                    />
+                </Route>
+                }
+                {subscriptionObject != null &&
+                    <Route exact path="/boxes/selectedBox/checkout/finish">
+                        <CheckoutDone
+                            subscriptionObjectProps={subscriptionObject}
+                        />
+                    </Route>
+                }
+                {localStorage.getItem("adminLog") === "true" &&
                     <Route exact path="/adminPortal">
                         <BoxesGroupedPage
-                            jwtTokenProps={cookies.get("jwtToken")}
                             selectGroupedBoxesProps={selectGroupedBoxes}
                         />
                     </Route>
-                    :
-                    <Redirect to="/" />
                 }
                 {localStorage.getItem("adminLog") === "true" ?
                     <Route exact path="/adminPortal/selectedGroup">
@@ -161,15 +176,6 @@ const MainContainer = () => {
                         <BoxEdit
                             boxToEditProps={boxToEdit}
                             jwtTokenProps={cookies.get("jwtToken")}
-                        />
-                    </Route>
-                    :
-                    <Redirect to="/" />
-                }
-                {subscriptionObject != null ?
-                    <Route path="/boxes/selectedBox/checkout/finish">
-                        <CheckoutDone
-                            subscriptionObjectProps={subscriptionObject}
                         />
                     </Route>
                     :

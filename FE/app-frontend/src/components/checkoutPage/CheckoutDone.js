@@ -7,7 +7,7 @@ const CheckoutDone = (props) => {
     return (
         <>
             <p>Thank you {subscriptionObject.name} for placing your order</p>
-            <p>You will receive {subscriptionObject.amount} boxes, comming every {subscriptionObject.frequency} month(s)</p>
+            <p>You will receive {subscriptionObject.amountBought} boxes, coming every {subscriptionObject.frequency} month(s)</p>
             <p>An email with your order details will be send to {subscriptionObject.email}</p>
             <p>This email will contain the delivery date of the boxes</p>
             <p>The boxes will be delivered to {subscriptionObject.address} {subscriptionObject.city} ({subscriptionObject.postal})</p>

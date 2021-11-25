@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react"
+import jwtDecode from "jwt-decode"
+import react,  { useState, useEffect } from "react"
+import Cookies from "universal-cookie"
 import axios from "axios"
 import * as urls from "./../../URL"
-import Cookies from "universal-cookie";
-import BoxesGroupedSingle from "./BoxesGroupedSingle"
 
-const BoxesGroupedPage = (props) => {
+const HistoryPage = () => {
 
     const cookies = new Cookies()
     const jwtToken = cookies.get("jwtToken")
-    const [groupedBoxes, setGroupedBoxes] = useState()
-
+    const decodedJwt = jwtDecode(jwtToken)
+    
+    const [subscriptions, setSubscriptions] = useState()
+    
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            axios.get(urls.baseURL + urls.subscriptionURL + urls.ordersGrouped, {
+            axios.get(urls.baseURL + urls.subscriptionURL + decodedJwt.userId, {
                 headers: {
                     'Authorization': jwtToken
                 }
             }).then(res => {
-                setGroupedBoxes(res.data);
+                setSubscriptions(res.data);
             }).catch(err => {
                 if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
@@ -32,19 +34,15 @@ const BoxesGroupedPage = (props) => {
         return () => mounted = false;
     }, [])
 
-    if (!groupedBoxes) return null
+    if(!subscriptions) return <p>Any subscriptions you have orderd on this account will appear here (Page will give E500)</p>
 
-    return (
+    return(
+        //Return needs update after userid is included in JWT token
         <>
-            <ul>
-                {groupedBoxes.map(boxGroup => (
-                    <BoxesGroupedSingle
-                        selectGroupedBoxesProps={props.selectGroupedBoxesProps}
-                        key={boxGroup.boxID}
-                        box={boxGroup} />
-                ))}
-            </ul>
+        
         </>
     )
+
 }
-export default BoxesGroupedPage
+
+export default HistoryPage

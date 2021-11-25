@@ -37,6 +37,9 @@ public class UserService implements IUserService {
         if (byUsername != null) {
             return false;
         }
+        if(userModel.getRole() == null){
+            userModel.setRole("USER");
+        }
         userModel.setPassword(passEncoder.encode(userModel.getPassword()));
         return dataSource.createUserModel(userModel);
     }

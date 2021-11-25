@@ -40,13 +40,13 @@ const BoxEdit = (props) => {
                 console.log("Update successfull")
             }
         }).catch(err => {
-            if (!err) {
+            if (!err.status) {
                 alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-                return false
+                return
             }
             else {
                 alert("Your update did not work, please check all your input fields")
-                return false
+                return
             }
         })
     }

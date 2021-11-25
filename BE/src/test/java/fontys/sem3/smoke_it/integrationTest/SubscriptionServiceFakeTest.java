@@ -24,7 +24,7 @@ class SubscriptionServiceFakeTest {
         subscriptionService.createSubscription(sub);
 
         Assertions.assertEquals(sub, subscriptionService.getSubscriptionById(sub.getId()));
-        Assertions.assertNotNull(subscriptionService.getOrderBySubscriptionId(1L));
+        Assertions.assertNotNull(subscriptionService.getActiveOrderBySubscriptionId(1L));
     }
 
     @Test
@@ -35,7 +35,7 @@ class SubscriptionServiceFakeTest {
         subscriptionService.createSubscription(sub1);
         subscriptionService.createSubscription(sub2);
 
-        subscriptionService.setOrderAsShipped(subscriptionService.getOrderBySubscriptionId(2L).getId());
+        subscriptionService.setOrderAsShipped(subscriptionService.getActiveOrderBySubscriptionId(2L).getId());
 
 
         Assertions.assertEquals(subscriptionService.getActiveSubscriptions("1").get(0), sub1);

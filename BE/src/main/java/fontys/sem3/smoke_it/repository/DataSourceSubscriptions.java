@@ -37,6 +37,11 @@ public class DataSourceSubscriptions implements IDataSourceSubscriptions {
     }
 
     @Override
+    public List<SubscriptionModel> getSubscriptionsByUserId(Long id) {
+        return subRepo.getSubscriptionModelsByUserID(id);
+    }
+
+    @Override
     public void decreaseSubscriptionAmount(Long id) {
         SubscriptionModel subscriptionModel =  subRepo.getSubscriptionModelById(id);
         subscriptionModel.setAmountLeft(subscriptionModel.getAmountLeft() -1);
@@ -61,14 +66,14 @@ public class DataSourceSubscriptions implements IDataSourceSubscriptions {
 
 
     @Override
-    public OrderModel getOrderBySubscriptionId(Long subscriptionId) {
-        return orderRepo.getOrderModelBySubscriptionId(subscriptionId);
+    public List<OrderModel> getOrdersBySubscriptionId(Long subscriptionId) {
+        return orderRepo.getOrdersModelBySubscriptionId(subscriptionId);
     }
 
     @Override
-    public void setOrderAsPacked(Long id) {
+    public void toggleOrderPacked(Long id) {
         OrderModel orderModel = orderRepo.getOrderModelById(id);
-        orderModel.setPacked(true);
+        orderModel.setPacked(!orderModel.getPacked());
         orderRepo.save(orderModel);
     }
 

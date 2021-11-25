@@ -19,14 +19,19 @@ const BoxAdd = (props) => {
 
         axios.post(urls.baseURL + urls.boxesAddURL, file, {
             headers: {
-                'Authorization' : jwtToken
+                'Authorization': jwtToken
             }
         }).then(res => {
             if (res.status === 200) {
                 console.log("create successfull")
             }
         }).catch(err => {
-            alert(err.status)
+            if (!err.status) {
+                alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                return false
+            } else {
+                alert(err.status)
+            }
         })
     }
 
@@ -111,7 +116,7 @@ const BoxAdd = (props) => {
                     placeholder="Insert a name"
                     value={boxDetails.name}
                     onChange={onChange}
-                    required/>
+                    required />
             </label>
             <br />
             <label>
@@ -122,8 +127,8 @@ const BoxAdd = (props) => {
                     name="basePrice"
                     placeholder="Insert a base price"
                     value={boxDetails.basePrice}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <label>
@@ -133,8 +138,8 @@ const BoxAdd = (props) => {
                     name="content"
                     placeholder="Items separated with commas (,) will be listed below each other on the box page"
                     value={boxDetails.content}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <label>
@@ -144,8 +149,8 @@ const BoxAdd = (props) => {
                     name="description"
                     placeholder="Insert a description"
                     value={boxDetails.description}
-                    onChange={onChange} 
-                    required/>
+                    onChange={onChange}
+                    required />
             </label>
             <br />
             <input type="submit" value="Submit" />
