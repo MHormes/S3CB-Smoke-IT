@@ -24,5 +24,6 @@ public class OrderDTO {
     private String postal;
     private String city;
     private Boolean packed;
+    private Boolean shipped;
     private LocalDate deliveryDate;
 }

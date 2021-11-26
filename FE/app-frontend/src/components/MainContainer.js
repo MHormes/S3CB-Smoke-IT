@@ -71,8 +71,10 @@ const MainContainer = () => {
     }
 
     const [boxIdForOrderGroup, setBoxIdForOrderGroup] = useState()
-    const selectGroupedBoxes = (boxId) => {
-        setBoxIdForOrderGroup(boxId)
+    const [selectedBoxGroupName, setSelectedBoxGroupName] = useState()
+    const selectGroupedBoxes = (boxGroup) => {
+        setBoxIdForOrderGroup(boxGroup.boxID)
+        setSelectedBoxGroupName(boxGroup.boxName)
         history.push("/adminPortal/selectedGroup")
     }
 
@@ -157,6 +159,7 @@ const MainContainer = () => {
                         <SelectedBoxGroupPage
                             jwtTokenProps={cookies.get("jwtToken")}
                             boxIdForOrderGroupProps={boxIdForOrderGroup}
+                            selectedBoxGroupNameProps={selectedBoxGroupName}
                             selectOrderProps={selectOrder}
                         />
                     </Route>

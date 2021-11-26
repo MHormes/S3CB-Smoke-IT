@@ -18,8 +18,6 @@ const SelectedBoxContent = (props) => {
             <ul>
                 {contentItems}
             </ul>
-
-            <p>{selectedBox.content}</p>
         </>
     )
 }

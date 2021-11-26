@@ -12,6 +12,6 @@ public class SubscriptionModelConverter {
     }
 
     public OrderDTO mergeOrderAndSubscription(OrderModel o, SubscriptionModel s){
-        return new OrderDTO(o.getId(), s.getId(), s.getBoxId(), s.getUserID(), s.getAmountBought(), s.getAmountLeft(), s.getFrequency(), s.getEmail(), s.getName(), s.getAddress(), s.getPostal(), s.getCity(), o.getPacked(), o.getDeliverDate());
+        return new OrderDTO(o.getId(), s.getId(), s.getBoxId(), s.getUserID(), s.getAmountBought(), s.getAmountLeft(), s.getFrequency(), s.getEmail(), s.getName(), s.getAddress(), s.getPostal(), s.getCity(), o.getPacked(), o.getShipped(), o.getDeliverDate());
     }
 }

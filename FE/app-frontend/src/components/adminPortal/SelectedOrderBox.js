@@ -1,6 +1,7 @@
 const SelectedOrderBox = (props) => {
     const orderedBox = props.orderedBoxProps
 
+   
     return (
         <>
             <h1>Packing details:</h1>

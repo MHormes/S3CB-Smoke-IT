@@ -65,4 +65,12 @@ public class BoxServiceMockTest {
         Assertions.assertEquals(1 ,sortedList.get(1).getBasePrice());
     }
 
+    @Test
+    void testCalculateBoxPrice(){
+        double price = boxService.calculateBoxPrice(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1"), 2);
+        double expectedPrice = 0.96;
+
+        Assertions.assertEquals(expectedPrice, price);
+    }
+
 }

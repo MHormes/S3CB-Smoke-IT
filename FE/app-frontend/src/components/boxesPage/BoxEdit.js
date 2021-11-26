@@ -38,9 +38,10 @@ const BoxEdit = (props) => {
         ).then(res => {
             if (res.status === 200) {
                 console.log("Update successfull")
+                history.push("/boxes")
             }
         }).catch(err => {
-            if (!err.status) {
+            if (!err) {
                 alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                 return
             }

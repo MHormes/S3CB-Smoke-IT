@@ -6,6 +6,7 @@ import SelectedBoxGroupSingle from "./SelectedBoxGroupSingle"
 const SelectedBoxGroupPage = (props) => {
 
     const jwtToken = props.jwtTokenProps
+    const selectedBoxGroupName = props.selectedBoxGroupNameProps
     const [orders, setOrders] = useState()
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const SelectedBoxGroupPage = (props) => {
 
     return (
         <>
+        <h1>All orders for box {selectedBoxGroupName}</h1>
             <ul>
                 {orders.map(order => (
                     <SelectedBoxGroupSingle

@@ -22,7 +22,7 @@ const InfoPage = () => {
     return (
         <>
         {editButton}
-        <p>This is the information page. Here we user can view important stuff, and admins can edit</p>
+        <p>This is the information page. Here the user can view important stuff, and admins can edit</p>
         </>
     )
 }

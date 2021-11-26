@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -80,6 +83,12 @@ public class SubscriptionController {
                 returnList.add(orderDTO);
             }
         }
+        Collections.sort(returnList, new Comparator<OrderDTO>() {
+            @Override
+            public int compare(OrderDTO o1, OrderDTO o2) {
+                return o1.getDeliveryDate().compareTo(o2.getDeliveryDate());
+            }
+        });
         return ResponseEntity.ok().body(returnList);
     }
 
@@ -91,8 +100,11 @@ public class SubscriptionController {
 
     @PutMapping("/orders/send/{id}")
     public ResponseEntity setOrderAsShipped(@PathVariable(value="id")String id){
-        subscriptionService.setOrderAsShipped(Long.parseLong(id));
-        return ResponseEntity.ok().build();
+        if(subscriptionService.setOrderAsShipped(Long.parseLong(id)) != null){
+            return this.getOrder(id);
+        }
+        String entity = "It seems like the order has already been shipped";
+        return new ResponseEntity(entity, HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

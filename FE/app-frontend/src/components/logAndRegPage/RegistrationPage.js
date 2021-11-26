@@ -15,15 +15,16 @@ const RegistrationPage = (props) => {
     const registerToApp = (registrationDetails) => {
         axios.post(urls.baseURL + urls.registerToApp, registrationDetails)
             .then(res => {
-                if(res.response.status === "200"){
+                if (res.status === "200") {
                     alert("Your account creation was successful, You can use your details to login now")
                 }
                 console.log(res.data)
             })
             .catch(err => {
-                if (!err.status) {
+                if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-                    return
+                } else if (err.response.status === 409) {
+                    alert("Username is already taken")
                 }
                 else {
                     alert("Please contact your system administrator with: " + err)
@@ -50,46 +51,48 @@ const RegistrationPage = (props) => {
     }
 
     return (
-        <form onSubmit={handleRegistrationSubmit} className={styles.login_form}>
-            <div className={styles.row}>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Enter username"
-                        value={registrationDetails.username}
-                        onChange={onChange}
-                    />
-                </label>
-            </div>
-            <div className={styles.row}>
-                <label>Password:
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Enter password"
-                        value={registrationDetails.password}
-                        onChange={onChange}
-                    />
-                </label>
-            </div>
-            <div className={styles.row}>
-                <label>Password:
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Enter email"
-                        value={registrationDetails.email}
-                        onChange={onChange}
-                    />
-                </label>
-            </div>
-            <div className={styles.row}>
-                <input type="submit" value="Register" />
-            </div>
-        </form>
-
+        <>
+            <h1>Register for an account</h1>
+            <form onSubmit={handleRegistrationSubmit} className={styles.login_form}>
+                <div className={styles.row}>
+                    <label>
+                        Username:
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Enter username"
+                            value={registrationDetails.username}
+                            onChange={onChange}
+                        />
+                    </label>
+                </div>
+                <div className={styles.row}>
+                    <label>Password:
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter password"
+                            value={registrationDetails.password}
+                            onChange={onChange}
+                        />
+                    </label>
+                </div>
+                <div className={styles.row}>
+                    <label>Password:
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter email"
+                            value={registrationDetails.email}
+                            onChange={onChange}
+                        />
+                    </label>
+                </div>
+                <div className={styles.row}>
+                    <input type="submit" value="Register" />
+                </div>
+            </form>
+        </>
     )
 }
 

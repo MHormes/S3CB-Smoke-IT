@@ -36,6 +36,7 @@ const BoxesGroupedPage = (props) => {
 
     return (
         <>
+        <h1>All subscriptions grouped by box type</h1>
             <ul>
                 {groupedBoxes.map(boxGroup => (
                     <BoxesGroupedSingle

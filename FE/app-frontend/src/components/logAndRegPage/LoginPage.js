@@ -23,7 +23,7 @@ const LoginPage = (props) => {
                 props.handleLoginProps(decodedJWT.role, jwtToken)
             })
             .catch(err => {
-                if (!err.response.status) {
+                if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
                     return
                 }
@@ -61,6 +61,7 @@ const LoginPage = (props) => {
 
     return (
         <>
+        <h1>Login</h1>
             <form onSubmit={handleLoginsubmit} className={styles.login_form}>
                 <div className={styles.row}>
                     <label>

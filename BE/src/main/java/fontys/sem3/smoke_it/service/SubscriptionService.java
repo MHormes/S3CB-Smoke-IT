@@ -96,13 +96,18 @@ public class SubscriptionService implements ISubscriptionService {
     @Override
     public OrderModel setOrderAsShipped(Long id) {
         OrderModel ordermodel = dataSource.getOrder(id);
-        SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(ordermodel.getSubscriptionId());
-        if (subscriptionModel.getAmountLeft() > 0) {
-            this.createOrder(subscriptionModel.getId());
+        if(ordermodel.getShipped()){
+            return null;
         }
-        dataSource.setOrderAsShipped(id);
-        dataSource.decreaseSubscriptionAmount(subscriptionModel.getId());
-        return ordermodel;
+        else{
+            SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(ordermodel.getSubscriptionId());
+            if (subscriptionModel.getAmountLeft() > 0) {
+                this.createOrder(subscriptionModel.getId());
+            }
+            dataSource.setOrderAsShipped(id);
+            dataSource.decreaseSubscriptionAmount(subscriptionModel.getId());
+            return ordermodel;
+        }
     }
 
     //    @Override

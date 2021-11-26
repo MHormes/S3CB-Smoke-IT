@@ -54,7 +54,7 @@ const SelectedOrderPage = () => {
     }
 
     const setOrderAsSend = (orderId) => {
-        if(selectedOrder.packed){
+        if (selectedOrder.packed) {
             axios.put(urls.baseURL + urls.subscriptionURL + urls.ordersURL + urls.ordersSend + orderId, null, {
                 headers: {
                     'Authorization': jwtToken
@@ -71,10 +71,10 @@ const SelectedOrderPage = () => {
                     alert("Contact your system administrator for error: " + err)
                 }
             })
-        }else{
+        } else {
             alert("The order has to be packed before it can be send")
         }
-        
+
     }
 
 
@@ -92,12 +92,45 @@ const SelectedOrderPage = () => {
             </button>
         )
     }
+
     let packButton = null;
-    if (selectedOrder.packed !== true) {
+    if (!selectedOrder.packed) {
         packButton = packButtonNeeded();
     } else {
         packButton = packButtonPacked();
     }
+
+    const shipmentNeeded = () => {
+        return (
+            <button onClick={() => { if (window.confirm("Are you sure you wish to send this order ?")) { setOrderAsSend(selectedOrder.orderId) } }}>
+                Send box
+            </button>
+        )
+    }
+
+    let shipButton = null;
+    if (!selectedOrder.shipped) {
+        shipButton = shipmentNeeded();
+    }else{
+        shipButton = null;
+    }
+
+
+    let packed;
+    if (selectedOrder.packed) {
+        packed = "This order is packed and ready to ship"
+    }
+    else {
+        packed = "This order still needs to be packed before it can be send"
+    }
+
+    let shipped;
+    if (selectedOrder.shipped) {
+        shipped = "This box has already been marked as send. This cannot be undone"
+    } else {
+        shipped = "This box still needs to be send!"
+    }
+
 
     if (!orderedBox || !selectedOrder || !orderedBoxId) return null
     return (
@@ -105,14 +138,18 @@ const SelectedOrderPage = () => {
             <p>Order id:{selectedOrder.orderId}. For subscription with id: {selectedOrder.subscriptionId}</p>
             <p>Box must be send every: {selectedOrder.frequency} month(s)</p>
             <p>Including this box there are: {selectedOrder.amountLeft + 1} boxes left in this subscription</p>
+            <p>{packed}</p>
+            <p>{shipped}</p>
             <SelectedOrderBox
                 orderedBoxProps={orderedBox}
             />
             <SelectedOrderShipping
                 shippingDetailsProps={selectedOrder}
             />
-            {packButton} <button onClick={() => setOrderAsSend(selectedOrder.orderId)}>Send box</button>
+            {packButton}
+            {shipButton}
         </>
+        
     )
 }
 

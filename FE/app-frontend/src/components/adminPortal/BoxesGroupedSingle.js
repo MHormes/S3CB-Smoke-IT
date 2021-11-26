@@ -4,7 +4,7 @@ const BoxesGroupedSingle = (props) => {
 
     const boxGroup = props.box
     const selectBoxGroup = () => {
-        props.selectGroupedBoxesProps(boxGroup.boxID)
+        props.selectGroupedBoxesProps(boxGroup)
     }
 
     return (
