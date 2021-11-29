@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import * as urls from "./../../URL"
+import styles from "./BoxList.module.css"
 
 //component that holds the list of boxes when viewing all boxes
 const BoxList = (props) => {
@@ -49,7 +50,7 @@ const BoxList = (props) => {
     return (
         <>
             {addButton}
-            <ul>
+            <ul className={styles.ul}>
                 {boxes.map(box => (
                     <BoxSingle
                         selectBoxProps={props.selectBoxProps}

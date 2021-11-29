@@ -1,13 +1,18 @@
 import React from "react"
+import styles from "./NewsItem.module.css"
 
-class NewsItem extends React.Component{
-    render(){
-        return(
-            <li>
+const NewsItem = (props) => {
 
-            </li>
+    const message = props.messageProps;
 
-        )
-    }
+    return (
+        <li>
+            <p className={styles.title}>{message.title}</p>
+            <p className={styles.text}>{message.text}</p>
+            <p className={styles.date}>{message.date}</p>
+        </li>
+
+    )
+
 }
 export default NewsItem

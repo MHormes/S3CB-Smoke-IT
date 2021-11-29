@@ -51,21 +51,21 @@ const BoxSingle = (props) => {
     //method to perform the delete
     const deleteBox = (boxToDelete) => {
         var URL = urls.baseURL + urls.boxesDeleteURL + boxToDelete.id;
-        axios.delete(URL,{
-            headers:{
+        axios.delete(URL, {
+            headers: {
                 'Authorization': jwtToken
             }
         }).then(res => {
-            if(res.status === 200){
-                    console.log("Delete was successfull")
-            }else{
+            if (res.status === 200) {
+                console.log("Delete was successfull")
+            } else {
                 alert(res.status)
             }
         }).catch(err => {
-            if(err == null){
+            if (err == null) {
                 alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
             }
-            else{
+            else {
                 alert(err)
             }
         })
@@ -76,8 +76,11 @@ const BoxSingle = (props) => {
     return (
         <li>
             <div className={styles.box} onClick={() => selectBox(singleBox)}>
-                {singleBox.name} {singleBox.basePrice}
+                <img src={urls.imageWebServer + singleBox.name + ".png"} className={styles.image} alt={singleBox.name + " image could not be loaded"} />
+                <br />
+                <p className={styles.p1}>{singleBox.name} {singleBox.basePrice}</p>
             </div>
+            <br />
             {deleteButton}
             {updateButton}
         </li>

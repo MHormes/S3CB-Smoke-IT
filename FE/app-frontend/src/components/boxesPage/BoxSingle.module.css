@@ -1,4 +1,16 @@
 .box {
     font-size: 36px;
-    background-color: green;
+    display: inline-block;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.p1{
+    font-size: 3vw;
+}
+
+.image{
+    width: 22vw;
+    height: 22vw;
 }
