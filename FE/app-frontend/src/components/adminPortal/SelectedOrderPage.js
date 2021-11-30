@@ -4,13 +4,11 @@ import * as urls from "./../../URL"
 import { useState } from "react/cjs/react.development";
 import SelectedOrderShipping from "./SelectedOrderShipment";
 import SelectedOrderBox from "./SelectedOrderBox";
-import Cookies from "universal-cookie";
 
 const SelectedOrderPage = () => {
 
-    const cookies = new Cookies()
     const [selectedOrder, setSelectedOrder] = useState(JSON.parse(localStorage.getItem("selectedOrder")))
-    const jwtToken = cookies.get("jwtToken")
+    const jwtToken = localStorage.getItem("jwtToken")
     const orderedBoxId = selectedOrder.boxId
     const [orderedBox, setOrderedBox] = useState()
 

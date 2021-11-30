@@ -16,14 +16,12 @@ import HistoryPage from "./historyPage/HistoryPage";
 import AboutUsPage from "./infoPage/AboutUsPage";
 import BoxesGroupedPage from "./adminPortal/BoxesGroupedPage";
 import CheckoutDone from "./checkoutPage/CheckoutDone";
-import Cookies from "universal-cookie";
 import SelectedBoxGroupPage from "./adminPortal/SelectedBoxGroupPage";
 import SelectedOrderPage from "./adminPortal/SelectedOrderPage";
 
 const MainContainer = () => {
 
     const history = useHistory()
-    const cookies = new Cookies()
 
     //method to handle login and setting the adminlog for admin functions
     const [adminLog, setAdminLog] = useState()
@@ -36,14 +34,14 @@ const MainContainer = () => {
             localStorage.setItem("adminLog", false)
             setAdminLog(false)
         }
-        cookies.set("jwtToken", jwtToken)
+        localStorage.setItem("jwtToken", jwtToken)
         history.push("/")
     }
 
     const handleLogout = () => {
         localStorage.removeItem("adminLog")
         setAdminLog("")
-        cookies.remove("jwtToken")
+        localStorage.removeItem("jwtToken")
         history.push("/")
     }
 
@@ -97,7 +95,7 @@ const MainContainer = () => {
                     <BoxList
                         selectBoxProps={selectBox}
                         getBoxToEditProps={getBoxToEdit}
-                        jwtTokenProps={cookies.get("jwtToken")}
+                        jwtTokenProps={localStorage.getItem("jwtToken")}
                     />
                 </Route>
                 <Route exact path="/boxes/selectedBox">
@@ -134,7 +132,7 @@ const MainContainer = () => {
                     <SelectedOrderPage
                     />
                 </Route>
-                {cookies.get("jwtToken") != null &&
+                {localStorage.getItem("jwtToken") != null &&
                     <Route exact path="/history/">
                     <HistoryPage
                     />
@@ -157,7 +155,7 @@ const MainContainer = () => {
                 {localStorage.getItem("adminLog") === "true" ?
                     <Route exact path="/adminPortal/selectedGroup">
                         <SelectedBoxGroupPage
-                            jwtTokenProps={cookies.get("jwtToken")}
+                            jwtTokenProps={localStorage.getItem("jwtToken")}
                             boxIdForOrderGroupProps={boxIdForOrderGroup}
                             selectedBoxGroupNameProps={selectedBoxGroupName}
                             selectOrderProps={selectOrder}
@@ -169,7 +167,7 @@ const MainContainer = () => {
                 {localStorage.getItem("adminLog") === "true" ?
                     <Route path="/boxes/create">
                         <BoxAdd
-                            jwtTokenProps={cookies.get("jwtToken")} />
+                            jwtTokenProps={localStorage.getItem("jwtToken")} />
                     </Route>
                     :
                     <Redirect to="/" />
@@ -178,7 +176,7 @@ const MainContainer = () => {
                     <Route path="/boxes/update">
                         <BoxEdit
                             boxToEditProps={boxToEdit}
-                            jwtTokenProps={cookies.get("jwtToken")}
+                            jwtTokenProps={localStorage.getItem("jwtToken")}
                         />
                     </Route>
                     :

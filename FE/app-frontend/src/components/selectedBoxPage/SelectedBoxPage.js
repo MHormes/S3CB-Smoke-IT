@@ -9,7 +9,6 @@ const SelectedBoxPage = (props) => {
     if (!selectedBox) return <h1>no box selected</h1>
     return (
         <>
-            <h1>{selectedBox.name}</h1>
             <SelectedBoxContent
                 selectedBoxProps={selectedBox} />
             <SelectedBoxPrice

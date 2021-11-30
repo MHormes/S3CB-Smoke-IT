@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./BoxesGroupedSingle.module.css"
 
 const BoxesGroupedSingle = (props) => {
 
@@ -8,9 +9,9 @@ const BoxesGroupedSingle = (props) => {
     }
 
     return (
-        <li>
+        <li className={styles.li}>
             <div onClick={() => selectBoxGroup()}>
-                <h1>{boxGroup.boxName} {boxGroup.amount}</h1>
+                <h1 className={styles.h1}>Box: {boxGroup.boxName} / Amount: {boxGroup.amount}</h1>
             </div>
         </li>
     )

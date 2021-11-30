@@ -1,4 +1,10 @@
 .ul{
     list-style: none;
-    position: absolute;
+    position: relative;
+}
+
+.addButton{
+    float: right;
+    font-size: 1.8vw;
+    margin: 15px;
 }

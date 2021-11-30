@@ -36,7 +36,7 @@ const BoxList = (props) => {
 
     const AddButton = () => {
         return (
-            <button onClick={() => history.push("/boxes/create")}>
+            <button className={styles.addButton} onClick={() => history.push("/boxes/create")}>
                 Add box
             </button>
         )

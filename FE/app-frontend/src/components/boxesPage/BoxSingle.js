@@ -74,13 +74,11 @@ const BoxSingle = (props) => {
 
 
     return (
-        <li>
+        <li className={styles.li}>
             <div className={styles.box} onClick={() => selectBox(singleBox)}>
                 <img src={urls.imageWebServer + singleBox.name + ".png"} className={styles.image} alt={singleBox.name + " image could not be loaded"} />
-                <br />
                 <p className={styles.p1}>{singleBox.name} {singleBox.basePrice}</p>
             </div>
-            <br />
             {deleteButton}
             {updateButton}
         </li>

@@ -1,16 +1,21 @@
 .box {
     font-size: 36px;
-    display: inline-block;
-    padding-top: 50px;
-    padding-left: 50px;
-    padding-right: 50px;
+    display: table-cell;
+    position: relative;
+
 }
 
-.p1{
+.li {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.p1 {
     font-size: 3vw;
 }
 
-.image{
+.image {
     width: 22vw;
     height: 22vw;
 }

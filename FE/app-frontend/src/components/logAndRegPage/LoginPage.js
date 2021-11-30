@@ -25,9 +25,8 @@ const LoginPage = (props) => {
             .catch(err => {
                 if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-                    return
                 }
-                else if (err.response.status === 403) {
+                else if (err.status === 403) {
                     alert("Your login details are incorrect")
                     return
                 }

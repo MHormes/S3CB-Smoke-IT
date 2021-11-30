@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./SelectedBoxGroupSingle.module.css"
 
 const SelectedBoxGroupSingle = (props) => {
 
@@ -9,9 +10,9 @@ const SelectedBoxGroupSingle = (props) => {
     }
 
     return (
-        <li>
+        <li className={styles.li}>
             <div onClick={selectOrderFunction}>
-                <p>{order.name} {order.city}</p>
+                <h1 className={styles.h1}>Customer name: {order.name} / To be delivered on: {order.deliveryDate}</h1>
             </div>
         </li>
     )

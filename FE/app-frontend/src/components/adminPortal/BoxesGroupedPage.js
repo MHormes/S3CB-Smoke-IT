@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import * as urls from "./../../URL"
-import Cookies from "universal-cookie";
+import styles from "./BoxesGroupedPage.module.css"
 import BoxesGroupedSingle from "./BoxesGroupedSingle"
 
 const BoxesGroupedPage = (props) => {
 
-    const cookies = new Cookies()
-    const jwtToken = cookies.get("jwtToken")
+    const jwtToken = localStorage.getItem("jwtToken")
     const [groupedBoxes, setGroupedBoxes] = useState()
 
     useEffect(() => {
@@ -36,8 +35,8 @@ const BoxesGroupedPage = (props) => {
 
     return (
         <>
-        <h1>All subscriptions grouped by box type</h1>
-            <ul>
+        <h1 className={styles.h1}>All subscriptions grouped by box type</h1>
+            <ul className={styles.boxGroup}>
                 {groupedBoxes.map(boxGroup => (
                     <BoxesGroupedSingle
                         selectGroupedBoxesProps={props.selectGroupedBoxesProps}
