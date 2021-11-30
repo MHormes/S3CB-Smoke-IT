@@ -14,9 +14,10 @@ public class NewsMessageDTO {
     private String text;
     private LocalDate postDate;
 
-    public NewsMessageDTO(Long id, String title, String text){
+    public NewsMessageDTO(Long id, String title, String text, LocalDate postDate){
         this.id = id;
         this.title = title;
         this.text = text;
+        this.postDate = postDate;
     }
 }

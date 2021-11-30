@@ -5,14 +5,22 @@ import fontys.sem3.smoke_it.model.NewsMessageModel;
 import fontys.sem3.smoke_it.model.modelconverters.NewsMessageModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/newsFeed")
 public class NewsController {
 
     @Autowired
@@ -20,13 +28,29 @@ public class NewsController {
 
     NewsMessageModelConverter modelConverter = new NewsMessageModelConverter();
 
-    @MessageMapping("/postNews")
-    @SendTo("/news/feed")
-    public NewsMessageDTO castNewMessage(@RequestBody NewsMessageDTO news) {
-        news.setPostDate(LocalDate.now());
-        NewsMessageModel message = modelConverter.ConvertDTOToModel(news);
-        newsService.saveNewsMessage(message);
-        return news;
+    @GetMapping("")
+    public ResponseEntity<List<NewsMessageDTO>> getNewestMessages(){
+        return ResponseEntity.ok().body(getNewestMessageDTO());
     }
 
+
+    @MessageMapping("/postNews")
+    @SendTo("/news/feed")
+    public List<NewsMessageDTO> castNewMessage(@RequestBody NewsMessageDTO newsDTO) {
+        newsDTO.setPostDate(LocalDate.now());
+        NewsMessageModel message = modelConverter.ConvertDTOToModel(newsDTO);
+        newsService.saveNewsMessage(message);
+
+        return this.getNewestMessageDTO();
+    }
+
+
+    private List<NewsMessageDTO> getNewestMessageDTO(){
+        List<NewsMessageModel> modelList = newsService.getNewestMessages();
+        List<NewsMessageDTO> dtoList = new ArrayList<>();
+        for(NewsMessageModel m: modelList){
+            dtoList.add(modelConverter.ConvertModelToDTO(m));
+        }
+        return dtoList;
+    }
 }

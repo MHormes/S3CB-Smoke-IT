@@ -4,12 +4,11 @@ import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceSubscriptions;
-import fontys.sem3.smoke_it.repository.interfaces.IOrderRepository;
-import fontys.sem3.smoke_it.repository.interfaces.ISubscriptionRepository;
+import fontys.sem3.smoke_it.repository.jpaRepo.IOrderRepository;
+import fontys.sem3.smoke_it.repository.jpaRepo.ISubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository

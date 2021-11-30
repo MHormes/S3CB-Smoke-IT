@@ -1,7 +1,7 @@
 package fontys.sem3.smoke_it.repository;
 
 import fontys.sem3.smoke_it.model.BoxModel;
-import fontys.sem3.smoke_it.repository.interfaces.IBoxesRepository;
+import fontys.sem3.smoke_it.repository.jpaRepo.IBoxesRepository;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.repository.interfaces;
+package fontys.sem3.smoke_it.repository.jpaRepo;
 
 import fontys.sem3.smoke_it.model.NewsMessageModel;
 import org.springframework.data.jpa.repository.JpaRepository;

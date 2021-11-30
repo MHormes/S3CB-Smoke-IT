@@ -8,4 +8,8 @@ public class NewsMessageModelConverter {
     public NewsMessageModel ConvertDTOToModel(NewsMessageDTO message){
         return new NewsMessageModel(0L, message.getTitle(), message.getText(), message.getPostDate());
     }
+
+    public NewsMessageDTO ConvertModelToDTO(NewsMessageModel message){
+        return new NewsMessageDTO(message.getId(), message.getTitle(), message.getText(), message.getPostDate());
+    }
 }

@@ -9,7 +9,7 @@ const NewsItem = (props) => {
         <li>
             <p className={styles.title}>{message.title}</p>
             <p className={styles.text}>{message.text}</p>
-            <p className={styles.date}>{message.date}</p>
+            <p className={styles.date}>{message.postDate}</p>
         </li>
 
     )

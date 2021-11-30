@@ -6,6 +6,7 @@ import Stomp from "stompjs"
 import styles from "./NewsFeed.module.css"
 import NewsItems from "./NewsItems"
 
+//THIS PAGE IS A WORKING WEBSOCKET EXAMPLE. THE NEWS FEED IS SUBSCRIBED TO AN ENDPOINT AND WILL UPDATE WHEN A NEW MESSAGE IS POSTED
 const NewsFeed = () => {
 
     const adminLog = localStorage.getItem("adminLog")
@@ -17,57 +18,39 @@ const NewsFeed = () => {
         text: ""
     })
 
-    const [messages, setMessages] = useState([
-        {
-            "id": 1,
-            "title": "Some title",
-            "text": "This is a news message",
-            "date": "29/11/2021"
-        },
-        {
-            "id": 2,
-            "title": "Another title",
-            "text": "Wow news message",
-            "date": "29/11/2021"
-        }])
+    const [messages, setMessages] = useState()
 
+    //Method to make axios call for news items
     const refreshNews = () => {
-        //axios.get(urls.baseURL + urls.getMessages)
-        //    .then(res => {
-        //    setMessages(res.data);
-        //    }).catch(err => {
-        //        if (!err.status) {
-        //            alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-        //        }
-        //        else {
-        //            alert(err.status)
-        //        }
-        //   });
+        axios.get(urls.baseURL + urls.newsFeed)
+           .then(res => {
+           setMessages(res.data);
+           }).catch(err => {
+               if (!err.status) {
+                   alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+               }
+               else {
+                   alert(err.status)
+               }
+          });
     }
 
     useEffect(() => {
+        //call axios method
         refreshNews();
+        //initialze connection with be
         const socket = SockJS(urls.baseURL + urls.newsWebSocket)
         const stompClient = Stomp.over(socket)
         stompClient.connect({}, () => {
             stompClient.subscribe("/news/feed", (data) => {
+                //when new message posted, update list of messags
                 const receivedMessage = data.body
                 const messageObject = JSON.parse(receivedMessage)
-                setMessages(
-                    messages => [...messages, { id: messageObject.id, title: messageObject.title, text: messageObject.text, date: messageObject.postDate }]
-                )
+                setMessages(messageObject)
             })
         })
         setStompClient(stompClient)
     }, [])
-
-    //Button for refreshing the page
-    const refreshButtonFunc = () => {
-        return (
-            <button onClick={() => refreshNews()} className={styles.button}>Refresh Feed</button>
-        )
-    }
-    let refreshButton = refreshButtonFunc()
 
     //On change for posting news message form
     const onChange = e => {
@@ -81,6 +64,10 @@ const NewsFeed = () => {
     const sendNewsMessage = e => {
         e.preventDefault();
         stompClient.send("/app/postNews", {}, JSON.stringify({ 'text': newMessage.text, 'title': newMessage.title }))
+        setNewMessage({
+            title: "",
+            text: ""
+        })
     }
 
     //Form for posting new news message
@@ -117,17 +104,19 @@ const NewsFeed = () => {
         )
     }
 
+    //extra option when admin
     let newNewsMessageForm = null
+    let updateMessageButton = null
+    let deleteMessagebButton = null;
     if (adminLog === "true") {
         newNewsMessageForm = addMessageFields();
     }
 
     if (!messages) return null;
 
-    console.log(messages)
     return (
         <div className={styles.newsFeed}>
-            <p className={styles.p1}>News Feed</p>{refreshButton}
+            <p className={styles.p1}>News Feed</p>
             <ul className={styles.ul}>
                 {messages.map(message => (
                     <NewsItems
@@ -135,6 +124,8 @@ const NewsFeed = () => {
                         messageProps={message}
                     />
                 ))}
+                {updateMessageButton}
+                {deleteMessagebButton}
             </ul>
             {newNewsMessageForm}
         </div>

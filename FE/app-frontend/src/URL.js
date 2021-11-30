@@ -14,4 +14,5 @@ export const ordersGrouped = "grouped/";
 export const ordersPack = "pack/";
 export const ordersSend = "send/";
 export const newsWebSocket = "nf/";
+export const newsFeed = "newsFeed/"
 export const imageWebServer = "http://127.0.0.1:8887/";
