@@ -23,4 +23,14 @@ public class DataSourceNews implements IDataSourceNews {
     public List<NewsMessageModel> getAllMessages() {
         return repo.findAll();
     }
+
+    @Override
+    public void deleteMessageWithId(Long id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public NewsMessageModel getMessageWithId(Long id) {
+        return repo.getOne(id);
+    }
 }

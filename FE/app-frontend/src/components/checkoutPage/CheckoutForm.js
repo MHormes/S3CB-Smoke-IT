@@ -1,6 +1,12 @@
 import React, { useState } from "react"
+import { useHistory } from "react-router"
+import jwtDecode from "jwt-decode"
 
 const CheckoutForm = (props) => {
+
+    const history = useHistory()
+    const jwtToken = localStorage.getItem("jwtToken")
+    const decodedJWT = jwtDecode(jwtToken)
 
     const [orderDetails, setOrderDetails] = useState({
         name: "",
@@ -25,13 +31,51 @@ const CheckoutForm = (props) => {
         else {
             alert("Please fill in all fields")
         }
+    }
 
+    const goToLogin = () => {
+        localStorage.setItem("fromCheckout", true)
+        history.push("/login")
+    }
+
+    const goToRegistration = () => {
+        localStorage.setItem("fromCheckout", true)
+        history.push("/register")
+    }
+
+    const notLoggedElement = () => {
+        return (
+            <>
+                <br />
+                <p>Logging in/creating an account will save your order to your account</p>
+                <br />
+                <button onClick={() => goToLogin()} >Login</button><button onClick={() => goToRegistration()}>Register instead</button>
+            </>
+        )
+    }
+
+    const isLoggedElement = () => {
+        return (
+            <>
+                <p>You are currently logged in as: {decodedJWT.sub}</p>
+            </>
+        )
+    }
+
+    let notLogged = null;
+    let isLogged = null;
+    if (jwtToken === null) {
+        notLogged = notLoggedElement()
+    } else {
+        isLogged = isLoggedElement()
     }
 
     return (
         <>
+            {notLogged}
             <form onSubmit={handleSubmit}>
                 <h1>Enter your shipping details</h1>
+                {isLogged}
                 <label>
                     Full name:
                     <input

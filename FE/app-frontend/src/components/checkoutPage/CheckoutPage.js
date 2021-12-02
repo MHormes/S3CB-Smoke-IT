@@ -4,6 +4,7 @@ import CheckoutForm from "./CheckoutForm"
 import CheckoutPayment from "./CheckoutPayment"
 import axios from "axios"
 import * as urls from "./../../URL"
+import jwtDecode from "jwt-decode"
 
 const CheckoutPage = (props) => {
 
@@ -12,10 +13,18 @@ const CheckoutPage = (props) => {
 
     const [paymentCheck, setPaymentCheck] = useState()
 
+    //User id when not logged
+    let userId = 0
+    if (localStorage.getItem("jwtToken")) {
+        const jwtToken = localStorage.getItem("jwtToken")
+        const decodedJwt = jwtDecode(jwtToken)
+        userId = decodedJwt.userId
+    }
+
     const assignSubscriptionObject = (orderDetails) => {
         const subscriptionObject = {
             boxId: checkoutDetails.boxId,
-            userId: 0,
+            userId: userId,
             amountBought: checkoutDetails.amount,
             frequency: checkoutDetails.frequency,
             name: orderDetails.name,
@@ -31,19 +40,19 @@ const CheckoutPage = (props) => {
         console.log(subscriptionObject)
         if (paymentCheck) {
             axios.post(urls.baseURL + urls.subscriptionURL + urls.createSub, subscriptionObject)
-            .then(res => {
-                console.log(res.data)
-                if (res.status === 200) {
-                    props.finishCheckoutProps(res.data)
-                }
-            }).catch(err => {
-                if (!err) {
-                    alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-                }
-                else {
-                    alert(err)
-                }
-            })
+                .then(res => {
+                    console.log(res.data)
+                    if (res.status === 200) {
+                        props.finishCheckoutProps(res.data)
+                    }
+                }).catch(err => {
+                    if (!err) {
+                        alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                    }
+                    else {
+                        alert(err)
+                    }
+                })
         } else {
             alert("Please pay before finishing checkout")
         }
@@ -60,7 +69,7 @@ const CheckoutPage = (props) => {
                 checkoutDetailsProps={checkoutDetails} />
             <CheckoutForm
                 assignSubscriptionObjectProps={assignSubscriptionObject}
-                 />
+            />
             <CheckoutPayment
                 setPaymentCheckProps={setPaymentCheckInSate}
                 pricePerBoxProps={checkoutDetails.basePrice}

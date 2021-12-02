@@ -1,8 +1,7 @@
 import React, { useState } from "react"
-import styles from "./LoginPage.module.css"
-import jwt_decode from "jwt-decode"
 import * as urls from "./../../URL"
 import axios from "axios"
+import styles from "./RegistrationPage.module.css"
 
 const RegistrationPage = (props) => {
 
@@ -52,8 +51,8 @@ const RegistrationPage = (props) => {
 
     return (
         <>
-            <h1>Register for an account</h1>
-            <form onSubmit={handleRegistrationSubmit} className={styles.login_form}>
+            <h1 className={styles.h1}>Register for an account</h1>
+            <form onSubmit={handleRegistrationSubmit} className={styles.register_form}>
                 <div className={styles.row}>
                     <label>
                         Username:
@@ -63,6 +62,7 @@ const RegistrationPage = (props) => {
                             placeholder="Enter username"
                             value={registrationDetails.username}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
@@ -74,20 +74,24 @@ const RegistrationPage = (props) => {
                             placeholder="Enter password"
                             value={registrationDetails.password}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
                 <div className={styles.row}>
-                    <label>Password:
+                    <label>Email address:
                         <input
-                            type="email"
+                            type="text"
                             name="email"
                             placeholder="Enter email"
                             value={registrationDetails.email}
                             onChange={onChange}
+                            pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
+                            required
                         />
                     </label>
                 </div>
+                <br/>
                 <div className={styles.row}>
                     <input type="submit" value="Register" />
                 </div>

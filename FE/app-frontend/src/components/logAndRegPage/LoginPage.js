@@ -60,7 +60,7 @@ const LoginPage = (props) => {
 
     return (
         <>
-        <h1>Login</h1>
+        <h1 className={styles.h1}>Login</h1>
             <form onSubmit={handleLoginsubmit} className={styles.login_form}>
                 <div className={styles.row}>
                     <label>
@@ -71,6 +71,7 @@ const LoginPage = (props) => {
                             placeholder="Enter username"
                             value={loginDetails.username}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
@@ -82,6 +83,7 @@ const LoginPage = (props) => {
                             placeholder="Enter password"
                             value={loginDetails.password}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
@@ -89,7 +91,7 @@ const LoginPage = (props) => {
                     <input type="submit" value="Login" />
                 </div>
             </form>
-            <button onClick={registerRedirect}>Register instead</button>
+            <button className={styles.register}onClick={registerRedirect}>Register instead</button>
         </>
     )
 }

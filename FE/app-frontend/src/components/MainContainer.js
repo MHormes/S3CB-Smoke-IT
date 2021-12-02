@@ -35,7 +35,13 @@ const MainContainer = () => {
             setAdminLog(false)
         }
         localStorage.setItem("jwtToken", jwtToken)
-        history.push("/")
+        if(localStorage.getItem("fromCheckout")){
+            history.push("/boxes/selectedBox/checkout")
+            localStorage.removeItem("fromCheckout")
+        }else{
+
+            history.push("/")
+        }
     }
 
     const handleLogout = () => {
@@ -133,7 +139,7 @@ const MainContainer = () => {
                     />
                 </Route>
                 {localStorage.getItem("jwtToken") != null &&
-                    <Route exact path="/history/">
+                    <Route exact path="/history">
                     <HistoryPage
                     />
                 </Route>

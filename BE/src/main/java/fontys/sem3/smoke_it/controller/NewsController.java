@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,10 +26,9 @@ public class NewsController {
     NewsMessageModelConverter modelConverter = new NewsMessageModelConverter();
 
     @GetMapping("")
-    public ResponseEntity<List<NewsMessageDTO>> getNewestMessages(){
+    public ResponseEntity<List<NewsMessageDTO>> getNewestMessages() {
         return ResponseEntity.ok().body(getNewestMessageDTO());
     }
-
 
     @MessageMapping("/postNews")
     @SendTo("/news/feed")
@@ -44,11 +40,17 @@ public class NewsController {
         return this.getNewestMessageDTO();
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<List<NewsMessageDTO>> deleteMessageWithId(@PathVariable(value = "id") String id) {
+        newsService.deleteMessageWithId(Long.valueOf(id));
+        return ResponseEntity.ok().body(getNewestMessageDTO());
+    }
 
-    private List<NewsMessageDTO> getNewestMessageDTO(){
+
+    private List<NewsMessageDTO> getNewestMessageDTO() {
         List<NewsMessageModel> modelList = newsService.getNewestMessages();
         List<NewsMessageDTO> dtoList = new ArrayList<>();
-        for(NewsMessageModel m: modelList){
+        for (NewsMessageModel m : modelList) {
             dtoList.add(modelConverter.ConvertModelToDTO(m));
         }
         return dtoList;

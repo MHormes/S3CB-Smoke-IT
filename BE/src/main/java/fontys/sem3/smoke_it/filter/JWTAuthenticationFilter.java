@@ -47,6 +47,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT.create()
                 .withSubject(((User) auth.getPrincipal()).getUsername())
                 .withClaim("role", auth.getAuthorities().iterator().next().getAuthority())
+                //CLAIM USER ID IS HARDCODED
+                .withClaim("userId", 1L)
                 .withExpiresAt(new Date(System.currentTimeMillis() + AuthenticationConfigConstants.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(AuthenticationConfigConstants.SECRET.getBytes()));
         response.setContentType("application/json");

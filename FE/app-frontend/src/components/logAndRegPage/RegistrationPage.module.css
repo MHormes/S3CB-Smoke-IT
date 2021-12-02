@@ -1,5 +1,10 @@
-/* Login form */
-.login_form {
+h1{
+    text-align: center;
+    font-size: 3.5vw;
+}
+
+/* Registration form */
+.register_form {
     width: 60%;
     margin: 0 auto;
     color: black;
@@ -38,18 +43,3 @@ input[type="submit"] {
     margin: 0 auto;
     display: inline;
   }
-  
-.h1{
-  text-align: center;
-  font-size: 3.5vw;
-}
-
-.register{
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  font-size: 2vw;
-  width: 50vw;
-
-}

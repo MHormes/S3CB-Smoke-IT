@@ -9,4 +9,8 @@ public interface IDataSourceNews {
     void saveNewsMessage(NewsMessageModel message);
 
     List<NewsMessageModel> getAllMessages();
+
+    void deleteMessageWithId(Long id);
+
+    NewsMessageModel getMessageWithId(Long id);
 }

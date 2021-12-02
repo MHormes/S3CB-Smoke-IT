@@ -60,6 +60,11 @@ const NewsFeed = () => {
         })
     }
 
+    //method gets called after deleting a message
+    const deleteMessageHandler = (messageList) => {
+        setMessages(messageList)
+    }
+
     //submit method for news messages
     const sendNewsMessage = e => {
         e.preventDefault();
@@ -70,10 +75,11 @@ const NewsFeed = () => {
         })
     }
 
+
     //Form for posting new news message
     const addMessageFields = () => {
         return (
-            <form>
+            <form className={styles.addForm}>
                 <div>
                     <label>
                         Title:
@@ -98,7 +104,7 @@ const NewsFeed = () => {
                     </label>
                 </div>
                 <div>
-                    <button value="Post message" onClick={sendNewsMessage} />
+                    <button className={styles.postButton} value="" onClick={sendNewsMessage}>Post message</button>
                 </div>
             </form>
         )
@@ -106,8 +112,7 @@ const NewsFeed = () => {
 
     //extra option when admin
     let newNewsMessageForm = null
-    let updateMessageButton = null
-    let deleteMessagebButton = null;
+
     if (adminLog === "true") {
         newNewsMessageForm = addMessageFields();
     }
@@ -122,10 +127,9 @@ const NewsFeed = () => {
                     <NewsItems
                         key={message.id}
                         messageProps={message}
+                        deleteMessageProps={deleteMessageHandler}
                     />
                 ))}
-                {updateMessageButton}
-                {deleteMessagebButton}
             </ul>
             {newNewsMessageForm}
         </div>

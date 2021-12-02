@@ -11,4 +11,8 @@ public interface INewsService {
     void saveNewsMessage(NewsMessageModel message);
 
     List<NewsMessageModel> getNewestMessages();
+
+    void deleteMessageWithId(Long id);
+
+    NewsMessageModel getMessageWithId(Long id);
 }

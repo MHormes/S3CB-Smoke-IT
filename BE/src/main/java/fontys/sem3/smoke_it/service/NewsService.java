@@ -24,19 +24,32 @@ public class NewsService implements INewsService {
     public List<NewsMessageModel> getNewestMessages() {
         List<NewsMessageModel> returnList = new ArrayList<>();
         List<NewsMessageModel> messageList = dataSource.getAllMessages();
-        if(messageList.size() > 0){
+        if (messageList.size() > 0) {
             int amount = 5;
-            if(messageList.size() <= 5){
+            if (messageList.size() <= 5) {
                 amount = messageList.size();
             }
-            for(int i = 0; i < amount; i++){
-                int x = 1 +i;
-                returnList.add(messageList.get(messageList.size() -x));
+            for (int i = 0; i < amount; i++) {
+                int x = 1 + i;
+                returnList.add(messageList.get(messageList.size() - x));
             }
             return returnList;
         }
         return null;
 
 
+    }
+
+    @Override
+    public void deleteMessageWithId(Long id) {
+        NewsMessageModel message = this.getMessageWithId(id);
+        if (message != null) {
+            dataSource.deleteMessageWithId(id);
+        }
+    }
+
+    @Override
+    public NewsMessageModel getMessageWithId(Long id) {
+        return dataSource.getMessageWithId(id);
     }
 }
