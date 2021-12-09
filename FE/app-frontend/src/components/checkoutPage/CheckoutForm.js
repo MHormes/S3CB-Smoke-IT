@@ -6,7 +6,10 @@ const CheckoutForm = (props) => {
 
     const history = useHistory()
     const jwtToken = localStorage.getItem("jwtToken")
-    const decodedJWT = jwtDecode(jwtToken)
+    let decodedJWT = null
+    if(jwtToken != null){
+        decodedJWT = jwtDecode(jwtToken)
+    }
 
     const [orderDetails, setOrderDetails] = useState({
         name: "",

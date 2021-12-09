@@ -18,6 +18,7 @@ import BoxesGroupedPage from "./adminPortal/BoxesGroupedPage";
 import CheckoutDone from "./checkoutPage/CheckoutDone";
 import SelectedBoxGroupPage from "./adminPortal/SelectedBoxGroupPage";
 import SelectedOrderPage from "./adminPortal/SelectedOrderPage";
+import HistoryOrders from "./historyPage/HistoryOrders";
 
 const MainContainer = () => {
 
@@ -35,12 +36,12 @@ const MainContainer = () => {
             setAdminLog(false)
         }
         localStorage.setItem("jwtToken", jwtToken)
-        if(localStorage.getItem("fromCheckout")){
+        if (localStorage.getItem("fromCheckout")) {
             history.push("/boxes/selectedBox/checkout")
             localStorage.removeItem("fromCheckout")
-        }else{
-
+        } else {
             history.push("/")
+            window.location.reload();
         }
     }
 
@@ -82,8 +83,12 @@ const MainContainer = () => {
         history.push("/adminPortal/selectedGroup")
     }
 
-    const selectOrder = () => {
+    const selectOrderAdminPortal = () => {
         history.push("/adminPortal/selectedOrder")
+    }
+
+    const selectSubscriptionHistory = () => {
+        history.push("/history/selectSub")
     }
 
 
@@ -138,11 +143,18 @@ const MainContainer = () => {
                     <SelectedOrderPage
                     />
                 </Route>
-                {localStorage.getItem("jwtToken") != null &&
+                {localStorage.getItem("jwtToken") &&
                     <Route exact path="/history">
-                    <HistoryPage
-                    />
-                </Route>
+                        <HistoryPage
+                        selectSubscriptionHistoryProps={selectSubscriptionHistory}
+                        />
+                    </Route>
+                }
+                {localStorage.getItem("jwtToken") &&
+                    <Route exact path="/history/selectSub">
+                        <HistoryOrders 
+                        />
+                    </Route>
                 }
                 {subscriptionObject != null &&
                     <Route exact path="/boxes/selectedBox/checkout/finish">
@@ -164,7 +176,7 @@ const MainContainer = () => {
                             jwtTokenProps={localStorage.getItem("jwtToken")}
                             boxIdForOrderGroupProps={boxIdForOrderGroup}
                             selectedBoxGroupNameProps={selectedBoxGroupName}
-                            selectOrderProps={selectOrder}
+                            selectOrderProps={selectOrderAdminPortal}
                         />
                     </Route>
                     :

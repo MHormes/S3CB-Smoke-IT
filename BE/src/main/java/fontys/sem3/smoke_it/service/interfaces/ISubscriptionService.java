@@ -28,6 +28,8 @@ public interface ISubscriptionService {
 
     OrderModel getActiveOrderBySubscriptionId(Long subscriptionID);
 
+    List<OrderModel> getAllOrdersBySubscriptionId(Long subscriptionID);
+
     void toggleOrderPacked(Long id);
 
     OrderModel setOrderAsShipped(Long id);

@@ -10,8 +10,9 @@ const CheckoutPage = (props) => {
 
     //get the checkout details from the local storage. In here i saved the box and subscription details.
     const checkoutDetails = JSON.parse(localStorage.getItem("checkoutDetails"))
-
+    console.log(checkoutDetails)
     const [paymentCheck, setPaymentCheck] = useState()
+    const [totalPrice, setTotalPrice] = useState()
 
     //User id when not logged
     let userId = 0
@@ -27,6 +28,7 @@ const CheckoutPage = (props) => {
             userId: userId,
             amountBought: checkoutDetails.amount,
             frequency: checkoutDetails.frequency,
+            totalPrice: totalPrice,
             name: orderDetails.name,
             email: orderDetails.email,
             address: orderDetails.address,
@@ -37,7 +39,6 @@ const CheckoutPage = (props) => {
     }
 
     const addSubscriptionInBE = (subscriptionObject) => {
-        console.log(subscriptionObject)
         if (paymentCheck) {
             axios.post(urls.baseURL + urls.subscriptionURL + urls.createSub, subscriptionObject)
                 .then(res => {
@@ -58,8 +59,9 @@ const CheckoutPage = (props) => {
         }
     }
 
-    const setPaymentCheckInSate = (value) => {
-        setPaymentCheck(value);
+    const setPaymentCheckInSate = (bool, price) => {
+        setPaymentCheck(bool)
+        setTotalPrice(price)
     }
 
     return (
@@ -72,7 +74,7 @@ const CheckoutPage = (props) => {
             />
             <CheckoutPayment
                 setPaymentCheckProps={setPaymentCheckInSate}
-                pricePerBoxProps={checkoutDetails.basePrice}
+                pricePerBoxProps={checkoutDetails.price}
                 amountOfBoxesProps={checkoutDetails.amount} />
         </>
     )

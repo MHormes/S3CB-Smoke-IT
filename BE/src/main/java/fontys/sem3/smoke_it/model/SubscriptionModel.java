@@ -25,6 +25,8 @@ public class SubscriptionModel {
     private int amountLeft;
     @Column(name="frequency")
     private int frequency;
+    @Column(name="totalCost")
+    private double totalCost;
     @Column(name="name")
     private String name;
     @Column(name="email")
@@ -40,12 +42,13 @@ public class SubscriptionModel {
     public SubscriptionModel(){
     }
 
-    public SubscriptionModel(String boxId, Long userID, int amountBought, int frequency, String name, String email, String address, String postal, String city){
+    public SubscriptionModel(String boxId, Long userID, int amountBought, int frequency, double totalCost, String name, String email, String address, String postal, String city){
         this.boxId = boxId;
         this.userID = userID;
         this.amountBought = amountBought;
         this.amountLeft = amountBought;
         this.frequency = frequency;
+        this.totalCost = totalCost;
         this.name = name;
         this.email = email;
         this.address = address;

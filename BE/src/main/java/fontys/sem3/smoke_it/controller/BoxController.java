@@ -48,7 +48,7 @@ public class BoxController {
         if (boxModel != null) {
             BoxDTO boxDTO = boxModelConverter.convertModelToDTO(boxModel);
             return ResponseEntity.ok().body(boxDTO);
-        }
+        }   
         return ResponseEntity.notFound().build();
     }
 

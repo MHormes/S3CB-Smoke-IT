@@ -87,6 +87,11 @@ public class SubscriptionService implements ISubscriptionService {
         return null;
     }
 
+    @Override
+    public List<OrderModel> getAllOrdersBySubscriptionId(Long subscriptionID) {
+        return dataSource.getOrdersBySubscriptionId(subscriptionID);
+    }
+
 
     @Override
     public void toggleOrderPacked(Long id) {

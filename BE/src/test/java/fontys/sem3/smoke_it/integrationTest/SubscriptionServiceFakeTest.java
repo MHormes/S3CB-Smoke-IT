@@ -20,7 +20,7 @@ class SubscriptionServiceFakeTest {
 
     @Test
     void createSubscriptionSuccessful(){
-        SubscriptionModel sub = new SubscriptionModel("1", 1L, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
+        SubscriptionModel sub = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(sub);
 
         Assertions.assertEquals(sub, subscriptionService.getSubscriptionById(sub.getId()));
@@ -29,8 +29,8 @@ class SubscriptionServiceFakeTest {
 
     @Test
     void getAllActiveSubscriptions(){
-        SubscriptionModel sub1 = new SubscriptionModel("1", 1L, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
-        SubscriptionModel sub2 = new SubscriptionModel("1", 1L, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
+        SubscriptionModel sub1 = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
+        SubscriptionModel sub2 = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
 
         subscriptionService.createSubscription(sub1);
         subscriptionService.createSubscription(sub2);

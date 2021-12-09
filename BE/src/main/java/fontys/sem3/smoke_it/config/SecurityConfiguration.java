@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -39,7 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
-
         http.cors().configurationSource(request -> corsConfiguration).and().csrf().disable().authorizeRequests()
                 .antMatchers("/h2-ui/**").permitAll()
                 //configuration of boxes end points
@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/subscriptions/{id}").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/subscriptions/grouped").hasAnyAuthority("ADMIN")
                 .antMatchers("/subscriptions/grouped/{id}").hasAnyAuthority("ADMIN")
+                .antMatchers("/subscriptions/ordersFor/{id}").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/subscriptions/orders/send/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers("/subscriptions/orders/pack/{id}").hasAnyAuthority("ADMIN")
                 //configuration of user endpoints

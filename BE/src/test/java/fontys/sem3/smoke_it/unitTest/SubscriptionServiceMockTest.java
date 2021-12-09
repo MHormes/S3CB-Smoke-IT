@@ -32,8 +32,8 @@ public class SubscriptionServiceMockTest {
     @BeforeEach
     void setUp(){
         List<SubscriptionModel> mockList = new ArrayList<>();
-        model1 = new SubscriptionModel("1", 0L, 2, 1, "Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
-        model2 = new SubscriptionModel("1", 1L, 0, 2, "Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
+        model1 = new SubscriptionModel("1", 0L, 2, 1, 1,"Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
+        model2 = new SubscriptionModel("1", 1L, 0, 2, 2,"Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
         mockList.add(model1);
         mockList.add(model2);
 

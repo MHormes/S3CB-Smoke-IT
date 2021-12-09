@@ -9,6 +9,7 @@ export const registerToApp = "user/register"
 export const boxesGetPrice = "/price/";
 export const subscriptionURL = "subscriptions/";
 export const ordersURL = "orders/"
+export const ordersURLAll = "ordersFor/"
 export const createSub = "create/";
 export const ordersGrouped = "grouped/";
 export const ordersPack = "pack/";

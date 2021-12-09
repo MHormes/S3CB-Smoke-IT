@@ -26,7 +26,7 @@ public class BoxServiceMockTest {
 
     @BeforeEach
     void setUp(){
-        boxService = new BoxService(datasource);
+        boxService = new BoxService();
         BoxModel boxModel = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1");
         List<BoxModel> mockList = new ArrayList<>();
         mockList.add(boxModel);

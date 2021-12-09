@@ -3,6 +3,8 @@ package fontys.sem3.smoke_it.controller;
 import fontys.sem3.smoke_it.model.*;
 import fontys.sem3.smoke_it.model.modelconverters.SubscriptionModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
+import org.apache.coyote.Response;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +72,16 @@ public class SubscriptionController {
     public ResponseEntity<List<GroupedOrders>> getAllOrdersGrouped() {
         List<GroupedOrders> ordersGrouped = subscriptionService.getAllOrdersGrouped();
         return ResponseEntity.ok().body(ordersGrouped);
+    }
+
+    @GetMapping("/ordersFor/{id}")
+    public ResponseEntity<List<OrderDTO>> getOrdersBySubscriptionId(@PathVariable(value = "id")String id){
+        List<OrderDTO> returnList = new ArrayList<>();
+        List<OrderModel> orderList = subscriptionService.getAllOrdersBySubscriptionId(Long.valueOf(id));
+        for(OrderModel o: orderList){
+            returnList.add(modelConverter.convertOrderModelToDTO(o));
+        }
+        return ResponseEntity.ok().body(returnList);
     }
 
     @GetMapping("/grouped/{id}")

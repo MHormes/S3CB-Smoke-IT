@@ -13,6 +13,7 @@ public class SubscriptionDTO {
     private int amountBought;
     private int amountLeft;
     private int frequency;
+    private double totalPrice;
     private String email;
     private String name;
     private String address;

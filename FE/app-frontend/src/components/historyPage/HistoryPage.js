@@ -5,7 +5,7 @@ import * as urls from "./../../URL"
 import styles from "./HistoryPage.module.css"
 import HistorySubscriptions from "./HistorySubscriptions"
 
-const HistoryPage = () => {
+const HistoryPage = (props) => {
 
     const jwtToken = localStorage.getItem("jwtToken")
     const decodedJwt = jwtDecode(jwtToken)
@@ -21,7 +21,6 @@ const HistoryPage = () => {
                 }
             }).then(res => {
                 setSubscriptions(res.data);
-                console.log(res.data);
             }).catch(err => {
                 if (!err) {
                     alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
@@ -47,7 +46,8 @@ const HistoryPage = () => {
                     <HistorySubscriptions
                         key={sub.id}
                         subscriptionProps={sub}
-                        jwtTokenProps={jwtToken} />
+                        jwtTokenProps={jwtToken}
+                        selectSubscriptionHistoryProps={props.selectSubscriptionHistoryProps} />
                 ))}
             </ul>
         </>

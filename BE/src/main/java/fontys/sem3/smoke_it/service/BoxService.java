@@ -16,12 +16,8 @@ import java.util.UUID;
 @Service
 public class BoxService implements IBoxService , IBoxSorter {
 
-    IDataSourceBoxes datasource;
-
     @Autowired
-    public BoxService(@Qualifier("dataSourceBoxes") IDataSourceBoxes datasource){
-        this.datasource = datasource;
-    }
+    IDataSourceBoxes datasource;
 
     @Override
     public List<BoxModel> getAllBoxes() {

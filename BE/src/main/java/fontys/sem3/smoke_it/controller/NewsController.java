@@ -40,7 +40,9 @@ public class NewsController {
         return this.getNewestMessageDTO();
     }
 
+
     @DeleteMapping("/delete/{id}")
+    @SendTo("/news/feed")
     public ResponseEntity<List<NewsMessageDTO>> deleteMessageWithId(@PathVariable(value = "id") String id) {
         newsService.deleteMessageWithId(Long.valueOf(id));
         return ResponseEntity.ok().body(getNewestMessageDTO());

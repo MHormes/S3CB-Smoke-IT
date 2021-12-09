@@ -7,8 +7,9 @@ const HistorySubscriptions = (props) => {
 
     const subscription = props.subscriptionProps
     const [subBox, setSubBox] = useState()
-    const selectSub = (subscriptionId) => {
-        console.log("selected: " + subscriptionId)
+    const selectSub = (subscription) => {
+        localStorage.setItem("selectedSubHistory", JSON.stringify(subscription))
+        props.selectSubscriptionHistoryProps()
     }
 
     useEffect(() => {
@@ -35,10 +36,12 @@ const HistorySubscriptions = (props) => {
 
     return (
         <>
-            <li className={styles.li} onClick={() => selectSub(subscription.id)}>
+            <li className={styles.li} onClick={() => selectSub(subscription)}>
                 <p className={styles.p}>Name: {subscription.name}</p>
                 <p className={styles.p}>Box ordered: {subBox.name}</p>
-                <p className={styles.p}>Amount of boxes in subscription: {subscription.amount}</p>
+                <p className={styles.p}>Amount of boxes bought: {subscription.amountBought}</p>
+                <p className={styles.p}>Amount of boxes to be delivered: {subscription.amountLeft +1}</p>
+                <p className={styles.p}>the total cost of this order was: {subscription.totalCost}</p>
             </li>
         </>
     )
