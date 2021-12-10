@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface IBoxService {
 
-    public List<BoxModel> getAllBoxes();
+     List<BoxModel> getAllBoxes();
 
-    public List<BoxModel> getAllBoxesSorted(String sort);
+     List<BoxModel> getAllBoxesSorted(String sort);
 
-    public BoxModel getBoxWithID(String ID);
+     BoxModel getBoxWithID(String id);
 
-    public boolean createBox(BoxModel boxModel);
+     BoxModel createBox(BoxModel boxModel);
 
-    public boolean updateBox(BoxModel boxModel);
+     boolean updateBox(BoxModel boxModel);
 
-    public boolean deleteBox(String ID);
+     boolean deleteBox(String id);
 
-    public double calculateBoxPrice(BoxModel boxModel, int amount);
+     double calculateBoxPrice(BoxModel boxModel, int amount);
 
-    public String createID();
+     String createID();
 }

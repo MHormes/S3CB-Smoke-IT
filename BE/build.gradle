@@ -47,6 +47,18 @@ jacocoTestReport {
         csv.enabled false
         html.enabled false
     }
+
+    afterEvaluate {
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: ['**/fontys/sem3/smoke_it/controller/*',
+                                            '**/fontys/sem3/smoke_it/config/*',
+                                            '**/fontys/sem3/smoke_it/model/dtos/*',
+                                            'fontys/sem3/smoke_it/filter/*',
+                                            'fontys/sem3/smoke_it/model/modelconverters'])
+            }))
+        }
+    }
 }
 tasks.getByName("sonarqube").dependsOn(test)
 

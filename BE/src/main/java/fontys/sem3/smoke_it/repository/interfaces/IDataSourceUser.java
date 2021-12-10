@@ -6,5 +6,5 @@ public interface IDataSourceUser {
 
     UserModel getUserModel(String username);
 
-    Boolean createUserModel(UserModel userModel);
+    UserModel createUserModel(UserModel userModel);
 }

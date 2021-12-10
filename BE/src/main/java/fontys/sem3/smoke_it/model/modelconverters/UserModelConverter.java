@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.model.modelconverters;
 
-import fontys.sem3.smoke_it.model.UserDTO;
+import fontys.sem3.smoke_it.model.dtos.UserDTO;
 import fontys.sem3.smoke_it.model.UserModel;
 
 public class UserModelConverter {

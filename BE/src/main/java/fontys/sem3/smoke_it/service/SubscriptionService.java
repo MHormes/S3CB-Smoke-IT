@@ -4,11 +4,11 @@ import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
 import fontys.sem3.smoke_it.repository.DataSourceSubscriptions;
+import fontys.sem3.smoke_it.repository.interfaces.IDataSourceSubscriptions;
 import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -19,14 +19,18 @@ import java.util.List;
 public class SubscriptionService implements ISubscriptionService {
 
     @Autowired
-    DataSourceSubscriptions dataSource;
+    IDataSourceSubscriptions dataSource;
+
+    public SubscriptionService(IDataSourceSubscriptions dataSource){
+        this.dataSource = dataSource;
+    }
 
     @Override
-    public Boolean createSubscription(SubscriptionModel subscriptionModel) {
-        dataSource.createSubscription(subscriptionModel);
+    public SubscriptionModel createSubscription(SubscriptionModel subscriptionModel) {
+        SubscriptionModel model = dataSource.createSubscription(subscriptionModel);
         this.createOrder(subscriptionModel.getId());
         dataSource.decreaseSubscriptionAmount(subscriptionModel.getId());
-        return true;
+        return model;
     }
 
     @Override

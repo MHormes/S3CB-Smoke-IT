@@ -4,8 +4,8 @@ import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceSubscriptions;
-import fontys.sem3.smoke_it.repository.jpaRepo.IOrderRepository;
-import fontys.sem3.smoke_it.repository.jpaRepo.ISubscriptionRepository;
+import fontys.sem3.smoke_it.repository.JPARepo.IOrderRepository;
+import fontys.sem3.smoke_it.repository.JPARepo.ISubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +21,8 @@ public class DataSourceSubscriptions implements IDataSourceSubscriptions {
     IOrderRepository orderRepo;
 
     @Override
-    public void createSubscription(SubscriptionModel subscriptionModel) {
-        subRepo.save(subscriptionModel);
+    public SubscriptionModel createSubscription(SubscriptionModel subscriptionModel) {
+       return subRepo.save(subscriptionModel);
     }
 
     @Override

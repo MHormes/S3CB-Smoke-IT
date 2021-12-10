@@ -5,7 +5,6 @@ import fontys.sem3.smoke_it.repository.interfaces.IDataSourceBoxes;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -42,12 +41,12 @@ public class BoxService implements IBoxService , IBoxSorter {
     }
 
     @Override
-    public BoxModel getBoxWithID(String ID){
-        return datasource.getBoxWithID(ID);
+    public BoxModel getBoxWithID(String id){
+        return datasource.getBoxWithID(id);
     }
 
     @Override
-    public boolean createBox(BoxModel boxModel){
+    public BoxModel createBox(BoxModel boxModel){
         return datasource.createBox(boxModel);
     }
     
@@ -60,8 +59,8 @@ public class BoxService implements IBoxService , IBoxSorter {
     }
 
     @Override
-    public boolean deleteBox(String ID){
-       return datasource.deleteBox(ID);
+    public boolean deleteBox(String id){
+       return datasource.deleteBox(id);
     }
 
     @Override
@@ -82,23 +81,13 @@ public class BoxService implements IBoxService , IBoxSorter {
     @Override
     public List<BoxModel> boxesSortedHighToLow(List<BoxModel> listToSort) {
         List<BoxModel> list = listToSort;
-        Collections.sort(list, new Comparator<BoxModel>() {
-            @Override
-            public int compare(BoxModel b1, BoxModel b2) {
-                return Double.compare(b2.getBasePrice(), b1.getBasePrice());
-            }
-        });
+        Collections.sort(list, (b1, b2) -> Double.compare(b2.getBasePrice(), b1.getBasePrice()));
         return listToSort;
     }
 
     @Override
     public List<BoxModel> boxesSortedLowToHigh(List<BoxModel> listToSort) {
-        Collections.sort(listToSort, new Comparator<BoxModel>() {
-            @Override
-            public int compare(BoxModel b1, BoxModel b2) {
-                return Double.compare(b1.getBasePrice(), b2.getBasePrice());
-            }
-        });
+        Collections.sort(listToSort, Comparator.comparingDouble(BoxModel::getBasePrice));
         return listToSort;
     }
 

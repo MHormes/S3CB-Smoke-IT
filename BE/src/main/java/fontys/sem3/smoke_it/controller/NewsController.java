@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.controller;
 
-import fontys.sem3.smoke_it.model.NewsMessageDTO;
+import fontys.sem3.smoke_it.model.dtos.NewsMessageDTO;
 import fontys.sem3.smoke_it.model.NewsMessageModel;
 import fontys.sem3.smoke_it.model.modelconverters.NewsMessageModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.INewsService;
@@ -34,7 +34,7 @@ public class NewsController {
     @SendTo("/news/feed")
     public List<NewsMessageDTO> castNewMessage(@RequestBody NewsMessageDTO newsDTO) {
         newsDTO.setPostDate(LocalDate.now());
-        NewsMessageModel message = modelConverter.ConvertDTOToModel(newsDTO);
+        NewsMessageModel message = modelConverter.convertDTOToModel(newsDTO);
         newsService.saveNewsMessage(message);
 
         return this.getNewestMessageDTO();
@@ -53,7 +53,7 @@ public class NewsController {
         List<NewsMessageModel> modelList = newsService.getNewestMessages();
         List<NewsMessageDTO> dtoList = new ArrayList<>();
         for (NewsMessageModel m : modelList) {
-            dtoList.add(modelConverter.ConvertModelToDTO(m));
+            dtoList.add(modelConverter.convertModelToDTO(m));
         }
         return dtoList;
     }

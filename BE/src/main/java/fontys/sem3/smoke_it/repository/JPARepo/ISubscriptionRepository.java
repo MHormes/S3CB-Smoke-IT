@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.repository.jpaRepo;
+package fontys.sem3.smoke_it.repository.JPARepo;
 
 import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.SubscriptionModel;

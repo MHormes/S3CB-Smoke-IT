@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.controller;
 
-import fontys.sem3.smoke_it.model.BoxDTO;
+import fontys.sem3.smoke_it.model.dtos.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.model.modelconverters.BoxModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,11 +24,11 @@ import java.util.Objects;
 @RequestMapping("/boxes")
 public class BoxController {
 
-    private static String imageDirectory = System.getProperty("user.dir") + "/images/";
+    private static final String imageDirectory = System.getProperty("user.dir") + "/images/";
 
     @Autowired
     private IBoxService boxService;
-    private BoxModelConverter boxModelConverter;
+    private final BoxModelConverter boxModelConverter;
 
     public BoxController() {
         boxModelConverter = new BoxModelConverter();
@@ -75,14 +74,13 @@ public class BoxController {
         //create file path
         createImageFilePath(boxDTO);
         //convert completed dto to model for db add
-        BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
-        if (!boxService.createBox(boxModel)) {
+        BoxModel boxModel = boxService.createBox(boxModelConverter.convertDTOToModel(boxDTO));
+        BoxDTO addedBox = boxModelConverter.convertModelToDTO(boxModel);
+        if (addedBox == null) {
             String entity = "Box with ID " + boxDTO.getId() + " already exists";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
-            String url = "boxes/" + boxDTO.getId();
-            URI uri = URI.create(url);
-            return new ResponseEntity(uri, HttpStatus.CREATED);
+            return ResponseEntity.ok().body(addedBox);
         }
     }
 
@@ -105,13 +103,13 @@ public class BoxController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteBox(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Boolean> deleteBox(@PathVariable(value = "id") String id) {
         Boolean result = boxService.deleteBox(id);
         return ResponseEntity.ok().body(result);
     }
 
-    private void makeDirectoryIfNotExist(String imageDirectory) {
-        File directory = new File(imageDirectory);
+    private void makeDirectoryIfNotExist() {
+        File directory = new File(BoxController.imageDirectory);
         if (!directory.exists()) {
             directory.mkdir();
         }
@@ -119,7 +117,7 @@ public class BoxController {
 
     private void createImageFilePath(BoxDTO boxDTO) {
         //Create directory for images
-        makeDirectoryIfNotExist(imageDirectory);
+        makeDirectoryIfNotExist();
         //create file path
         Path imagePath = Paths.get(imageDirectory,
                 boxDTO.getName().concat(".").concat(Objects.requireNonNull(FilenameUtils.getExtension(boxDTO.getImageFile().getOriginalFilename()))));

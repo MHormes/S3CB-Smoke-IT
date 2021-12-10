@@ -15,6 +15,10 @@ public class NewsService implements INewsService {
     @Autowired
     IDataSourceNews dataSource;
 
+    public NewsService(IDataSourceNews dataSource){
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void saveNewsMessage(NewsMessageModel message) {
         dataSource.saveNewsMessage(message);
@@ -24,7 +28,7 @@ public class NewsService implements INewsService {
     public List<NewsMessageModel> getNewestMessages() {
         List<NewsMessageModel> returnList = new ArrayList<>();
         List<NewsMessageModel> messageList = dataSource.getAllMessages();
-        if (messageList.size() > 0) {
+        if (!messageList.isEmpty()) {
             int amount = 5;
             if (messageList.size() <= 5) {
                 amount = messageList.size();
@@ -36,8 +40,6 @@ public class NewsService implements INewsService {
             return returnList;
         }
         return null;
-
-
     }
 
     @Override

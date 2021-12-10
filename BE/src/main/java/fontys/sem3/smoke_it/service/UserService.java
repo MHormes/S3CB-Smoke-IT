@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService implements IUserService {
 
-
+    @Autowired
     IDataSourceUser dataSource;
+
     BCryptPasswordEncoder passEncoder;
 
     @Autowired
@@ -20,22 +21,16 @@ public class UserService implements IUserService {
         this.passEncoder = new BCryptPasswordEncoder();
     }
 
-    //Not needed since spring security
-//    @Override
-//    public Boolean attemptLogin(String username, String password) {
-//        return dataSource.attemptLogin(username, password);
-//    }
-
     @Override
     public UserModel getUserModel(String username) {
         return dataSource.getUserModel(username);
     }
 
     @Override
-    public Boolean createUserModel(UserModel userModel) {
+    public UserModel createUserModel(UserModel userModel) {
         UserModel byUsername = dataSource.getUserModel(userModel.getUsername());
         if (byUsername != null) {
-            return false;
+            return null;
         }
         if(userModel.getRole() == null){
             userModel.setRole("USER");
@@ -43,6 +38,4 @@ public class UserService implements IUserService {
         userModel.setPassword(passEncoder.encode(userModel.getPassword()));
         return dataSource.createUserModel(userModel);
     }
-
-
 }

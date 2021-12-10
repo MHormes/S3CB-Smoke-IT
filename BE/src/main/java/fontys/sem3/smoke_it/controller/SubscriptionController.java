@@ -1,21 +1,17 @@
 package fontys.sem3.smoke_it.controller;
 
 import fontys.sem3.smoke_it.model.*;
+import fontys.sem3.smoke_it.model.dtos.OrderDTO;
+import fontys.sem3.smoke_it.model.dtos.SubscriptionDTO;
 import fontys.sem3.smoke_it.model.modelconverters.SubscriptionModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
-import org.apache.coyote.Response;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -33,12 +29,13 @@ public class SubscriptionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<SubscriptionModel> createSubscription(@RequestBody SubscriptionDTO subscriptionDTO) throws MessagingException, IOException {
-        SubscriptionModel subscription = modelConverter.convertDTOToModel(subscriptionDTO);
-        if (subscriptionService.createSubscription(subscription)) {
+    public ResponseEntity<SubscriptionDTO> createSubscription(@RequestBody SubscriptionDTO subscriptionDTO) {
+        SubscriptionModel subscription = subscriptionService.createSubscription(modelConverter.convertDTOToModel(subscriptionDTO));
+        if (subscription != null) {
             //Email needs later fix
             //orderService.sendEmail();
-            return ResponseEntity.ok().body(subscription);
+            SubscriptionDTO dto = modelConverter.convertModelToDTO(subscription);
+            return ResponseEntity.ok().body(dto);
         }
         String entity = "Order was not completed";
         return new ResponseEntity(entity, HttpStatus.CONFLICT);
@@ -95,7 +92,7 @@ public class SubscriptionController {
                 returnList.add(orderDTO);
             }
         }
-        Collections.sort(returnList, new Comparator<OrderDTO>() {
+        returnList.sort(new Comparator<OrderDTO>() {
             @Override
             public int compare(OrderDTO o1, OrderDTO o2) {
                 return o1.getDeliveryDate().compareTo(o2.getDeliveryDate());
@@ -111,7 +108,7 @@ public class SubscriptionController {
     }
 
     @PutMapping("/orders/send/{id}")
-    public ResponseEntity setOrderAsShipped(@PathVariable(value="id")String id){
+    public ResponseEntity<OrderDTO> setOrderAsShipped(@PathVariable(value="id")String id){
         if(subscriptionService.setOrderAsShipped(Long.parseLong(id)) != null){
             return this.getOrder(id);
         }

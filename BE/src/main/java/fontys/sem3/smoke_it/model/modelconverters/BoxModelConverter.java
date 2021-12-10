@@ -1,6 +1,6 @@
 package fontys.sem3.smoke_it.model.modelconverters;
 
-import fontys.sem3.smoke_it.model.BoxDTO;
+import fontys.sem3.smoke_it.model.dtos.BoxDTO;
 import fontys.sem3.smoke_it.model.BoxModel;
 
 import java.nio.file.Path;
@@ -18,9 +18,12 @@ public class BoxModelConverter {
     }
 
     public BoxDTO convertModelToDTO(BoxModel boxModel){
-        BoxDTO boxDTO =  new BoxDTO(boxModel.getId(), boxModel.getName(), boxModel.getBasePrice(), boxModel.getContent(), boxModel.getDescription());
-        boxDTO.setImagePath(Path.of(boxModel.getImagePath()));
-        return boxDTO;
+        if(boxModel != null){
+            BoxDTO boxDTO =  new BoxDTO(boxModel.getId(), boxModel.getName(), boxModel.getBasePrice(), boxModel.getContent(), boxModel.getDescription());
+            boxDTO.setImagePath(Path.of(boxModel.getImagePath()));
+            return boxDTO;
+        }
+        return null;
     }
 
     public BoxModel convertDTOToModel(BoxDTO boxDTO){

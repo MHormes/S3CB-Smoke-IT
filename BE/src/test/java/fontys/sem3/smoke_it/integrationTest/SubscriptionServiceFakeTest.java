@@ -3,7 +3,6 @@ package fontys.sem3.smoke_it.integrationTest;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
 import fontys.sem3.smoke_it.service.SubscriptionService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

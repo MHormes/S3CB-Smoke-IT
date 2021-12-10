@@ -18,12 +18,11 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class SubscriptionServiceMockTest {
+public class SubscriptionServiceUnitTest {
 
     @Mock
     IDataSourceSubscriptions datasource;
 
-    @Autowired
     ISubscriptionService subscriptionService;
 
     SubscriptionModel model1;
@@ -31,6 +30,8 @@ public class SubscriptionServiceMockTest {
 
     @BeforeEach
     void setUp(){
+        subscriptionService = new SubscriptionService(datasource);
+
         List<SubscriptionModel> mockList = new ArrayList<>();
         model1 = new SubscriptionModel("1", 0L, 2, 1, 1,"Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
         model2 = new SubscriptionModel("1", 1L, 0, 2, 2,"Maarten", "Email@gmail.com", "someStreet 4", "6045EA", "Roermond");
@@ -38,6 +39,13 @@ public class SubscriptionServiceMockTest {
         mockList.add(model2);
 
         when(datasource.getSubscriptionsByBoxId("1")).thenReturn(mockList);
+
+    }
+
+    @Test
+    void getActiveSubscriptionsForBoxIdTest(){
+        List<SubscriptionModel> subscriptionModels = subscriptionService.getActiveSubscriptions("1");
+
 
     }
 }

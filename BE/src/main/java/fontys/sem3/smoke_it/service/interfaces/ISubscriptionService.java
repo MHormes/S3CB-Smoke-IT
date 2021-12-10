@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ISubscriptionService {
 
-    Boolean createSubscription(SubscriptionModel orderModel);
+    SubscriptionModel createSubscription(SubscriptionModel orderModel);
 
     SubscriptionModel getSubscriptionById(Long id);
 

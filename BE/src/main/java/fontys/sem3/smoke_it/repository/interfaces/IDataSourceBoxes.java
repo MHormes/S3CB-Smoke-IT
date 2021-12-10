@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IDataSourceBoxes {
 
-    public List<BoxModel> getAllBoxes();
+     List<BoxModel> getAllBoxes();
 
-    public BoxModel getBoxWithID(String ID);
+     BoxModel getBoxWithID(String id);
 
-    public boolean createBox(BoxModel boxModel);
+     BoxModel createBox(BoxModel boxModel);
 
-    public boolean updateBox(BoxModel boxModel);
+     boolean updateBox(BoxModel boxModel);
 
-    public boolean deleteBox(String id);
+     boolean deleteBox(String id);
 }

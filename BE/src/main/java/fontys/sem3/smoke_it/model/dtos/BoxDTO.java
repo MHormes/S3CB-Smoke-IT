@@ -1,4 +1,4 @@
-package fontys.sem3.smoke_it.model;
+package fontys.sem3.smoke_it.model.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
