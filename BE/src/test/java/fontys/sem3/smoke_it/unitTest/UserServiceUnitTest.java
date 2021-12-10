@@ -28,18 +28,17 @@ class UserServiceUnitTest {
     @BeforeEach
     void setUp(){
         this.userService = new UserService(dataSourceUser);
-        this.userModel = new UserModel("username", "password", null);
-        this.adminModel = new UserModel("admin", "password", "ADMIN");
+        this.userModel = new UserModel("username", "password", "testMail@mail.com", null);
+        this.adminModel = new UserModel("admin", "password", "testMail@mail.com","ADMIN");
 
-        when(dataSourceUser.getUserModel("admin")).then(null);
         when(dataSourceUser.getUserModel("username")).thenReturn(userModel);
         when(dataSourceUser.createUserModel(userModel)).thenReturn(userModel);
     }
 
-//    @Test
-//    void createAccountExistingUsername(){
-//        UserModel returnModel = userService.createUserModel(userModel);
-//
-//        Assertions.assertNull(returnModel);
-//    }
+    @Test
+    void createAccountExistingUsername(){
+        UserModel returnModel = userService.createUserModel(userModel);
+
+        Assertions.assertNull(returnModel);
+    }
 }

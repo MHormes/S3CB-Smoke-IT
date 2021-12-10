@@ -19,7 +19,7 @@ class UserServiceFakeTest {
 
     @Test
     void testGetUserModelExists(){
-        UserModel modelToExpect = new UserModel("admin", "admin", "ADMIN");
+        UserModel modelToExpect = new UserModel("admin", "admin", "testMail@mail.com", "ADMIN");
         userService.createUserModel(modelToExpect);
         UserModel userModel = userService.getUserModel("admin");
 

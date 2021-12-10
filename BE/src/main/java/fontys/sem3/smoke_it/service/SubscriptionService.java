@@ -3,7 +3,6 @@ package fontys.sem3.smoke_it.service;
 import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
-import fontys.sem3.smoke_it.repository.DataSourceSubscriptions;
 import fontys.sem3.smoke_it.repository.interfaces.IDataSourceSubscriptions;
 import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class SubscriptionService implements ISubscriptionService {
     @Autowired
     IDataSourceSubscriptions dataSource;
 
-    public SubscriptionService(IDataSourceSubscriptions dataSource){
+    public SubscriptionService(IDataSourceSubscriptions dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -56,7 +55,7 @@ public class SubscriptionService implements ISubscriptionService {
     }
 
     @Override
-    public void createOrder(Long subscriptionId) {
+    public OrderModel createOrder(Long subscriptionId) {
         LocalDate date = LocalDate.now();
         SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(subscriptionId);
         if (subscriptionModel.getAmountLeft() == subscriptionModel.getAmountBought()) {
@@ -69,7 +68,7 @@ public class SubscriptionService implements ISubscriptionService {
             }
         }
         OrderModel orderModel = new OrderModel(subscriptionId, date);
-        dataSource.createOrder(orderModel);
+        return dataSource.createOrder(orderModel);
     }
 
     @Override
@@ -90,13 +89,12 @@ public class SubscriptionService implements ISubscriptionService {
                 if (!order.getPacked() && ChronoUnit.DAYS.between(LocalDate.now(), order.getDeliverDate()) <= 7) {
                     g.setPackFlag(g.getPackFlag() + 1);
                 }
-                //if order is packed but needs to be send within 5 days we add to send flag
+                //if order is packed but needs to be sent within 5 days we add to send flag
                 else if (order.getPacked() && ChronoUnit.DAYS.between(LocalDate.now(), order.getDeliverDate()) <= 5) {
                     g.setShipFlag(g.getShipFlag() + 1);
                 }
             }
         }
-
         return groupedOrders;
     }
 

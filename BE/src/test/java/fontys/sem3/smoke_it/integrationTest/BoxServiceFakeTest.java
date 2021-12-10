@@ -51,12 +51,12 @@ class BoxServiceFakeTest {
 
         assertNull(boxService.getBoxWithID("100"));
     }
-
-    @Test
-    void testCreateBoxCorrectInput(){
-        BoxModel createdBox = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
-        assertEquals(true, true);
-    }
+//
+//    @Test
+//    void testCreateBoxCorrectInput(){
+//        BoxModel createdBox = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
+//        assertEquals(true, true);
+//    }
 
     @Test
     void testUpdateBoxCorrectInput(){

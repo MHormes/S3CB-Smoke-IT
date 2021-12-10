@@ -49,8 +49,8 @@ public class DataSourceSubscriptions implements IDataSourceSubscriptions {
 
 
     @Override
-    public void createOrder(OrderModel orderModel) {
-        orderRepo.save(orderModel);
+    public OrderModel createOrder(OrderModel orderModel) {
+        return orderRepo.save(orderModel);
     }
 
     @Override

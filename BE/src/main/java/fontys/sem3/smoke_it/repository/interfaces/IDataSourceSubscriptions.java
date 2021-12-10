@@ -19,7 +19,7 @@ public interface IDataSourceSubscriptions {
 
     void decreaseSubscriptionAmount(Long id);
 
-    void createOrder(OrderModel orderModel);
+    OrderModel createOrder(OrderModel orderModel);
 
     OrderModel getOrder(Long id);
 
