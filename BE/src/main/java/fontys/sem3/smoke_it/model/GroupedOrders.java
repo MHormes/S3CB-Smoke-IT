@@ -9,10 +9,14 @@ public class GroupedOrders {
     private String boxName;
     private String boxID;
     private Long amount;
+    private int packFlag;
+    private int shipFlag;
 
-    public GroupedOrders(String boxName, String boxID, Long amount){
+    public GroupedOrders(String boxName, String boxID, Long amount, int packFlag, int shipFlag){
         this.boxName = boxName;
         this.boxID = boxID;
         this.amount = amount;
+        this.packFlag = packFlag;
+        this.shipFlag = shipFlag;
     }
 }

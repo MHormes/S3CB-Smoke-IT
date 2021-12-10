@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class BoxServiceMockTest {
 
     @BeforeEach
     void setUp(){
-        boxService = new BoxService();
+        boxService = new BoxService(datasource);
         BoxModel boxModel = new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1");
         List<BoxModel> mockList = new ArrayList<>();
         mockList.add(boxModel);

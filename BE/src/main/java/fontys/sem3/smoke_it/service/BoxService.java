@@ -19,6 +19,10 @@ public class BoxService implements IBoxService , IBoxSorter {
     @Autowired
     IDataSourceBoxes datasource;
 
+    public BoxService(IDataSourceBoxes datasource){
+        this.datasource = datasource;
+    }
+
     @Override
     public List<BoxModel> getAllBoxes() {
         return datasource.getAllBoxes();

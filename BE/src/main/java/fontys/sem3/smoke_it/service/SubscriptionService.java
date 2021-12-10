@@ -8,7 +8,9 @@ import fontys.sem3.smoke_it.service.interfaces.ISubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +75,32 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Override
     public List<GroupedOrders> getAllOrdersGrouped() {
-        return dataSource.getAllOrdersGrouped();
+        List<GroupedOrders> groupedOrders = dataSource.getAllOrdersGrouped();
+        //Get all grouped orders. For each get all subscriptions
+        for (GroupedOrders g : groupedOrders) {
+            List<SubscriptionModel> modelList = this.getActiveSubscriptions(g.getBoxID());
+            //For each subscription get the active order to check packed and shipped
+            for (SubscriptionModel s : modelList) {
+                OrderModel order = this.getActiveOrderBySubscriptionId(s.getId());
+                //If order is not packed and needs to be sent within 7 days we update the pack flag
+                if (!order.getPacked() && ChronoUnit.DAYS.between(LocalDate.now(), order.getDeliverDate()) <= 7) {
+                    g.setPackFlag(g.getPackFlag() + 1);
+                }
+                //if order is packed but needs to be send within 5 days we add to send flag
+                else if (order.getPacked() && ChronoUnit.DAYS.between(LocalDate.now(), order.getDeliverDate()) <= 5) {
+                    g.setShipFlag(g.getShipFlag() + 1);
+                }
+            }
+        }
+
+        return groupedOrders;
     }
 
     @Override
     public OrderModel getActiveOrderBySubscriptionId(Long subscriptionID) {
         List<OrderModel> orderList = dataSource.getOrdersBySubscriptionId(subscriptionID);
-        for(OrderModel o: orderList){
-            if(!o.getShipped()){
+        for (OrderModel o : orderList) {
+            if (!o.getShipped()) {
                 return o;
             }
         }
@@ -101,10 +121,9 @@ public class SubscriptionService implements ISubscriptionService {
     @Override
     public OrderModel setOrderAsShipped(Long id) {
         OrderModel ordermodel = dataSource.getOrder(id);
-        if(ordermodel.getShipped()){
+        if (ordermodel.getShipped()) {
             return null;
-        }
-        else{
+        } else {
             SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(ordermodel.getSubscriptionId());
             if (subscriptionModel.getAmountLeft() > 0) {
                 this.createOrder(subscriptionModel.getId());

@@ -7,7 +7,7 @@ import styles from "./HistoryOrders.module.css"
 const HistoryOrders = (props) => {
     const subscription = JSON.parse(localStorage.getItem("selectedSubHistory"))
     const jwtToken = localStorage.getItem("jwtToken")
-
+    console.log(subscription)
     const [orders, setOrders] = useState();
 
     useEffect(() => {
@@ -46,6 +46,7 @@ const HistoryOrders = (props) => {
                     <HistoryOrdersSingle
                         key={order.orderId}
                         order={order}
+                        subscription={subscription}
                     />
                 ))}
             </ul>

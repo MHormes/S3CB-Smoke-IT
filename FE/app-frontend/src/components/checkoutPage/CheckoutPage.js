@@ -19,7 +19,7 @@ const CheckoutPage = (props) => {
     if (localStorage.getItem("jwtToken")) {
         const jwtToken = localStorage.getItem("jwtToken")
         const decodedJwt = jwtDecode(jwtToken)
-        userId = decodedJwt.userId
+        //userId = decodedJwt.userId
     }
 
     const assignSubscriptionObject = (orderDetails) => {
