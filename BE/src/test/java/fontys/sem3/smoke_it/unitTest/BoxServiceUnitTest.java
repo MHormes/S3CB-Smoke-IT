@@ -35,13 +35,13 @@ class BoxServiceUnitTest {
     }
 
     @Test
-    void testUpdateBoxNullValue() {
-        boolean result = boxService.updateBox(null);
-        Assertions.assertFalse(result);
+    void updateBoxNullValueTest() {
+        BoxModel updatedBox = boxService.updateBox(null);
+        Assertions.assertNull(updatedBox);
     }
 
     @Test
-    void testGetAllBoxesSortedLowHigh() {
+    void getAllBoxesSortedLowHighTest() {
         List<BoxModel> sortedList = boxService.getAllBoxesSorted("l-h");
 
         Assertions.assertEquals(1, sortedList.get(0).getBasePrice());
@@ -50,17 +50,35 @@ class BoxServiceUnitTest {
     }
 
     @Test
-    void testGetAllBoxesSortedHighToLow() {
+    void getAllBoxesSortedHighToLowTest() {
         List<BoxModel> sortedList = boxService.getAllBoxesSorted("h-l");
 
         Assertions.assertEquals(2, sortedList.get(0).getBasePrice());
         Assertions.assertEquals(1, sortedList.get(1).getBasePrice());
     }
 
+    //Calling sort method without any sort string. This results in the basic list being returned
     @Test
-    void testCalculateBoxPrice() {
+    void etAllBoxesSortedWithoutSortStringTest(){
+        List<BoxModel> sortedList = boxService.getAllBoxesSorted("");
+
+        Assertions.assertEquals("test1", sortedList.get(0).getName());
+        Assertions.assertEquals("test2", sortedList.get(1).getName());
+    }
+
+    @Test
+    void calculateBoxPriceAmountTwoTest() {
         double price = boxService.calculateBoxPrice(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1"), 2);
         double expectedPrice = 0.96;
+
+        Assertions.assertEquals(expectedPrice, price);
+    }
+
+    @Test
+    void calculateBoxPriceAmountOneTest() {
+        //Amount 1 should return the basePrice
+        double price = boxService.calculateBoxPrice(new BoxModel("1", "test1", 1.00, "testContent1", "testDescription1", "testImagePath1"), 1);
+        double expectedPrice = 1;
 
         Assertions.assertEquals(expectedPrice, price);
     }

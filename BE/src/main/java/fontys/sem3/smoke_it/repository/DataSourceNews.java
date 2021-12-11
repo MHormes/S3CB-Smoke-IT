@@ -31,6 +31,6 @@ public class DataSourceNews implements IDataSourceNews {
 
     @Override
     public NewsMessageModel getMessageWithId(Long id) {
-        return repo.getOne(id);
+        return repo.getNewsMessageModelById(id);
     }
 }

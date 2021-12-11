@@ -94,7 +94,7 @@ public class BoxController {
         }
 
         BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
-        if (!boxService.updateBox(boxModel)) {
+        if (boxService.updateBox(boxModel) == null) {
             String entity = "There is no box with supplied id: " + boxDTO.getId() + " (box is called: " + boxDTO.getName() + ")";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {

@@ -36,7 +36,7 @@ class UserServiceUnitTest {
     }
 
     @Test
-    void createAccountExistingUsername(){
+    void createAccountExistingUsernameTest(){
         UserModel returnModel = userService.createUserModel(userModel);
 
         Assertions.assertNull(returnModel);

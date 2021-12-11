@@ -14,7 +14,7 @@ public interface IBoxService {
 
      BoxModel createBox(BoxModel boxModel);
 
-     boolean updateBox(BoxModel boxModel);
+     BoxModel updateBox(BoxModel boxModel);
 
      boolean deleteBox(String id);
 

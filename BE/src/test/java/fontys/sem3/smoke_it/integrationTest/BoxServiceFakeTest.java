@@ -2,6 +2,7 @@ package fontys.sem3.smoke_it.integrationTest;
 
 import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +42,7 @@ class BoxServiceFakeTest {
         BoxModel modelToExpect = new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testImagePath1");
         boxService.createBox(modelToExpect);
 
-        assertTrue(modelToExpect.equals(boxService.getBoxWithID("1")));
+        assertEquals(modelToExpect, boxService.getBoxWithID("1"));
 
     }
 
@@ -51,33 +52,50 @@ class BoxServiceFakeTest {
 
         assertNull(boxService.getBoxWithID("100"));
     }
-//
-//    @Test
-//    void testCreateBoxCorrectInput(){
-//        BoxModel createdBox = boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
-//        assertEquals(true, true);
-//    }
+
+    @Test
+    void testCreateBoxCorrectInput(){
+        BoxModel modelToAdd = new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath");
+        BoxModel createdBox = boxService.createBox(modelToAdd);
+        assertEquals(modelToAdd, createdBox);
+    }
 
     @Test
     void testUpdateBoxCorrectInput(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
-        BoxModel x = boxService.getBoxWithID("1");
+        BoxModel updatedBox = new BoxModel("1", "update", 1.00, "update", "update", "update");
 
-        Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("1"));
+        BoxModel updateResult = boxService.updateBox(updatedBox);
 
-        assertEquals(true, updateResult);
+        assertEquals(updatedBox, updateResult);
+        assertEquals("1", updateResult.getId());
     }
 
     @Test
-    void testUpdateBoxWithIncorrectInput(){
+    void testUpdateBoxWithInvalidIdTest(){
         boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
 
-        BoxModel x = boxService.getBoxWithID("1");
+        BoxModel updatedBox = new BoxModel("2", "update", 1.00, "update", "update", "update");
 
-        Boolean updateResult = boxService.updateBox(boxService.getBoxWithID("2"));
+        BoxModel updateResult = boxService.updateBox(updatedBox);
 
-        assertEquals(false, updateResult);
+        //Box with id 2 does not exist. This means updateResult should be null
+        Assertions.assertNull(updateResult);
+    }
+
+    @Test
+    void testUpdateBoxWithEmptyImagePath(){
+        boxService.createBox(new BoxModel("1", "test", 1.00, "testContent", "testDescription", "testPath"));
+
+        BoxModel updatedBox = new BoxModel("1", "update", 1.00, "update", "update", "");
+
+        BoxModel updateResult = boxService.updateBox(updatedBox);
+
+        //Box should be updated like testUpdateBoxCorrectInput. We check if imagePath is still the same "testPath".
+        assertEquals(updatedBox, updateResult);
+        assertEquals("testPath", updateResult.getImagePath());
+
     }
 
     @Test

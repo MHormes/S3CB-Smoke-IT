@@ -69,7 +69,7 @@ public class SubscriptionServiceUnitTest {
     }
 
     @Test
-    void getActiveOrdersForSubscriptionId(){
+    void getActiveOrdersForSubscriptionIdTest(){
         //Get the active order
         OrderModel returnModel = subscriptionService.getActiveOrderBySubscriptionId(1L);
         //See if the order returned is ordermodel2, since 1 is already send

@@ -123,7 +123,7 @@ public class SubscriptionService implements ISubscriptionService {
     @Override
     public OrderModel setOrderAsShipped(Long id) {
         OrderModel ordermodel = dataSource.getOrder(id);
-        if (ordermodel.getShipped()) {
+        if (ordermodel.getShipped() || !ordermodel.getPacked()) {
             return null;
         } else {
             SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(ordermodel.getSubscriptionId());

@@ -61,8 +61,8 @@ public class SubscriptionModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SubscriptionModel orderModel = (SubscriptionModel) o;
-        return Objects.equals(hashCode(), orderModel.hashCode());
+        SubscriptionModel subModel = (SubscriptionModel) o;
+        return Objects.equals(hashCode(), subModel.hashCode());
     }
 
     @Override

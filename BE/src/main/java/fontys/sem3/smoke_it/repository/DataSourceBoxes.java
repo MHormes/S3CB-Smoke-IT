@@ -32,9 +32,9 @@ public class DataSourceBoxes implements IDataSourceBoxes {
     }
 
     @Override
-    public boolean updateBox(BoxModel boxModel) {
-        BoxModel modelToUpdate = repo.getOne(boxModel.getId());
-        if (modelToUpdate.getName() != null) {
+    public BoxModel updateBox(BoxModel boxModel) {
+        BoxModel modelToUpdate = repo.getBoxModelById(boxModel.getId());
+        if (modelToUpdate != null) {
             modelToUpdate.setName(boxModel.getName());
             modelToUpdate.setBasePrice(boxModel.getBasePrice());
             modelToUpdate.setContent(boxModel.getContent());
@@ -42,10 +42,9 @@ public class DataSourceBoxes implements IDataSourceBoxes {
             if (!Objects.equals(boxModel.getImagePath(), "")) {
                 modelToUpdate.setImagePath(boxModel.getImagePath());
             }
-            repo.save(modelToUpdate);
-            return true;
+            return repo.save(modelToUpdate);
         }
-        return false;
+        return null;
 
     }
 

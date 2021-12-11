@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,5 +29,18 @@ public class NewsMessageModel {
         this.title = title;
         this.text = text;
         this.postDate = postDate;
+    }
+
+    @Override
+    public boolean equals(Object n) {
+        if (this == n) return true;
+        if (n == null || getClass() != n.getClass()) return false;
+        NewsMessageModel newsModel = (NewsMessageModel) n;
+        return Objects.equals(hashCode(), newsModel.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

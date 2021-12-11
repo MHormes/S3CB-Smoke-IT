@@ -51,11 +51,11 @@ public class BoxService implements IBoxService , IBoxSorter {
     }
     
     @Override
-    public boolean updateBox(BoxModel boxModel){
+    public BoxModel updateBox(BoxModel boxModel){
         if(boxModel != null){
             return datasource.updateBox(boxModel);
         }
-        return false;
+        return null;
     }
 
     @Override
