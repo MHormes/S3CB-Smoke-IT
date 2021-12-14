@@ -4,7 +4,6 @@ import fontys.sem3.smoke_it.model.BoxModel;
 import fontys.sem3.smoke_it.model.GroupedOrders;
 import fontys.sem3.smoke_it.model.OrderModel;
 import fontys.sem3.smoke_it.model.SubscriptionModel;
-import fontys.sem3.smoke_it.service.BoxService;
 import fontys.sem3.smoke_it.service.SubscriptionService;
 import fontys.sem3.smoke_it.service.interfaces.IBoxService;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 @ActiveProfiles("test")
@@ -23,7 +21,9 @@ class SubscriptionServiceFakeTest {
 
     @Autowired
     SubscriptionService subscriptionService;
-
+    //Need a box service for adding a box to get ordersgrouped without failing
+    @Autowired
+    IBoxService boxService;
 
     @Test
     void createSubscriptionSuccessful() {
@@ -51,20 +51,20 @@ class SubscriptionServiceFakeTest {
         Assertions.assertEquals(1, subscriptionService.getActiveSubscriptions("2").size());
     }
 
-    //TEST NEEDS CONSTANT UPDATE TO KEEP SUCCEEDING
     @Test
     void createOrderSuccessfulTest() {
         SubscriptionModel sub = new SubscriptionModel("1", 1L, 3, 2, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(sub);
 
-        LocalDate date = LocalDate.now();
+        //Date is set to date of test creation
+        LocalDate date = LocalDate.of(2021, 12, 14);
         //First order for sub is already made in create subscription method. Here we get it to test the date
         OrderModel orderModel = subscriptionService.getActiveOrderBySubscriptionId(1L);
-        //Check if date is set correctly
-        Assertions.assertEquals(date.with(TemporalAdjusters.firstDayOfNextMonth()), orderModel.getDeliverDate());
+        //Check if date is set correctly (should be first of january)
+        Assertions.assertEquals(LocalDate.of(2022, 1, 1), orderModel.getDeliverDate());
 
         //Create order for same subscription. Frequency is 2, new date should be 3 months from now. (Jan 1st box 1, March 1st box 2)
-        OrderModel orderModel2 = subscriptionService.createOrder(sub.getId());
+        OrderModel orderModel2 = subscriptionService.createOrder(sub.getId(), LocalDate.now());
         //Check if date is set correctly
         Assertions.assertEquals(LocalDate.of(2022, 3, 1), orderModel2.getDeliverDate());
     }
@@ -81,12 +81,8 @@ class SubscriptionServiceFakeTest {
         Assertions.assertEquals(firstModel, subModelList.get(0));
     }
 
-    //Need a box service for adding a box to get ordersgrouped without failing
-    @Autowired
-    IBoxService boxService;
-
     @Test
-    void getOrdersGroupedTest(){
+    void getOrdersGroupedTest() {
         //Create 2 times 2 subscriptions
         SubscriptionModel sub1 = new SubscriptionModel("4", 6L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         SubscriptionModel sub2 = new SubscriptionModel("4", 6L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
@@ -110,11 +106,11 @@ class SubscriptionServiceFakeTest {
     }
 
     @Test
-    void getOrdersForSubscriptionIdTest(){
+    void getOrdersForSubscriptionIdTest() {
         SubscriptionModel subModel = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(subModel);
 
-        OrderModel orderModel = subscriptionService.createOrder(subModel.getId());
+        OrderModel orderModel = subscriptionService.createOrder(subModel.getId(), LocalDate.now());
 
         List<OrderModel> ordersList = subscriptionService.getAllOrdersBySubscriptionId(subModel.getId());
 
@@ -123,7 +119,7 @@ class SubscriptionServiceFakeTest {
     }
 
     @Test
-    void toggleOrderPackedTest(){
+    void toggleOrderPackedTest() {
         SubscriptionModel subModel = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(subModel);
         //Get the created order
@@ -145,7 +141,7 @@ class SubscriptionServiceFakeTest {
     }
 
     @Test
-    void setOrderAsShippedTest(){
+    void setOrderAsShippedTest() {
         SubscriptionModel subModel = new SubscriptionModel("1", 1L, 2, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(subModel);
         //Get the created order
@@ -165,7 +161,7 @@ class SubscriptionServiceFakeTest {
     }
 
     @Test
-    void setOrderAsShippedOrderAlreadyShippedTest(){
+    void setOrderAsShippedOrderAlreadyShippedTest() {
         SubscriptionModel subModel = new SubscriptionModel("1", 1L, 1, 1, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(subModel);
         //Get the created order

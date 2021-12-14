@@ -23,16 +23,16 @@ const NewsFeed = () => {
     //Method to make axios call for news items
     const refreshNews = () => {
         axios.get(urls.baseURL + urls.newsFeed)
-           .then(res => {
-           setMessages(res.data);
-           }).catch(err => {
-               if (!err.status) {
-                   alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
-               }
-               else {
-                   alert(err.status)
-               }
-          });
+            .then(res => {
+                setMessages(res.data);
+            }).catch(err => {
+                if (!err.status) {
+                    alert("There seems to be an connection issue on our side. Please call 06xxxxxxxx to fix it")
+                }
+                else {
+                    alert(err.status)
+                }
+            });
     }
 
     useEffect(() => {
@@ -79,7 +79,7 @@ const NewsFeed = () => {
     //Form for posting new news message
     const addMessageFields = () => {
         return (
-            <form className={styles.addForm}>
+            <form className={styles.addForm} onSubmit={sendNewsMessage}>
                 <div>
                     <label>
                         Title:
@@ -89,6 +89,7 @@ const NewsFeed = () => {
                             placeholder="Enter a title"
                             value={newMessage.title}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
@@ -100,11 +101,12 @@ const NewsFeed = () => {
                             placeholder="Enter some text"
                             value={newMessage.text}
                             onChange={onChange}
+                            required
                         />
                     </label>
                 </div>
                 <div>
-                    <button className={styles.postButton} value="" onClick={sendNewsMessage}>Post message</button>
+                    <input type="submit" value="Post Message" className={styles.postButton} />
                 </div>
             </form>
         )

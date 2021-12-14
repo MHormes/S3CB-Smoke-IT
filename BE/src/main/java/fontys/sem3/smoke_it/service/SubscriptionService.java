@@ -27,7 +27,7 @@ public class SubscriptionService implements ISubscriptionService {
     @Override
     public SubscriptionModel createSubscription(SubscriptionModel subscriptionModel) {
         SubscriptionModel model = dataSource.createSubscription(subscriptionModel);
-        this.createOrder(subscriptionModel.getId());
+        this.createOrder(subscriptionModel.getId(), LocalDate.now());
         dataSource.decreaseSubscriptionAmount(subscriptionModel.getId());
         return model;
     }
@@ -55,8 +55,8 @@ public class SubscriptionService implements ISubscriptionService {
     }
 
     @Override
-    public OrderModel createOrder(Long subscriptionId) {
-        LocalDate date = LocalDate.now();
+    public OrderModel createOrder(Long subscriptionId, LocalDate currentDate) {
+        LocalDate date = currentDate;
         SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(subscriptionId);
         if (subscriptionModel.getAmountLeft() == subscriptionModel.getAmountBought()) {
             date = date.with(TemporalAdjusters.firstDayOfNextMonth());
@@ -128,7 +128,7 @@ public class SubscriptionService implements ISubscriptionService {
         } else {
             SubscriptionModel subscriptionModel = dataSource.getSubscriptionById(ordermodel.getSubscriptionId());
             if (subscriptionModel.getAmountLeft() > 0) {
-                this.createOrder(subscriptionModel.getId());
+                this.createOrder(subscriptionModel.getId(), LocalDate.now());
             }
             dataSource.setOrderAsShipped(id);
             dataSource.decreaseSubscriptionAmount(subscriptionModel.getId());

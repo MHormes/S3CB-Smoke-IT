@@ -19,7 +19,7 @@ public interface ISubscriptionService {
 
 //    void sendEmail() throws AddressException, MessagingException, IOException;
 
-    OrderModel createOrder(Long subscriptionId);
+    OrderModel createOrder(Long subscriptionId, LocalDate currentDate);
 
 
     OrderModel getOrder(Long id);
