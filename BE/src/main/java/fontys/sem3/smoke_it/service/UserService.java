@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService implements IUserService {
 
-    @Autowired
+
     IDataSourceUser dataSource;
 
     BCryptPasswordEncoder passEncoder;

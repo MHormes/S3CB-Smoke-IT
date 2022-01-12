@@ -12,9 +12,10 @@ import java.util.List;
 @Service
 public class NewsService implements INewsService {
 
-    @Autowired
+
     IDataSourceNews dataSource;
 
+    @Autowired
     public NewsService(IDataSourceNews dataSource){
         this.dataSource = dataSource;
     }

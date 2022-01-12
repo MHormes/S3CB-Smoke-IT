@@ -7,7 +7,7 @@ const CheckoutForm = (props) => {
     const history = useHistory()
     const jwtToken = localStorage.getItem("jwtToken")
     let decodedJWT = null
-    if(jwtToken != null){
+    if (jwtToken != null) {
         decodedJWT = jwtDecode(jwtToken)
     }
 
@@ -52,7 +52,7 @@ const CheckoutForm = (props) => {
                 <br />
                 <p>Logging in/creating an account will save your order to your account</p>
                 <br />
-                <button onClick={() => goToLogin()} >Login</button><button onClick={() => goToRegistration()}>Register instead</button>
+                <button onClick={() => goToLogin()} data-cy='login-button-checkout' >Login</button><button onClick={() => goToRegistration()}>Register instead</button>
             </>
         )
     }
@@ -87,7 +87,8 @@ const CheckoutForm = (props) => {
                         placeholder="e.g. John Doe"
                         value={orderDetails.name}
                         onChange={onChange}
-                        required />
+                        required
+                        data-cy='name-order' />
                 </label>
                 <br />
                 <label>
@@ -99,7 +100,8 @@ const CheckoutForm = (props) => {
                         value={orderDetails.email}
                         onChange={onChange}
                         required
-                        pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' />
+                        pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
+                        data-cy='email-order' />
                 </label>
                 <br />
                 <label>
@@ -110,7 +112,8 @@ const CheckoutForm = (props) => {
                         placeholder="e.g. Rachelsmolen 10"
                         value={orderDetails.address}
                         onChange={onChange}
-                        required />
+                        required
+                        data-cy='address-order' />
                 </label>
                 <br />
                 <label>
@@ -122,7 +125,8 @@ const CheckoutForm = (props) => {
                         value={orderDetails.postal}
                         onChange={onChange}
                         required
-                        pattern="^[0-9]{4}[A-z]{2}$" />
+                        pattern="^[0-9]{4}[A-z]{2}$"
+                        data-cy='postal-order' />
                 </label>
                 <br />
                 <label>
@@ -133,7 +137,8 @@ const CheckoutForm = (props) => {
                         placeholder="e.g. Eindhoven"
                         value={orderDetails.city}
                         onChange={onChange}
-                        required />
+                        required
+                        data-cy='city-order' />
                 </label>
                 <br />
                 <input type="submit" value="Finish your order" />

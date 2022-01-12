@@ -20,12 +20,14 @@ import java.util.List;
 @RequestMapping("/subscriptions")
 public class SubscriptionController {
 
-    @Autowired
+
     ISubscriptionService subscriptionService;
     SubscriptionModelConverter modelConverter;
 
-    public SubscriptionController() {
+    @Autowired
+    public SubscriptionController(ISubscriptionService subscriptionService) {
         this.modelConverter = new SubscriptionModelConverter();
+        this.subscriptionService = subscriptionService;
     }
 
     @PostMapping("/create")

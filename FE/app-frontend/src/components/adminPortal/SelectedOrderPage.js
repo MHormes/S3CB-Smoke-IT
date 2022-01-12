@@ -78,7 +78,7 @@ const SelectedOrderPage = () => {
 
     const packButtonNeeded = () => {
         return (
-            <button onClick={() => toggleOrderPacked(selectedOrder.orderId)}>
+            <button onClick={() => toggleOrderPacked(selectedOrder.orderId)} data-cy='pack-button-admin'>
                 Set box as packed
             </button>
         )
@@ -94,13 +94,16 @@ const SelectedOrderPage = () => {
     let packButton = null;
     if (!selectedOrder.packed) {
         packButton = packButtonNeeded();
-    } else {
+    } else if(selectedOrder.packed && !selectedOrder.shipped){
         packButton = packButtonPacked();
+    }
+    else{
+        packButton = null;
     }
 
     const shipmentNeeded = () => {
         return (
-            <button onClick={() => { if (window.confirm("Are you sure you wish to send this order ?")) { setOrderAsSend(selectedOrder.orderId) } }}>
+            <button onClick={() => { if (window.confirm("Are you sure you wish to send this order ?")) { setOrderAsSend(selectedOrder.orderId) } }} data-cy='ship-button-admin'>
                 Send box
             </button>
         )

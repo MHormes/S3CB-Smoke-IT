@@ -119,7 +119,7 @@ const NewsFeed = () => {
         newNewsMessageForm = addMessageFields();
     }
 
-    if (!messages) return null;
+    if (!messages) return newNewsMessageForm;
 
     return (
         <div className={styles.newsFeed}>

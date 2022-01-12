@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     private IUserService userService;
-
     UserModelConverter modelConverter;
 
+    @Autowired
     public UserController(IUserService userService) {
         this.userService = userService;
         this.modelConverter = new UserModelConverter();

@@ -1,7 +1,7 @@
 package fontys.sem3.smoke_it.controller;
 
-import fontys.sem3.smoke_it.model.dtos.NewsMessageDTO;
 import fontys.sem3.smoke_it.model.NewsMessageModel;
+import fontys.sem3.smoke_it.model.dtos.NewsMessageDTO;
 import fontys.sem3.smoke_it.model.modelconverters.NewsMessageModelConverter;
 import fontys.sem3.smoke_it.service.interfaces.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,15 @@ import java.util.List;
 @RequestMapping("/newsFeed")
 public class NewsController {
 
-    @Autowired
-    INewsService newsService;
 
-    NewsMessageModelConverter modelConverter = new NewsMessageModelConverter();
+    INewsService newsService;
+    NewsMessageModelConverter modelConverter;
+
+    @Autowired
+    public NewsController(INewsService newsService) {
+        this.modelConverter = new NewsMessageModelConverter();
+        this.newsService = newsService;
+    }
 
     @GetMapping("")
     public ResponseEntity<List<NewsMessageDTO>> getNewestMessages() {
@@ -51,10 +56,13 @@ public class NewsController {
 
     private List<NewsMessageDTO> getNewestMessageDTO() {
         List<NewsMessageModel> modelList = newsService.getNewestMessages();
-        List<NewsMessageDTO> dtoList = new ArrayList<>();
-        for (NewsMessageModel m : modelList) {
-            dtoList.add(modelConverter.convertModelToDTO(m));
+        if(modelList != null){
+            List<NewsMessageDTO> dtoList = new ArrayList<>();
+            for (NewsMessageModel m : modelList) {
+                dtoList.add(modelConverter.convertModelToDTO(m));
+            }
+            return dtoList;
         }
-        return dtoList;
+        return null;
     }
 }

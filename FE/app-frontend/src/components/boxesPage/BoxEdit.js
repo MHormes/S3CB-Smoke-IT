@@ -113,6 +113,7 @@ const BoxEdit = (props) => {
                     type="file"
                     accept="image/png, image/jpg, image/jpeg"
                     onChange={onFilechange}
+                    data-cy='fileInput-update'
                 />
             </label>
             <br />

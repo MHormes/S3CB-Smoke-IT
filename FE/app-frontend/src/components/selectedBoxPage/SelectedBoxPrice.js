@@ -74,7 +74,7 @@ const SelectedBoxPrice = (props) => {
             <button className={styles.button} onClick={() => setMonthSelection(6)} disabled={func.button6(amountSelected)}>Once every 6 months</button>
 
             <h1 className={styles.h2}>€ {roundedPrice}</h1>
-            <button className={styles.buttonFirst} onClick={continueToCheckout}>Continue to checkout</button>
+            <button className={styles.buttonFirst} onClick={continueToCheckout} data-cy='continue-button-order'>Continue to checkout</button>
         </>
     )
 }

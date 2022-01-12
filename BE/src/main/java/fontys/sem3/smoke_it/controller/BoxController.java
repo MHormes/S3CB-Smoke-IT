@@ -26,14 +26,14 @@ public class BoxController {
 
     private static final String imageDirectory = System.getProperty("user.dir") + "/images/";
 
-    @Autowired
     private IBoxService boxService;
     private final BoxModelConverter boxModelConverter;
 
-    public BoxController() {
+    @Autowired
+    public BoxController(IBoxService boxService) {
         boxModelConverter = new BoxModelConverter();
+        this.boxService = boxService;
     }
-
 
     @GetMapping()
     public ResponseEntity<List<BoxDTO>> getAllBoxes() {
@@ -93,12 +93,12 @@ public class BoxController {
             boxDTO.setImagePath(Path.of(""));
         }
 
-        BoxModel boxModel = boxModelConverter.convertDTOToModel(boxDTO);
-        if (boxService.updateBox(boxModel) == null) {
+        BoxModel boxModel = boxService.updateBox(boxModelConverter.convertDTOToModel(boxDTO));
+        if (boxModel == null) {
             String entity = "There is no box with supplied id: " + boxDTO.getId() + " (box is called: " + boxDTO.getName() + ")";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(boxModelConverter.convertModelToDTO(boxModel));
         }
     }
 

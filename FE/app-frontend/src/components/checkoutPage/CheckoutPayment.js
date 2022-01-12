@@ -11,7 +11,7 @@ const CheckoutPayment = (props) => {
     return (
         <>
             <p>Please pay {price} euros</p>
-            <button onClick={handlePayment}>I have paid</button>
+            <button onClick={handlePayment} data-cy='pay-button-order'>I have paid</button>
         </>
     )
 

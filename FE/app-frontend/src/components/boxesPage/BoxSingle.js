@@ -20,7 +20,7 @@ const BoxSingle = (props) => {
     //Element for update button 
     const UpdateButton = () => {
         return (
-            <button onClick={() => { if (window.confirm("Update the " + singleBox.name + "?")) { updateBox(singleBox) } }}>
+            <button onClick={() => { if (window.confirm("Update the " + singleBox.name + "?")) { updateBox(singleBox) } }} data-cy='update-button-boxes'>
                 update
             </button>
         )
@@ -38,7 +38,7 @@ const BoxSingle = (props) => {
     //Element for delete button 
     const DeleteButton = () => {
         return (
-            <button onClick={() => { if (window.confirm("Are you sure you wish to delete the " + singleBox.name + "?")) { deleteBox(singleBox) } }}>
+            <button onClick={() => { if (window.confirm("Are you sure you wish to delete the " + singleBox.name + "?")) { deleteBox(singleBox) } }} data-cy='delete-button-boxes'>
                 delete
             </button>
         )
@@ -74,7 +74,7 @@ const BoxSingle = (props) => {
 
 
     return (
-        <li className={styles.li}>
+        <li className={styles.li} data-cy='box-list-item'>
             <div className={styles.box} onClick={() => selectBox(singleBox)}>
                 <img src={urls.imageWebServer + singleBox.name + ".png"} className={styles.image} alt={singleBox.name + " image could not be loaded"} />
                 <p className={styles.p1}>{singleBox.name} {singleBox.basePrice}</p>

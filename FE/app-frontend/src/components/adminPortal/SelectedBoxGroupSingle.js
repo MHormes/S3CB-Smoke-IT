@@ -10,7 +10,7 @@ const SelectedBoxGroupSingle = (props) => {
     }
 
     return (
-        <li className={styles.li}>
+        <li className={styles.li} data-cy='order-item'>
             <div onClick={selectOrderFunction}>
                 <h1 className={styles.h1}>Customer name: {order.name} / To be delivered on: {order.deliveryDate}</h1>
             </div>

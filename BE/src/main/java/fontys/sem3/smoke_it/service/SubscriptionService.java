@@ -17,9 +17,10 @@ import java.util.List;
 @Service
 public class SubscriptionService implements ISubscriptionService {
 
-    @Autowired
+
     IDataSourceSubscriptions dataSource;
 
+    @Autowired
     public SubscriptionService(IDataSourceSubscriptions dataSource) {
         this.dataSource = dataSource;
     }
