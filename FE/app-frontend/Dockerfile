@@ -1,6 +1,8 @@
-FROM node:12-alpine
+FROM node:lts-alpine3.14
 # Adding build tools to make yarn install work on Apple silicon / arm64 machines
-RUN apk add --no-cache python2 g++ make
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
-CMD ["npm start", "src/index.js"]
+EXPOSE 3000
+CMD ["npm", "start"]

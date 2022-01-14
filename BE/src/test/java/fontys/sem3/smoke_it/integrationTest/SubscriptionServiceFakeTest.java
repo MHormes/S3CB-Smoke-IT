@@ -56,17 +56,15 @@ class SubscriptionServiceFakeTest {
         SubscriptionModel sub = new SubscriptionModel("1", 1L, 3, 2, 1, "Maarten", "maarten@gmail.com", "address", "postal", "city");
         subscriptionService.createSubscription(sub);
 
-        //Date is set to date of test creation
-        LocalDate date = LocalDate.of(2021, 12, 14);
         //First order for sub is already made in create subscription method. Here we get it to test the date
         OrderModel orderModel = subscriptionService.getActiveOrderBySubscriptionId(1L);
-        //Check if date is set correctly (should be first of january)
-        Assertions.assertEquals(LocalDate.of(2022, 1, 1), orderModel.getDeliverDate());
+        //Check if date is set correctly (should be first of february)
+        Assertions.assertEquals(LocalDate.of(2022, 2, 1), orderModel.getDeliverDate());
 
-        //Create order for same subscription. Frequency is 2, new date should be 3 months from now. (Jan 1st box 1, March 1st box 2)
+        //Create order for same subscription. Frequency is 2, new date should be 3 months from now. (Feb 1st box 1, April 1st box 2)
         OrderModel orderModel2 = subscriptionService.createOrder(sub.getId(), LocalDate.now());
         //Check if date is set correctly
-        Assertions.assertEquals(LocalDate.of(2022, 3, 1), orderModel2.getDeliverDate());
+        Assertions.assertEquals(LocalDate.of(2022, 4, 1), orderModel2.getDeliverDate());
     }
 
     @Test

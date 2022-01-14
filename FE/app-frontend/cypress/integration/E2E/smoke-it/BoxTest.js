@@ -1,8 +1,11 @@
+const urlBE = 'http://localhost:8080/';
+const urlFE = 'http://localhost:3000/';
+
 describe("Box CRUD test", () => {
     //execute once to create admin account
     before(() => {
         //create admin account
-        cy.request('POST', 'http://localhost:8080/user/register',
+        cy.request('POST', urlBE + 'user/register',
             {
                 username: 'adminBoxes',
                 password: 'admin',
@@ -18,7 +21,7 @@ describe("Box CRUD test", () => {
         //spy on endpoint
         cy.intercept('/login').as('login')
         //perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit(urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminBoxes');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
         cy.get('.LoginPage_login_form__22R7M').submit();
@@ -28,12 +31,12 @@ describe("Box CRUD test", () => {
         })
         cy.wait('@login').its('response.statusCode').should('equal', 200);
     })
-    
+
     it('Add new box', () => {
         //spy on create endpoint
         cy.intercept('POST', 'boxes/create').as('addBox')
         //create box
-        cy.visit('http://localhost:3000/boxes/');
+        cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=add-button-boxes]').click()
         cy.fixture('roll-kit.png').then(fileContent => {
             cy.get('[data-cy=fileInput-add]').attachFile({
@@ -55,7 +58,7 @@ describe("Box CRUD test", () => {
         //spy on update endpoint
         cy.intercept('PUT', 'boxes/update').as('updateBox')
         //update box
-        cy.visit('http://localhost:3000/boxes/');
+        cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=update-button-boxes]').first().click()
         cy.fixture('roll-kit.png').then(fileContent => {
             cy.get('[data-cy=fileInput-update]').attachFile({
@@ -75,7 +78,7 @@ describe("Box CRUD test", () => {
         //spy on delete endpoint
         cy.intercept('DELETE', 'boxes/delete/*').as('deleteBox')
         //remove box
-        cy.visit('http://localhost:3000/boxes/');
+        cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=delete-button-boxes]').first().click()
         cy.on('window:confirm', (text) => {
             expect(text).to.contains("Are you sure you wish to delete")

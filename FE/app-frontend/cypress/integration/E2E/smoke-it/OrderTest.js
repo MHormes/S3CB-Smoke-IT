@@ -1,8 +1,11 @@
+const urlBE = 'http://localhost:8080/';
+const urlFE = 'http://localhost:3000/';
+
 describe('Order test', () => {
    // setup an admin account -> login -> create box to order
     before(() => {
         //create admin account
-        cy.request('POST', 'http://localhost:8080/user/register',
+        cy.request('POST', urlBE + 'user/register',
             {
                 username: 'adminOrder',
                 password: 'admin',
@@ -16,7 +19,7 @@ describe('Order test', () => {
         //spy on login endpoint
         cy.intercept('/login').as('login')
         //perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit(urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminOrder');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
         cy.get('.LoginPage_login_form__22R7M').submit();
@@ -30,7 +33,7 @@ describe('Order test', () => {
         //spy on create endpoint
         cy.intercept('POST', 'boxes/create').as('addBox')
         //create box
-        cy.visit('http://localhost:3000/boxes/');
+        cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=add-button-boxes]').click()
         cy.fixture('roll-kit.png').then(fileContent => {
             cy.get('[data-cy=fileInput-add]').attachFile({
@@ -51,7 +54,7 @@ describe('Order test', () => {
     it('create new order', () => {
         //spy on end point
         cy.intercept('POST', 'subscriptions/create').as('placeOrder')
-        cy.visit('http://localhost:3000/boxes');
+        cy.visit(urlFE + 'boxes');
         //wait for boxes to get loaded
         cy.wait(2000)
         //select boxes and create order
@@ -75,7 +78,7 @@ describe('Order test', () => {
     it('create new order w/ login redirect', () => {
         //spy on end point
         cy.intercept('POST', 'subscriptions/create').as('placeOrder')
-        cy.visit('http://localhost:3000/boxes');
+        cy.visit(urlFE + 'boxes');
         //wait for boxes to get loaded
         cy.wait(2000)
         //select boxes and create order
@@ -91,7 +94,7 @@ describe('Order test', () => {
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
         cy.get('.LoginPage_login_form__22R7M').submit();
         //check if redirect back worked
-        cy.url().should('equal', 'http://localhost:3000/boxes/selectedBox/checkout')
+        cy.url().should('equal', urlFE + 'boxes/selectedBox/checkout')
         //check for adminlog on local storage
         cy.should(() => {
             expect(localStorage.getItem('adminLog')).to.equal('true')
@@ -114,7 +117,7 @@ describe('Order test', () => {
         //spy on endpoint
         cy.intercept('/login').as('login')
         //perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit( urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminOrder');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
         cy.get('.LoginPage_login_form__22R7M').submit();
@@ -128,7 +131,7 @@ describe('Order test', () => {
         //spy on endpoint
         cy.intercept('PUT', 'subscriptions/orders/send/*').as('sendOrder')
         cy.intercept('PUT', 'subscriptions/orders/pack/*').as('packOrder')
-        cy.visit('http://localhost:3000/adminPortal');
+        cy.visit(urlFE + 'adminPortal');
         cy.get('[data-cy=grouped-boxes]').first().click();
         cy.get('[data-cy=order-item]').first().click();
         cy.get('[data-cy=pack-button-admin]').click();

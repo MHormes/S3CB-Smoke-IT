@@ -1,9 +1,12 @@
+const urlBE = 'http://localhost:8080/';
+const urlFE = 'http://localhost:3000/';
+
 describe("Registration test", () => {
     it('successfull registration for user', () => {
         //spy on endpoint
         cy.intercept('POST', 'user/register').as('register')
         //create account
-        cy.visit('http://localhost:3000/register');
+        cy.visit(urlFE + 'register');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(1) input').type('userRegister');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(2) input').type('user');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(3) input').type('test@user.nl');
@@ -16,7 +19,7 @@ describe("Registration test", () => {
         //spy on endpoint
         cy.intercept('POST', 'user/register').as('register')
         //create account
-        cy.visit('http://localhost:3000/register');
+        cy.visit(urlFE + 'register');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(1) input').type('userRegister');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(2) input').type('user');
         cy.get('.RegistrationPage_row__2HoV4:nth-child(3) input').type('test@user.nl');

@@ -1,7 +1,10 @@
+const urlBE = 'http://localhost:8080/';
+const urlFE = 'http://localhost:3000/';
+
 describe("Login test", () => {
     it('successfull login admin', () => {
         //create admin account
-        cy.request('POST', 'http://localhost:8080/user/register',
+        cy.request('POST', urlBE + 'user/register',
             {
                 username: 'adminLogin',
                 password: 'admin',
@@ -15,7 +18,7 @@ describe("Login test", () => {
         //spy on endpoint
         cy.intercept('/login').as('login')
         //perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit(urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminLogin');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
         cy.get('.LoginPage_login_form__22R7M').submit();
@@ -29,7 +32,7 @@ describe("Login test", () => {
 
     it('successfull login user', () => {
         //create user account
-        cy.request('POST', 'http://localhost:8080/user/register',
+        cy.request('POST', urlBE + 'user/register',
             {
                 username: 'userLogin',
                 password: 'user',
@@ -42,7 +45,7 @@ describe("Login test", () => {
         //spy on endpoint
         cy.intercept('/login').as('login')
         //perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit(urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('userLogin');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('user');
         cy.get('.LoginPage_login_form__22R7M').submit();
@@ -56,9 +59,9 @@ describe("Login test", () => {
 
     it('failed login', () => {
         //spy on endpoint
-        cy.intercept('POST','/login').as('login')
+        cy.intercept('POST', '/login').as('login')
         //No account created, perform login
-        cy.visit('http://localhost:3000/login');
+        cy.visit(urlFE + 'login');
         cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('admin');
         cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('user');
         cy.get('.LoginPage_login_form__22R7M').submit();
