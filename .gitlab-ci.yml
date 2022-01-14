@@ -2,6 +2,10 @@ stages:
 - build
 - test 
 - sonarqube-check
+- docker-image-build
+- docker-container-run
+- cypress-test
+- docker-clean
 
 build:
  stage: build
@@ -24,3 +28,40 @@ sonarqube-check:
     - ./gradlew sonarqube
     - ./gradlew.bat --stop
  
+be-image:
+  stage: docker-image-build
+  script:
+    - cd BE
+    - ./gradlew build
+    - ./gradlew.bat --stop
+    - docker build --build-arg JAR_FILE="build/libs/*.jar" -t be-image .
+
+fe-image:
+  stage: docker-image-build
+  script:
+    - cd FE/app-frontend/
+    - docker build -t fe-image .
+
+be-container:
+  stage: docker-container-run
+  script:
+    - docker run -dp 8080:8080 --rm --name be-container be-image
+
+fe-container:
+  stage: docker-container-run
+  script:
+    - docker run -dp 3000:3000 --rm --name fe-container fe-image
+
+cypress-testing:
+  stage: cypress-test
+  script:
+    - cd FE/app-frontend/
+    - npx cypress run
+
+docker clean:
+  stage: docker-clean
+  script:
+    - docker stop be-container
+    - docker stop fe-container
+    - docker image rm be-image
+    - docker image rm fe-image
