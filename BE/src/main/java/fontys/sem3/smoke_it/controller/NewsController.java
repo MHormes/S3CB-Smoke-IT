@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://127.0.0.1:3000")
 @RequestMapping("/newsFeed")
 public class NewsController {
 

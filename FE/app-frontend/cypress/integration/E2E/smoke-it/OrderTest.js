@@ -1,59 +1,59 @@
-const urlBE = '127.0.0.1:8080/';
-const urlFE = '127.0.0.1:3000/';
+const urlBE = 'http://127.0.0.1:8080/';
+const urlFE = 'http://127.0.0.1:3000/';
+
+// setup an admin account -> login -> create box to order
+before(() => {
+    //create admin account
+    cy.request('POST', urlBE + 'user/register',
+        {
+            username: 'adminOrder',
+            password: 'admin',
+            email: 'admin@admin.nl',
+            role: 'ADMIN'
+        }).then(
+            (response) => {
+                expect(response.body).to.have.property('username', 'adminOrder')
+            })
+
+    //spy on login endpoint
+    cy.intercept(urlBE + '/login').as('login')
+    //perform login
+    cy.visit(urlFE + 'login');
+    cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('adminOrder');
+    cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('admin');
+    cy.get('.LoginPage_login_form__1BoC0').submit();
+    //check for adminlog on local storage and correct status code
+    cy.should(() => {
+        expect(localStorage.getItem('adminLog')).to.equal('true')
+    })
+    cy.wait('@login').its('response.statusCode').should('equal', 200);
+
+    //create a box to order
+    //spy on create endpoint
+    cy.intercept('POST', urlBE + 'boxes/create').as('addBox')
+    //create box
+    cy.visit(urlFE + 'boxes/');
+    cy.get('[data-cy=add-button-boxes]').click()
+    cy.fixture('roll-kit.png').then(fileContent => {
+        cy.get('[data-cy=fileInput-add]').attachFile({
+            fileContent: fileContent.toString(),
+            fileName: 'roll=kit.png',
+            mimeType: 'image.png'
+        });
+    })
+    cy.get('label:nth-child(4) > input').type('testBox');
+    cy.get('label:nth-child(6) > input').type('10');
+    cy.get('label:nth-child(8) > input').type('something, something else, another thing');
+    cy.get('label:nth-child(10) > input').type('just some text');
+    cy.get('form').submit();
+    cy.wait('@addBox').its('response.statusCode').should('equal', 200)
+    cy.get('@addBox').its('response.body.name').should('equal', 'testBox')
+})
 
 describe('Order test', () => {
-   // setup an admin account -> login -> create box to order
-    before(() => {
-        //create admin account
-        cy.request('POST', urlBE + 'user/register',
-            {
-                username: 'adminOrder',
-                password: 'admin',
-                email: 'admin@admin.nl',
-                role: 'ADMIN'
-            }).then(
-                (response) => {
-                    expect(response.body).to.have.property('username', 'adminOrder')
-                })
-
-        //spy on login endpoint
-        cy.intercept('/login').as('login')
-        //perform login
-        cy.visit(urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminOrder');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
-        cy.get('.LoginPage_login_form__22R7M').submit();
-        //check for adminlog on local storage and correct status code
-        cy.should(() => {
-            expect(localStorage.getItem('adminLog')).to.equal('true')
-        })
-        cy.wait('@login').its('response.statusCode').should('equal', 200);
-
-        //create a box to order
-        //spy on create endpoint
-        cy.intercept('POST', 'boxes/create').as('addBox')
-        //create box
-        cy.visit(urlFE + 'boxes/');
-        cy.get('[data-cy=add-button-boxes]').click()
-        cy.fixture('roll-kit.png').then(fileContent => {
-            cy.get('[data-cy=fileInput-add]').attachFile({
-                fileContent: fileContent.toString(),
-                fileName: 'roll=kit.png',
-                mimeType: 'image.png'
-            });
-        })
-        cy.get('label:nth-child(4) > input').type('testBox');
-        cy.get('label:nth-child(6) > input').type('10');
-        cy.get('label:nth-child(8) > input').type('something, something else, another thing');
-        cy.get('label:nth-child(10) > input').type('just some text');
-        cy.get('form').submit();
-        cy.wait('@addBox').its('response.statusCode').should('equal', 200)
-        cy.get('@addBox').its('response.body.name').should('equal', 'testBox')
-    })
-
     it('create new order', () => {
         //spy on end point
-        cy.intercept('POST', 'subscriptions/create').as('placeOrder')
+        cy.intercept('POST', urlBE + 'subscriptions/create').as('placeOrder')
         cy.visit(urlFE + 'boxes');
         //wait for boxes to get loaded
         cy.wait(2000)
@@ -77,7 +77,7 @@ describe('Order test', () => {
 
     it('create new order w/ login redirect', () => {
         //spy on end point
-        cy.intercept('POST', 'subscriptions/create').as('placeOrder')
+        cy.intercept('POST', urlBE + 'subscriptions/create').as('placeOrder')
         cy.visit(urlFE + 'boxes');
         //wait for boxes to get loaded
         cy.wait(2000)
@@ -90,9 +90,9 @@ describe('Order test', () => {
         //go to login
         cy.get('[data-cy=login-button-checkout]').click();
         //login
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminOrder');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('adminOrder');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('admin');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
         //check if redirect back worked
         cy.url().should('equal', urlFE + 'boxes/selectedBox/checkout')
         //check for adminlog on local storage
@@ -113,21 +113,21 @@ describe('Order test', () => {
         cy.get('@placeOrder').its('response.body.name').should('equal', 'Maarten Hormes')
     })
 
-    it('pack/send order', () =>{
+    it('pack/send order', () => {
         //spy on endpoint
-        cy.intercept('/login').as('login')
+        cy.intercept(urlBE + '/login').as('login')
         //perform login
-        cy.visit( urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminOrder');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.visit(urlFE + 'login');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('adminOrder');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('admin');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
 
         //check for adminlog on local storage and correct status code
         cy.should(() => {
             expect(localStorage.getItem('adminLog')).to.equal('true')
         })
         cy.wait('@login').its('response.statusCode').should('equal', 200);
-        
+
         //spy on endpoint
         cy.intercept('PUT', 'subscriptions/orders/send/*').as('sendOrder')
         cy.intercept('PUT', 'subscriptions/orders/pack/*').as('packOrder')

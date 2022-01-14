@@ -1,5 +1,5 @@
-const urlBE = '127.0.0.1:8080/';
-const urlFE = '127.0.0.1:3000/';
+const urlBE = 'http://127.0.0.1:8080/';
+const urlFE = 'http://127.0.0.1:3000/';
 
 describe("Login test", () => {
     it('successfull login admin', () => {
@@ -16,12 +16,12 @@ describe("Login test", () => {
                 })
 
         //spy on endpoint
-        cy.intercept('/login').as('login')
+        cy.intercept('http://127.0.0.1:8080/login').as('login')
         //perform login
         cy.visit(urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminLogin');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('adminLogin');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('admin');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
 
         //check for adminlog on local storage and correct status code
         cy.should(() => {
@@ -43,12 +43,12 @@ describe("Login test", () => {
                 })
 
         //spy on endpoint
-        cy.intercept('/login').as('login')
+        cy.intercept(urlBE + '/login').as('login')
         //perform login
         cy.visit(urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('userLogin');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('user');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('userLogin');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('user');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
 
         //check for adminlog on local storage and correct status code
         cy.should(() => {
@@ -59,12 +59,12 @@ describe("Login test", () => {
 
     it('failed login', () => {
         //spy on endpoint
-        cy.intercept('POST', '/login').as('login')
+        cy.intercept('POST', urlBE + '/login').as('login')
         //No account created, perform login
         cy.visit(urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('admin');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('user');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('admin');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('user');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
         //Check if adminlog is null and forbidden error
         cy.should(() => {
             expect(localStorage.getItem('adminLog')).to.equal(null)

@@ -1,30 +1,30 @@
-const urlBE = '127.0.0.1:8080/';
-const urlFE = '127.0.0.1:3000/';
+const urlBE = 'http://127.0.0.1:8080/';
+const urlFE = 'http://127.0.0.1:3000/';
 
+//execute once to create admin account
+before(() => {
+    //create admin account
+    cy.request('POST', urlBE + 'user/register',
+        {
+            username: 'adminBoxes',
+            password: 'admin',
+            email: 'admin@admin.nl',
+            role: 'ADMIN'
+        }).then(
+            (response) => {
+                expect(response.body).to.have.property('username', 'adminBoxes')
+            })
+})
 describe("Box CRUD test", () => {
-    //execute once to create admin account
-    before(() => {
-        //create admin account
-        cy.request('POST', urlBE + 'user/register',
-            {
-                username: 'adminBoxes',
-                password: 'admin',
-                email: 'admin@admin.nl',
-                role: 'ADMIN'
-            }).then(
-                (response) => {
-                    expect(response.body).to.have.property('username', 'adminBoxes')
-                })
-    })
     //execute before every task to ensure admin login
     beforeEach(() => {
         //spy on endpoint
-        cy.intercept('/login').as('login')
+        cy.intercept(urlBE + '/login').as('login')
         //perform login
         cy.visit(urlFE + 'login');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(1) input').type('adminBoxes');
-        cy.get('.LoginPage_row__2Yo4h:nth-child(2) input').type('admin');
-        cy.get('.LoginPage_login_form__22R7M').submit();
+        cy.get('.LoginPage_row__3uZTJ:nth-child(1) input').type('adminBoxes');
+        cy.get('.LoginPage_row__3uZTJ:nth-child(2) input').type('admin');
+        cy.get('.LoginPage_login_form__1BoC0').submit();
         //check for adminlog on local storage and correct status code
         cy.should(() => {
             expect(localStorage.getItem('adminLog')).to.equal('true')
@@ -34,7 +34,7 @@ describe("Box CRUD test", () => {
 
     it('Add new box', () => {
         //spy on create endpoint
-        cy.intercept('POST', 'boxes/create').as('addBox')
+        cy.intercept('POST', urlBE + 'boxes/create').as('addBox')
         //create box
         cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=add-button-boxes]').click()
@@ -56,7 +56,7 @@ describe("Box CRUD test", () => {
 
     it('update existing box', () => {
         //spy on update endpoint
-        cy.intercept('PUT', 'boxes/update').as('updateBox')
+        cy.intercept('PUT', urlBE + 'boxes/update').as('updateBox')
         //update box
         cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=update-button-boxes]').first().click()
@@ -76,7 +76,7 @@ describe("Box CRUD test", () => {
 
     it('delete existing box', () => {
         //spy on delete endpoint
-        cy.intercept('DELETE', 'boxes/delete/*').as('deleteBox')
+        cy.intercept('DELETE', urlBE + 'boxes/delete/*').as('deleteBox')
         //remove box
         cy.visit(urlFE + 'boxes/');
         cy.get('[data-cy=delete-button-boxes]').first().click()

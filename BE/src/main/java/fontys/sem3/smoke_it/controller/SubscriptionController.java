@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Controller
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://127.0.0.1:3000")
 @RequestMapping("/subscriptions")
 public class SubscriptionController {
 

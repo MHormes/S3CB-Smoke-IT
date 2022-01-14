@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 @RestController
 @RequestMapping("/boxes")
 public class BoxController {
