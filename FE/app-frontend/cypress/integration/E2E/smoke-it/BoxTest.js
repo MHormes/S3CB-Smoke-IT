@@ -1,5 +1,5 @@
-const urlBE = 'http://localhost:8080/';
-const urlFE = 'http://localhost:3000/';
+const urlBE = '127.0.0.1:8080/';
+const urlFE = '127.0.0.1:3000/';
 
 describe("Box CRUD test", () => {
     //execute once to create admin account
